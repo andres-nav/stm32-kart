@@ -1,0 +1,16 @@
+../Core/Src/main.c:59:6:espera	24	static
+../Core/Src/main.c:63:6:initMotorPin	24	static
+../Core/Src/main.c:76:6:initMotor	24	static
+../Core/Src/main.c:81:6:initRobot	32	static
+../Core/Src/main.c:88:6:updateStatusMotorPin	16	static
+../Core/Src/main.c:93:6:updateStatusMotor	16	static
+../Core/Src/main.c:98:6:updateStatusRobot	16	static
+../Core/Src/main.c:103:6:updateMotorPin	16	static
+../Core/Src/main.c:117:6:updateMotor	24	static
+../Core/Src/main.c:143:6:updateRobot	24	static
+../Core/Src/main.c:184:5:main	176	static
+../Core/Src/main.c:257:6:SystemClock_Config	80	static
+../Core/Src/main.c:301:13:MX_ADC_Init	24	static
+../Core/Src/main.c:356:13:MX_TS_Init	4	static
+../Core/Src/main.c:377:13:MX_GPIO_Init	40	static
+../Core/Src/main.c:456:6:Error_Handler	4	static,ignoring_inline_asm
