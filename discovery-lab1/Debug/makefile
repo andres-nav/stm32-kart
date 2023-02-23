@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := discovery-lab1-v1
+BUILD_ARTIFACT_NAME := discovery-lab1
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-discovery-lab1-v1.elf \
+discovery-lab1.elf \
 
 MAP_FILES += \
-discovery-lab1-v1.map \
+discovery-lab1.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-discovery-lab1-v1.list \
+discovery-lab1.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: discovery-lab1-v1.elf secondary-outputs
+main-build: discovery-lab1.elf secondary-outputs
 
 # Tool invocations
-discovery-lab1-v1.elf discovery-lab1-v1.map: $(OBJS) $(USER_OBJS) /home/me/MEGA/Uni/3YEAR/Q2/05\ Microprocessor/Labs/discovery-lab1-v1/STM32L152RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "discovery-lab1-v1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/discovery-lab1-v1/STM32L152RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="discovery-lab1-v1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+discovery-lab1.elf discovery-lab1.map: $(OBJS) $(USER_OBJS) /home/me/MEGA/Uni/3YEAR/Q2/05\ Microprocessor/Labs/stm32-kart/discovery-lab1/STM32L152RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "discovery-lab1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/discovery-lab1/STM32L152RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="discovery-lab1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-discovery-lab1-v1.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "discovery-lab1-v1.list"
+discovery-lab1.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "discovery-lab1.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout discovery-lab1-v1.elf discovery-lab1-v1.list discovery-lab1-v1.map
+	-$(RM) default.size.stdout discovery-lab1.elf discovery-lab1.list discovery-lab1.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

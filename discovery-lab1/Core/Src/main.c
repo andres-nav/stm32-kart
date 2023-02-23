@@ -56,10 +56,18 @@ static void MX_TS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+/*
+ * Waits a specific number of seconds approx.
+ */
 void espera(char seconds) {
   for (int i=0; i<(seconds*2000000); i++);
 }
 
+/*
+ * Initializes the pins of the motors as digital output with default.
+ * 	type and speed
+ */
 void initMotorPin(MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
   motor_pin->gpio = gpio;
   motor_pin->pin = pin;
@@ -73,11 +81,17 @@ void initMotorPin(MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
   gpio->OSPEEDR &= ~(1 << (pin*2));
 }
 
+/*
+ * Initializes the motor with the corresponding pins.
+ */
 void initMotor(Motor *motor, MotorPin *pin_1, MotorPin *pin_2) {
   motor->pin_1 = *pin_1;
   motor->pin_2 = *pin_2;
 }
 
+/*
+ * Initializes the robot with the motors and stops it.
+ */
 void initRobot(Robot *robot, Motor *motor_right, Motor *motor_left) {
   robot->motor_right = *motor_right;
   robot->motor_left = *motor_left;
@@ -85,21 +99,35 @@ void initRobot(Robot *robot, Motor *motor_right, Motor *motor_left) {
   updateStatusRobot(robot, ROBOT_STOPPED);
 }
 
+/*
+ * Updates the status of the motor pin and calls to implement the status.
+ */
 void updateStatusMotorPin(MotorPin *motor_pin, StatusMotorPin status) {
   motor_pin->status = status;
   updateMotorPin(motor_pin);
 }
 
+/*
+ * Updates the status of the motor and calls to implement the status.
+ */
 void updateStatusMotor(Motor *motor, StatusMotor status) {
   motor->status = status;
   updateMotor(motor);
 }
 
+/*
+ * Updates the status of the motor and calls to implement the status.
+ */
 void updateStatusRobot(Robot *robot, StatusRobot status) {
   robot->status = status;
   updateRobot(robot);
 }
 
+/*
+ * Updates the motor pin depending of its status
+ * 	MOTOR_PIN_UP: sets the BSRR register to set the pin to 1
+ * 	MOTOR_PIN_DOWN: sets the BSRR register to set the pin to 0
+ */
 void updateMotorPin(MotorPin *motor_pin) {
   switch (motor_pin->status) {
     case MOTOR_PIN_UP:
@@ -114,6 +142,14 @@ void updateMotorPin(MotorPin *motor_pin) {
 
 }
 
+/*
+ * Updates the motor depending of its status
+ * 	MOTOR_STOPPED: sets the motor to stop
+ * 	MOTOR_FORWARD: sets the motor to forward with respect to the whole robot
+ * 	MOTOR_BACKWARD: sets the motor to backward with respect to the whole robot
+ *
+ * 	This is important as one motor cables are swapped to correct that it is flip. (hardware)
+ */
 void updateMotor(Motor *motor) {
   StatusMotorPin status_motor_pin_1, status_motor_pin_2;
 
@@ -140,6 +176,10 @@ void updateMotor(Motor *motor) {
 
 }
 
+/*
+ * Updates the robot to its according status
+ * 	All the movements are with respect to the whole robot.
+ */
 void updateRobot(Robot *robot) {
   StatusMotor status_motor_right, status_motor_left;
 
@@ -188,7 +228,7 @@ int main(void)
 
   /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configpinsuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -214,6 +254,7 @@ int main(void)
   MotorPin pin_1_motor_right, pin_2_motor_right;
   Motor motor_right;
 
+  // Motor right is set to the output of the left driver (due to the placement of the driver)
   initMotorPin(&pin_1_motor_right, GPIOB, 9);
   initMotorPin(&pin_2_motor_right, GPIOA, 12);
   initMotor(&motor_right, &pin_1_motor_right, &pin_2_motor_right);
@@ -221,6 +262,7 @@ int main(void)
   MotorPin pin_1_motor_left, pin_2_motor_left;
   Motor motor_left;
 
+  // Motor left is set to the output of the right driver (due to the placement of the driver)
   initMotorPin(&pin_1_motor_left, GPIOB, 8);
   initMotorPin(&pin_2_motor_left, GPIOA, 11);
   initMotor(&motor_left, &pin_1_motor_left, &pin_2_motor_left);
