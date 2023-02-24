@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000029  00000000  00000000  0002000c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00005053  00000000  00000000  00020035  2**0
+ 12 .debug_info   00005057  00000000  00000000  00020035  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00001258  00000000  00000000  00025088  2**0
+ 13 .debug_abbrev 00001258  00000000  00000000  0002508c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000548  00000000  00000000  000262e0  2**3
+ 14 .debug_aranges 00000548  00000000  00000000  000262e8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 000004b0  00000000  00000000  00026828  2**3
+ 15 .debug_ranges 000004b0  00000000  00000000  00026830  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  000147a5  00000000  00000000  00026cd8  2**0
+ 16 .debug_macro  000147a5  00000000  00000000  00026ce0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   000059f8  00000000  00000000  0003b47d  2**0
+ 17 .debug_line   000059f9  00000000  00000000  0003b485  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00081ef7  00000000  00000000  00040e75  2**0
+ 18 .debug_str    00081ef7  00000000  00000000  00040e7e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  000c2d6c  2**0
+ 19 .comment      00000050  00000000  00000000  000c2d75  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00001424  00000000  00000000  000c2dbc  2**2
+ 20 .debug_frame  00001424  00000000  00000000  000c2dc8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -352,11 +352,11 @@ Disassembly of section .text:
  8000482:	bf00      	nop
 
 08000484 <espera>:
-
-/* USER CODE END PFP */
-
-/* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+/*
+ * Waits a specific number of seconds approx.
+ */
 void espera(char seconds) {
  8000484:	b480      	push	{r7}
  8000486:	b085      	sub	sp, #20
@@ -387,6 +387,10 @@ void espera(char seconds) {
 
 080004b8 <initMotorPin>:
 
+/*
+ * Initializes the pins of the motors as digital output with default.
+ * 	type and speed
+ */
 void initMotorPin(MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
  80004b8:	b480      	push	{r7}
  80004ba:	b085      	sub	sp, #20
@@ -470,6 +474,9 @@ void initMotorPin(MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
 
 0800054a <initMotor>:
 
+/*
+ * Initializes the motor with the corresponding pins.
+ */
 void initMotor(Motor *motor, MotorPin *pin_1, MotorPin *pin_2) {
  800054a:	b480      	push	{r7}
  800054c:	b085      	sub	sp, #20
@@ -498,6 +505,9 @@ void initMotor(Motor *motor, MotorPin *pin_1, MotorPin *pin_2) {
 
 08000578 <initRobot>:
 
+/*
+ * Initializes the robot with the motors and stops it.
+ */
 void initRobot(Robot *robot, Motor *motor_right, Motor *motor_left) {
  8000578:	b5b0      	push	{r4, r5, r7, lr}
  800057a:	b084      	sub	sp, #16
@@ -536,6 +546,9 @@ void initRobot(Robot *robot, Motor *motor_right, Motor *motor_left) {
 
 080005be <updateStatusMotorPin>:
 
+/*
+ * Updates the status of the motor pin and calls to implement the status.
+ */
 void updateStatusMotorPin(MotorPin *motor_pin, StatusMotorPin status) {
  80005be:	b580      	push	{r7, lr}
  80005c0:	b082      	sub	sp, #8
@@ -558,6 +571,9 @@ void updateStatusMotorPin(MotorPin *motor_pin, StatusMotorPin status) {
 
 080005de <updateStatusMotor>:
 
+/*
+ * Updates the status of the motor and calls to implement the status.
+ */
 void updateStatusMotor(Motor *motor, StatusMotor status) {
  80005de:	b580      	push	{r7, lr}
  80005e0:	b082      	sub	sp, #8
@@ -580,6 +596,9 @@ void updateStatusMotor(Motor *motor, StatusMotor status) {
 
 080005fe <updateStatusRobot>:
 
+/*
+ * Updates the status of the motor and calls to implement the status.
+ */
 void updateStatusRobot(Robot *robot, StatusRobot status) {
  80005fe:	b580      	push	{r7, lr}
  8000600:	b082      	sub	sp, #8
@@ -601,7 +620,11 @@ void updateStatusRobot(Robot *robot, StatusRobot status) {
  800061c:	bd80      	pop	{r7, pc}
 
 0800061e <updateMotorPin>:
-
+/*
+ * Updates the motor pin depending of its status
+ * 	MOTOR_PIN_UP: sets the BSRR register to set the pin to 1
+ * 	MOTOR_PIN_DOWN: sets the BSRR register to set the pin to 0
+ */
 void updateMotorPin(MotorPin *motor_pin) {
  800061e:	b480      	push	{r7}
  8000620:	b083      	sub	sp, #12
@@ -662,7 +685,11 @@ void updateMotorPin(MotorPin *motor_pin) {
  8000676:	4770      	bx	lr
 
 08000678 <updateMotor>:
-
+ * 	MOTOR_FORWARD: sets the motor to forward with respect to the whole robot
+ * 	MOTOR_BACKWARD: sets the motor to backward with respect to the whole robot
+ *
+ * 	This is important as one motor cables are swapped to correct that it is flip. (hardware)
+ */
 void updateMotor(Motor *motor) {
  8000678:	b580      	push	{r7, lr}
  800067a:	b084      	sub	sp, #16
@@ -737,6 +764,10 @@ void updateMotor(Motor *motor) {
 
 080006d8 <updateRobot>:
 
+/*
+ * Updates the robot to its according status
+ * 	All the movements are with respect to the whole robot.
+ */
 void updateRobot(Robot *robot) {
  80006d8:	b580      	push	{r7, lr}
  80006da:	b084      	sub	sp, #16
@@ -842,7 +873,7 @@ int main(void)
  8000760:	af00      	add	r7, sp, #0
   /* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configpinsuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
@@ -866,10 +897,10 @@ int main(void)
   MX_TS_Init();
  8000772:	f000 f903 	bl	800097c <MX_TS_Init>
 
-
   MotorPin pin_1_motor_right, pin_2_motor_right;
   Motor motor_right;
 
+  // Motor right is set to the output of the left driver (due to the placement of the driver)
   initMotorPin(&pin_1_motor_right, GPIOB, 9);
  8000776:	f107 039c 	add.w	r3, r7, #156	; 0x9c
  800077a:	2209      	movs	r2, #9
@@ -892,6 +923,7 @@ int main(void)
   MotorPin pin_1_motor_left, pin_2_motor_left;
   Motor motor_left;
 
+  // Motor left is set to the output of the right driver (due to the placement of the driver)
   initMotorPin(&pin_1_motor_left, GPIOB, 8);
  80007a4:	f107 0368 	add.w	r3, r7, #104	; 0x68
  80007a8:	2208      	movs	r2, #8

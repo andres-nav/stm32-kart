@@ -1,0 +1,28 @@
+#ifndef __ROBOT_H
+#define __ROBOT_H
+
+typedef enum { MOTOR_PIN_UP, MOTOR_PIN_DOWN } StatusMotorPin;
+typedef enum { MOTOR_STOPPED, MOTOR_FORWARD, MOTOR_BACKWARD } StatusMotor;
+typedef enum { ROBOT_STOPPED, ROBOT_FORWARD, ROBOT_BACKWARD, ROBOT_RIGHT, ROBOT_LEFT} StatusRobot;
+
+typedef struct {
+  StatusMotorPin status;
+  GPIO_TypeDef* gpio;
+  char pin;
+} MotorPin;
+
+
+typedef struct {
+  StatusMotor status;
+  MotorPin pin_1;
+  MotorPin pin_2;
+} Motor;
+
+
+typedef struct {
+  StatusRobot status;
+  Motor motor_right;
+  Motor motor_left;
+} Robot;
+
+#endif /* __ROBOT_H */

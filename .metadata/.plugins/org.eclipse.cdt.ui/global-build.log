@@ -1,43 +1,1816 @@
-21:42:18 **** Clean-only build of configuration Debug for project discovery-lab1 ****
-make -j8 clean 
-rm -rf ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.su
-rm -rf ./Core/Startup/startup_stm32l152rctx.d ./Core/Startup/startup_stm32l152rctx.o
-rm -rf ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32l1xx_hal_msp.d ./Core/Src/stm32l1xx_hal_msp.o ./Core/Src/stm32l1xx_hal_msp.su ./Core/Src/stm32l1xx_it.d ./Core/Src/stm32l1xx_it.o ./Core/Src/stm32l1xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32l1xx.d ./Core/Src/system_stm32l1xx.o ./Core/Src/system_stm32l1xx.su
-rm -rf default.size.stdout discovery-lab1-v1.elf discovery-lab1-v1.list discovery-lab1-v1.map
- 
-21:42:19 **** Build of configuration Debug for project discovery-lab1 ****
+11:13:20 **** Incremental Build of configuration Debug for project discovery-lab1 ****
 make -j8 all 
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_adc_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.o"
-arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.o"
-arm-none-eabi-gcc -mcpu=cortex-m3 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Startup/startup_stm32l152rctx.d" -MT"Core/Startup/startup_stm32l152rctx.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Startup/startup_stm32l152rctx.o" "../Core/Startup/startup_stm32l152rctx.s"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
-arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
-arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/syscalls.o"
-arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/sysmem.o"
-arm-none-eabi-gcc "../Core/Src/system_stm32l1xx.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xC -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/system_stm32l1xx.d" -MT"Core/Src/system_stm32l1xx.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/system_stm32l1xx.o"
-arm-none-eabi-gcc -o "discovery-lab1.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/discovery-lab1/STM32L152RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="discovery-lab1.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: discovery-lab1.elf
- 
 arm-none-eabi-size   discovery-lab1.elf 
-arm-none-eabi-objdump -h -S  discovery-lab1.elf  > "discovery-lab1.list"
    text	   data	    bss	    dec	    hex	filename
    9088	     20	   1652	  10760	   2a08	discovery-lab1.elf
 Finished building: default.size.stdout
  
-Finished building: discovery-lab1.list
+11:13:30 **** Incremental Build of configuration Debug for project discovery-lab1 ****
+make -j8 all 
+arm-none-eabi-size   discovery-lab1.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9088	     20	   1652	  10760	   2a08	discovery-lab1.elf
+Finished building: default.size.stdout
+ 
+11:18:11 **** Incremental Build of configuration Debug for project discovery-lab1 ****
+make -j8 all 
+arm-none-eabi-size   discovery-lab1.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9088	     20	   1652	  10760	   2a08	discovery-lab1.elf
+Finished building: default.size.stdout
+ 
+13:15:48 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:25:13: warning: passing argument 1 of 'initRobot' from incompatible pointer type [-Wincompatible-pointer-types]
+   25 |   initRobot(&g_robot, &s_motor_right, &s_motor_left);
+      |             ^~~~~~~~
+      |             |
+      |             struct Robot *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:30: note: expected 'struct Motor *' but argument is of type 'struct Robot *'
+   32 | void initRobot(struct Motor *motor_right, struct Motor *motor_left);
+      |                ~~~~~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/robot.c:25:3: error: too many arguments to function 'initRobot'
+   25 |   initRobot(&g_robot, &s_motor_right, &s_motor_left);
+      |   ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:6: note: declared here
+   32 | void initRobot(struct Motor *motor_right, struct Motor *motor_left);
+      |      ^~~~~~~~~
+../Core/Src/robot.c: In function 'initRobot':
+../Core/Src/robot.c:57:10: error: invalid type argument of '->' (have 'struct Robot')
+   57 |   g_robot->motor_right = *motor_right;
+      |          ^~
+../Core/Src/robot.c:58:10: error: invalid type argument of '->' (have 'struct Robot')
+   58 |   g_robot->motor_left = *motor_left;
+      |          ^~
+../Core/Src/robot.c: In function 'updateStatusRobot':
+../Core/Src/robot.c:67:10: error: invalid type argument of '->' (have 'struct Robot')
+   67 |   g_robot->status = status;
+      |          ^~
+../Core/Src/robot.c: In function 'updateRobot':
+../Core/Src/robot.c:78:18: error: invalid type argument of '->' (have 'struct Robot')
+   78 |   switch (g_robot->status) {
+      |                  ^~
+../Core/Src/robot.c:106:30: error: invalid type argument of '->' (have 'struct Robot')
+  106 |   updateStatusMotor(&(g_robot->motor_right), status_motor_right);
+      |                              ^~
+../Core/Src/robot.c:107:30: error: invalid type argument of '->' (have 'struct Robot')
+  107 |   updateStatusMotor(&(g_robot->motor_left), status_motor_left);
+      |                              ^~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+13:16:16 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:25:13: warning: passing argument 1 of 'initRobot' from incompatible pointer type [-Wincompatible-pointer-types]
+   25 |   initRobot(&g_robot, &s_motor_right, &s_motor_left);
+      |             ^~~~~~~~
+      |             |
+      |             struct Robot *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:30: note: expected 'struct Motor *' but argument is of type 'struct Robot *'
+   32 | void initRobot(struct Motor *motor_right, struct Motor *motor_left);
+      |                ~~~~~~~~~~~~~~^~~~~~~~~~~
+../Core/Src/robot.c:25:3: error: too many arguments to function 'initRobot'
+   25 |   initRobot(&g_robot, &s_motor_right, &s_motor_left);
+      |   ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:6: note: declared here
+   32 | void initRobot(struct Motor *motor_right, struct Motor *motor_left);
+      |      ^~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+13:16:41 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: ./Core/Src/robot.o: in function `initRobot':
+/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:61: undefined reference to `g_robot'
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: ./Core/Src/robot.o: in function `updateStatusRobot':
+/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:69: undefined reference to `g_robot'
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: ./Core/Src/robot.o: in function `updateRobot':
+/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:108: undefined reference to `g_robot'
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: /home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:108: undefined reference to `g_robot'
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: /home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:108: undefined reference to `g_robot'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:64: nucleo-lab2.elf] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+13:18:26 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8172	     20	   1804	   9996	   270c	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+13:20:13 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-size   nucleo-lab2.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8172	     20	   1804	   9996	   270c	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+13:20:50 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-size   nucleo-lab2.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8172	     20	   1804	   9996	   270c	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+13:23:56 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8172	     20	   1804	   9996	   270c	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+13:39:01 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8248	     20	   1804	  10072	   2758	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+13:39:59 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8196	     20	   1804	  10020	   2724	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+13:41:39 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-size   nucleo-lab2.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8196	     20	   1804	  10020	   2724	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+20:58:05 **** Clean-only build of configuration Debug for project nucleo-lab2 ****
+make -j8 clean 
+rm -rf ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.su ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.d ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.o ./Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.su
+rm -rf ./Core/Startup/startup_stm32l152retx.d ./Core/Startup/startup_stm32l152retx.o
+rm -rf ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/robot.d ./Core/Src/robot.o ./Core/Src/robot.su ./Core/Src/stm32l1xx_hal_msp.d ./Core/Src/stm32l1xx_hal_msp.o ./Core/Src/stm32l1xx_hal_msp.su ./Core/Src/stm32l1xx_it.d ./Core/Src/stm32l1xx_it.o ./Core/Src/stm32l1xx_it.su ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32l1xx.d ./Core/Src/system_stm32l1xx.o ./Core/Src/system_stm32l1xx.su ./Core/Src/utils.d ./Core/Src/utils.o ./Core/Src/utils.su
+rm -rf default.size.stdout nucleo-lab2.elf nucleo-lab2.list nucleo-lab2.map
+ 
+20:58:05 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_cortex.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_flash_ramfunc.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_gpio.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_pwr_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_rcc_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.o"
+arm-none-eabi-gcc "../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.d" -MT"Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_uart.o"
+arm-none-eabi-gcc -mcpu=cortex-m3 -g3 -DDEBUG -c -x assembler-with-cpp -MMD -MP -MF"Core/Startup/startup_stm32l152retx.d" -MT"Core/Startup/startup_stm32l152retx.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Startup/startup_stm32l152retx.o" "../Core/Startup/startup_stm32l152retx.s"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/main.c:20:
+../Core/Inc/robot.h:13:23: error: field 'status' has incomplete type
+   13 |   enum StatusGPIOrPin status;
+      |                       ^~~~~~
+../Core/Inc/robot.h:20:19: error: field 'pin_1' has incomplete type
+   20 |   struct MotorPin pin_1;
+      |                   ^~~~~
+../Core/Inc/robot.h:21:19: error: field 'pin_2' has incomplete type
+   21 |   struct MotorPin pin_2;
+      |                   ^~~~~
+../Core/Inc/robot.h:42:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   42 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status);
+      |                                                            ^~~~~~~~~~~~~~
+arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/syscalls.o"
+make: *** [Core/Src/subdir.mk:40: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_hal_msp.c:22:
+../Core/Inc/robot.h:13:23: error: field 'status' has incomplete type
+   13 |   enum StatusGPIOrPin status;
+      |                       ^~~~~~
+../Core/Inc/robot.h:20:19: error: field 'pin_1' has incomplete type
+   20 |   struct MotorPin pin_1;
+      |                   ^~~~~
+../Core/Inc/robot.h:21:19: error: field 'pin_2' has incomplete type
+   21 |   struct MotorPin pin_2;
+      |                   ^~~~~
+../Core/Inc/robot.h:42:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   42 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status);
+      |                                                            ^~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/stm32l1xx_hal_msp.o] Error 1
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:13:23: error: field 'status' has incomplete type
+   13 |   enum StatusGPIOrPin status;
+      |                       ^~~~~~
+../Core/Inc/robot.h:20:19: error: field 'pin_1' has incomplete type
+   20 |   struct MotorPin pin_1;
+      |                   ^~~~~
+../Core/Inc/robot.h:21:19: error: field 'pin_2' has incomplete type
+   21 |   struct MotorPin pin_2;
+      |                   ^~~~~
+../Core/Inc/robot.h:42:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   42 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status);
+      |                                                            ^~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'initMotorPin':
+../Core/Src/robot.c:33:12: error: invalid use of undefined type 'struct MotorPin'
+   33 |   motor_pin->gpio = gpio;
+      |            ^~
+../Core/Src/robot.c:34:12: error: invalid use of undefined type 'struct MotorPin'
+   34 |   motor_pin->pin = pin;
+      |            ^~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:49:18: error: invalid use of undefined type 'struct MotorPin'
+   49 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:50:18: error: invalid use of undefined type 'struct MotorPin'
+   50 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:128:23: error: storage size of 'status_motor_pin_1' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: error: storage size of 'status_motor_pin_2' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:148:41: error: type of formal parameter 2 is incomplete
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |                                         ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:149:41: error: type of formal parameter 2 is incomplete
+  149 |   updateStatusMotorPin(&(motor->pin_2), status_motor_pin_2);
+      |                                         ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: warning: unused variable 'status_motor_pin_2' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:23: warning: unused variable 'status_motor_pin_1' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:156:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                            ^~~~~~~~~~~~~~
+../Core/Src/robot.c:156:75: error: parameter 2 ('status') has incomplete type
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                       ~~~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:157:12: error: invalid use of undefined type 'struct MotorPin'
+  157 |   motor_pin->status = status;
+      |            ^~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:167:20: error: invalid use of undefined type 'struct MotorPin'
+  167 |   switch (motor_pin->status) {
+      |                    ^~
+../Core/Src/robot.c:169:16: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                ^~
+../Core/Src/robot.c:169:47: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                                               ^~
+../Core/Src/robot.c:173:16: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                ^~
+../Core/Src/robot.c:173:47: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                                               ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:5:24: error: storage size of 's_pin_1_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                        ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:5:45: error: storage size of 's_pin_2_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                                             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:24: error: storage size of 's_pin_1_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                        ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:44: error: storage size of 's_pin_2_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                                            ^~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_it.c:21:
+../Core/Inc/robot.h:13:23: error: field 'status' has incomplete type
+   13 |   enum StatusGPIOrPin status;
+      |                       ^~~~~~
+../Core/Inc/robot.h:20:19: error: field 'pin_1' has incomplete type
+   20 |   struct MotorPin pin_1;
+      |                   ^~~~~
+../Core/Inc/robot.h:21:19: error: field 'pin_2' has incomplete type
+   21 |   struct MotorPin pin_2;
+      |                   ^~~~~
+../Core/Inc/robot.h:42:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   42 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status);
+      |                                                            ^~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/stm32l1xx_it.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+20:58:39 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/sysmem.o"
+arm-none-eabi-gcc "../Core/Src/system_stm32l1xx.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/system_stm32l1xx.d" -MT"Core/Src/system_stm32l1xx.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/system_stm32l1xx.o"
+arm-none-eabi-gcc "../Core/Src/utils.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/utils.d" -MT"Core/Src/utils.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/utils.o"
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/main.c:20:
+../Core/Inc/robot.h:32:26: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                          ^~~~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_it.c:21:
+../Core/Inc/robot.h:32:26: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                          ^~~~~~~~
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+../Core/Inc/robot.h:43:28: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   43 | void updateMotorPin(struct MotorPin *motor_pin);
+      |                            ^~~~~~~~
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+../Core/Inc/robot.h:43:28: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   43 | void updateMotorPin(struct MotorPin *motor_pin);
+      |                            ^~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:26: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                          ^~~~~~~~
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+../Core/Inc/robot.h:43:28: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   43 | void updateMotorPin(struct MotorPin *motor_pin);
+      |                            ^~~~~~~~
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:16:16: warning: passing argument 1 of 'initMotorPin' from incompatible pointer type [-Wincompatible-pointer-types]
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |                ^~~~~~~~~~~~~~~~~~~~
+      |                |
+      |                struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:36: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                   ~~~~~~~~~~~~~~~~~^~~~~~~~~
+../Core/Src/robot.c:17:16: warning: passing argument 1 of 'initMotorPin' from incompatible pointer type [-Wincompatible-pointer-types]
+   17 |   initMotorPin(&s_pin_2_motor_right, GPIOA, 12);
+      |                ^~~~~~~~~~~~~~~~~~~~
+      |                |
+      |                struct MotorPin *
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_hal_msp.c:22:
+../Core/Inc/robot.h:32:26: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                          ^~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:36: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                   ~~~~~~~~~~~~~~~~~^~~~~~~~~
+../Core/Src/robot.c:18:29: warning: passing argument 2 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   18 |   initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+      |                             ^~~~~~~~~~~~~~~~~~~~
+      |                             |
+      |                             struct MotorPin *
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:54: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                     ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:18:51: warning: passing argument 3 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   18 |   initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+      |                                                   ^~~~~~~~~~~~~~~~~~~~
+      |                                                   |
+      |                                                   struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:78: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                                             ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Inc/robot.h:43:28: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   43 | void updateMotorPin(struct MotorPin *motor_pin);
+      |                            ^~~~~~~~
+../Core/Src/robot.c:21:16: warning: passing argument 1 of 'initMotorPin' from incompatible pointer type [-Wincompatible-pointer-types]
+   21 |   initMotorPin(&s_pin_1_motor_left, GPIOB, 8);
+      |                ^~~~~~~~~~~~~~~~~~~
+      |                |
+      |                struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:36: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                   ~~~~~~~~~~~~~~~~~^~~~~~~~~
+../Core/Src/robot.c:22:16: warning: passing argument 1 of 'initMotorPin' from incompatible pointer type [-Wincompatible-pointer-types]
+   22 |   initMotorPin(&s_pin_2_motor_left, GPIOA, 11);
+      |                ^~~~~~~~~~~~~~~~~~~
+      |                |
+      |                struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:36: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |                   ~~~~~~~~~~~~~~~~~^~~~~~~~~
+../Core/Src/robot.c:23:28: warning: passing argument 2 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |   initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+      |                            ^~~~~~~~~~~~~~~~~~~
+      |                            |
+      |                            struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:54: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                     ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:23:49: warning: passing argument 3 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |   initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+      |                                                 ^~~~~~~~~~~~~~~~~~~
+      |                                                 |
+      |                                                 struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:78: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                                             ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:32:6: error: conflicting types for 'initMotorPin'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
+      |      ^~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:32:6: note: previous declaration of 'initMotorPin' was here
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin);
+      |      ^~~~~~~~~~~~
+../Core/Src/robot.c: In function 'initMotorPin':
+../Core/Src/robot.c:33:12: error: invalid use of undefined type 'struct MotorPin'
+   33 |   motor_pin->gpio = gpio;
+      |            ^~
+../Core/Src/robot.c:34:12: error: invalid use of undefined type 'struct MotorPin'
+   34 |   motor_pin->pin = pin;
+      |            ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:48:6: error: conflicting types for 'initMotor'
+   48 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:6: note: previous declaration of 'initMotor' was here
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |      ^~~~~~~~~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:49:18: error: invalid use of undefined type 'struct MotorPin'
+   49 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:50:18: error: invalid use of undefined type 'struct MotorPin'
+   50 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:128:23: error: storage size of 'status_motor_pin_1' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: error: storage size of 'status_motor_pin_2' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: warning: unused variable 'status_motor_pin_2' [-Wunused-variable]
+../Core/Src/robot.c:128:23: warning: unused variable 'status_motor_pin_1' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:156:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                            ^~~~~~~~~~~~~~
+../Core/Src/robot.c:156:75: error: parameter 2 ('status') has incomplete type
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                       ~~~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:157:12: error: invalid use of undefined type 'struct MotorPin'
+  157 |   motor_pin->status = status;
+      |            ^~
+../Core/Src/robot.c:158:18: warning: passing argument 1 of 'updateMotorPin' from incompatible pointer type [-Wincompatible-pointer-types]
+  158 |   updateMotorPin(motor_pin);
+      |                  ^~~~~~~~~
+      |                  |
+      |                  struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:43:38: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   43 | void updateMotorPin(struct MotorPin *motor_pin);
+      |                     ~~~~~~~~~~~~~~~~~^~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:166:6: error: conflicting types for 'updateMotorPin'
+  166 | void updateMotorPin(struct MotorPin *motor_pin) {
+      |      ^~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:43:6: note: previous declaration of 'updateMotorPin' was here
+   43 | void updateMotorPin(struct MotorPin *motor_pin);
+      |      ^~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:167:20: error: invalid use of undefined type 'struct MotorPin'
+  167 |   switch (motor_pin->status) {
+      |                    ^~
+../Core/Src/robot.c:169:16: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                ^~
+../Core/Src/robot.c:169:47: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                                               ^~
+../Core/Src/robot.c:173:16: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                ^~
+../Core/Src/robot.c:173:47: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                                               ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:5:24: error: storage size of 's_pin_1_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                        ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:5:45: error: storage size of 's_pin_2_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                                             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:24: error: storage size of 's_pin_1_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                        ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:44: error: storage size of 's_pin_2_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                                            ^~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+20:59:22 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/main.c:20:
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_hal_msp.c:22:
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:16:3: warning: implicit declaration of function 'initMotorPin'; did you mean 'initMotor'? [-Wimplicit-function-declaration]
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |   ^~~~~~~~~~~~
+      |   initMotor
+../Core/Src/robot.c:18:29: warning: passing argument 2 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   18 |   initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+      |                             ^~~~~~~~~~~~~~~~~~~~
+      |                             |
+      |                             struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:54: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                     ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:18:51: warning: passing argument 3 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   18 |   initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+      |                                                   ^~~~~~~~~~~~~~~~~~~~
+      |                                                   |
+      |                                                   struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:78: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                                             ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:23:28: warning: passing argument 2 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |   initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+      |                            ^~~~~~~~~~~~~~~~~~~
+      |                            |
+      |                            struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:54: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                     ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:23:49: warning: passing argument 3 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |   initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+      |                                                 ^~~~~~~~~~~~~~~~~~~
+      |                                                 |
+      |                                                 struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:78: note: expected 'struct MotorPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                                             ~~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:32:6: warning: conflicting types for 'initMotorPin'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
+      |      ^~~~~~~~~~~~
+../Core/Src/robot.c:16:3: note: previous implicit declaration of 'initMotorPin' was here
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |   ^~~~~~~~~~~~
+../Core/Src/robot.c: In function 'initMotorPin':
+../Core/Src/robot.c:33:12: error: invalid use of undefined type 'struct MotorPin'
+   33 |   motor_pin->gpio = gpio;
+      |            ^~
+../Core/Src/robot.c:34:12: error: invalid use of undefined type 'struct MotorPin'
+   34 |   motor_pin->pin = pin;
+      |            ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:48:6: error: conflicting types for 'initMotor'
+   48 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:6: note: previous declaration of 'initMotor' was here
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |      ^~~~~~~~~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:49:18: error: invalid use of undefined type 'struct MotorPin'
+   49 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:50:18: error: invalid use of undefined type 'struct MotorPin'
+   50 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:128:23: error: storage size of 'status_motor_pin_1' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: error: storage size of 'status_motor_pin_2' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_it.c:21:
+../Core/Inc/robot.h:33:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   33 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2);
+      |                                            ^~~~~~~~
+../Core/Src/robot.c:148:3: warning: implicit declaration of function 'updateStatusMotorPin'; did you mean 'updateStatusMotor'? [-Wimplicit-function-declaration]
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+      |   updateStatusMotor
+../Core/Src/robot.c:128:43: warning: unused variable 'status_motor_pin_2' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:23: warning: unused variable 'status_motor_pin_1' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:156:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                            ^~~~~~~~~~~~~~
+../Core/Src/robot.c:156:75: error: parameter 2 ('status') has incomplete type
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                       ~~~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/robot.c:156:6: warning: conflicting types for 'updateStatusMotorPin'
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:148:3: note: previous implicit declaration of 'updateStatusMotorPin' was here
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:157:12: error: invalid use of undefined type 'struct MotorPin'
+  157 |   motor_pin->status = status;
+      |            ^~
+../Core/Src/robot.c:158:3: warning: implicit declaration of function 'updateMotorPin'; did you mean 'updateMotor'? [-Wimplicit-function-declaration]
+  158 |   updateMotorPin(motor_pin);
+      |   ^~~~~~~~~~~~~~
+      |   updateMotor
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:166:6: warning: conflicting types for 'updateMotorPin'
+  166 | void updateMotorPin(struct MotorPin *motor_pin) {
+      |      ^~~~~~~~~~~~~~
+../Core/Src/robot.c:158:3: note: previous implicit declaration of 'updateMotorPin' was here
+  158 |   updateMotorPin(motor_pin);
+      |   ^~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:167:20: error: invalid use of undefined type 'struct MotorPin'
+  167 |   switch (motor_pin->status) {
+      |                    ^~
+../Core/Src/robot.c:169:16: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                ^~
+../Core/Src/robot.c:169:47: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                                               ^~
+../Core/Src/robot.c:173:16: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                ^~
+../Core/Src/robot.c:173:47: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                                               ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:5:24: error: storage size of 's_pin_1_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                        ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:5:45: error: storage size of 's_pin_2_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                                             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:24: error: storage size of 's_pin_1_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                        ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:44: error: storage size of 's_pin_2_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                                            ^~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+20:59:35 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:16:3: warning: implicit declaration of function 'initMotorPin'; did you mean 'initMotor'? [-Wimplicit-function-declaration]
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |   ^~~~~~~~~~~~
+      |   initMotor
+../Core/Src/robot.c:18:29: warning: passing argument 2 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   18 |   initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+      |                             ^~~~~~~~~~~~~~~~~~~~
+      |                             |
+      |                             struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:53: note: expected 'struct GPIOPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |                                     ~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:18:51: warning: passing argument 3 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   18 |   initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+      |                                                   ^~~~~~~~~~~~~~~~~~~~
+      |                                                   |
+      |                                                   struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:76: note: expected 'struct GPIOPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |                                                            ~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:23:28: warning: passing argument 2 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |   initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+      |                            ^~~~~~~~~~~~~~~~~~~
+      |                            |
+      |                            struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:53: note: expected 'struct GPIOPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |                                     ~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c:23:49: warning: passing argument 3 of 'initMotor' from incompatible pointer type [-Wincompatible-pointer-types]
+   23 |   initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+      |                                                 ^~~~~~~~~~~~~~~~~~~
+      |                                                 |
+      |                                                 struct MotorPin *
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:76: note: expected 'struct GPIOPin *' but argument is of type 'struct MotorPin *'
+   33 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |                                                            ~~~~~~~~~~~~~~~~^~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:32:6: warning: conflicting types for 'initMotorPin'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
+      |      ^~~~~~~~~~~~
+../Core/Src/robot.c:16:3: note: previous implicit declaration of 'initMotorPin' was here
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |   ^~~~~~~~~~~~
+../Core/Src/robot.c: In function 'initMotorPin':
+../Core/Src/robot.c:33:12: error: invalid use of undefined type 'struct MotorPin'
+   33 |   motor_pin->gpio = gpio;
+      |            ^~
+../Core/Src/robot.c:34:12: error: invalid use of undefined type 'struct MotorPin'
+   34 |   motor_pin->pin = pin;
+      |            ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:48:6: error: conflicting types for 'initMotor'
+   48 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:6: note: previous declaration of 'initMotor' was here
+   33 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |      ^~~~~~~~~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:49:18: error: invalid use of undefined type 'struct MotorPin'
+   49 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:50:18: error: invalid use of undefined type 'struct MotorPin'
+   50 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:128:23: error: storage size of 'status_motor_pin_1' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: error: storage size of 'status_motor_pin_2' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:148:3: warning: implicit declaration of function 'updateStatusMotorPin'; did you mean 'updateStatusMotor'? [-Wimplicit-function-declaration]
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+      |   updateStatusMotor
+../Core/Src/robot.c:128:43: warning: unused variable 'status_motor_pin_2' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:23: warning: unused variable 'status_motor_pin_1' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:156:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                            ^~~~~~~~~~~~~~
+../Core/Src/robot.c:156:75: error: parameter 2 ('status') has incomplete type
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                       ~~~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/robot.c:156:6: warning: conflicting types for 'updateStatusMotorPin'
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:148:3: note: previous implicit declaration of 'updateStatusMotorPin' was here
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:157:12: error: invalid use of undefined type 'struct MotorPin'
+  157 |   motor_pin->status = status;
+      |            ^~
+../Core/Src/robot.c:158:3: warning: implicit declaration of function 'updateMotorPin'; did you mean 'updateMotor'? [-Wimplicit-function-declaration]
+  158 |   updateMotorPin(motor_pin);
+      |   ^~~~~~~~~~~~~~
+      |   updateMotor
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:166:6: warning: conflicting types for 'updateMotorPin'
+  166 | void updateMotorPin(struct MotorPin *motor_pin) {
+      |      ^~~~~~~~~~~~~~
+../Core/Src/robot.c:158:3: note: previous implicit declaration of 'updateMotorPin' was here
+  158 |   updateMotorPin(motor_pin);
+      |   ^~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:167:20: error: invalid use of undefined type 'struct MotorPin'
+  167 |   switch (motor_pin->status) {
+      |                    ^~
+../Core/Src/robot.c:169:16: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                ^~
+../Core/Src/robot.c:169:47: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                                               ^~
+../Core/Src/robot.c:173:16: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                ^~
+../Core/Src/robot.c:173:47: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                                               ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:5:24: error: storage size of 's_pin_1_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                        ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:5:45: error: storage size of 's_pin_2_motor_right' isn't known
+    5 | static struct MotorPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                                             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:24: error: storage size of 's_pin_1_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                        ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:44: error: storage size of 's_pin_2_motor_left' isn't known
+    8 | static struct MotorPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                                            ^~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+20:59:55 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:16:3: warning: implicit declaration of function 'initMotorPin'; did you mean 'initMotor'? [-Wimplicit-function-declaration]
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |   ^~~~~~~~~~~~
+      |   initMotor
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:32:26: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
+      |                          ^~~~~~~~
+../Core/Src/robot.c:32:6: warning: conflicting types for 'initMotorPin'
+   32 | void initMotorPin(struct MotorPin *motor_pin, GPIO_TypeDef *gpio, char pin) {
+      |      ^~~~~~~~~~~~
+../Core/Src/robot.c:16:3: note: previous implicit declaration of 'initMotorPin' was here
+   16 |   initMotorPin(&s_pin_1_motor_right, GPIOB, 9);
+      |   ^~~~~~~~~~~~
+../Core/Src/robot.c: In function 'initMotorPin':
+../Core/Src/robot.c:33:12: error: invalid use of undefined type 'struct MotorPin'
+   33 |   motor_pin->gpio = gpio;
+      |            ^~
+../Core/Src/robot.c:34:12: error: invalid use of undefined type 'struct MotorPin'
+   34 |   motor_pin->pin = pin;
+      |            ^~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:48:44: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+   48 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2) {
+      |                                            ^~~~~~~~
+../Core/Src/robot.c:48:6: error: conflicting types for 'initMotor'
+   48 | void initMotor(struct Motor *motor, struct MotorPin *pin_1, struct MotorPin *pin_2) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:33:6: note: previous declaration of 'initMotor' was here
+   33 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |      ^~~~~~~~~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:49:18: error: invalid use of undefined type 'struct MotorPin'
+   49 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:50:18: error: invalid use of undefined type 'struct MotorPin'
+   50 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:128:23: error: storage size of 'status_motor_pin_1' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: error: storage size of 'status_motor_pin_2' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:148:3: warning: implicit declaration of function 'updateStatusMotorPin'; did you mean 'updateStatusMotor'? [-Wimplicit-function-declaration]
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+      |   updateStatusMotor
+../Core/Src/robot.c:128:43: warning: unused variable 'status_motor_pin_2' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:23: warning: unused variable 'status_motor_pin_1' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:156:60: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                            ^~~~~~~~~~~~~~
+../Core/Src/robot.c:156:34: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                  ^~~~~~~~
+../Core/Src/robot.c:156:75: error: parameter 2 ('status') has incomplete type
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |                                                       ~~~~~~~~~~~~~~~~~~~~^~~~~~
+../Core/Src/robot.c:156:6: warning: conflicting types for 'updateStatusMotorPin'
+  156 | void updateStatusMotorPin(struct MotorPin *motor_pin, enum StatusMotorPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:148:3: note: previous implicit declaration of 'updateStatusMotorPin' was here
+  148 |   updateStatusMotorPin(&(motor->pin_1), status_motor_pin_1);
+      |   ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:157:12: error: invalid use of undefined type 'struct MotorPin'
+  157 |   motor_pin->status = status;
+      |            ^~
+../Core/Src/robot.c:158:3: warning: implicit declaration of function 'updateMotorPin'; did you mean 'updateMotor'? [-Wimplicit-function-declaration]
+  158 |   updateMotorPin(motor_pin);
+      |   ^~~~~~~~~~~~~~
+      |   updateMotor
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:166:28: warning: 'struct MotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  166 | void updateMotorPin(struct MotorPin *motor_pin) {
+      |                            ^~~~~~~~
+../Core/Src/robot.c:166:6: warning: conflicting types for 'updateMotorPin'
+  166 | void updateMotorPin(struct MotorPin *motor_pin) {
+      |      ^~~~~~~~~~~~~~
+../Core/Src/robot.c:158:3: note: previous implicit declaration of 'updateMotorPin' was here
+  158 |   updateMotorPin(motor_pin);
+      |   ^~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:167:20: error: invalid use of undefined type 'struct MotorPin'
+  167 |   switch (motor_pin->status) {
+      |                    ^~
+../Core/Src/robot.c:169:16: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                ^~
+../Core/Src/robot.c:169:47: error: invalid use of undefined type 'struct MotorPin'
+  169 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                                               ^~
+../Core/Src/robot.c:173:16: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                ^~
+../Core/Src/robot.c:173:47: error: invalid use of undefined type 'struct MotorPin'
+  173 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin) << 16;
+      |                                               ^~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+21:02:48 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:128:23: error: storage size of 'status_motor_pin_1' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: error: storage size of 'status_motor_pin_2' isn't known
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:128:43: warning: unused variable 'status_motor_pin_2' [-Wunused-variable]
+../Core/Src/robot.c:128:23: warning: unused variable 'status_motor_pin_1' [-Wunused-variable]
+  128 |   enum StatusMotorPin status_motor_pin_1, status_motor_pin_2;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:156:59: warning: 'enum StatusMotorPin' declared inside parameter list will not be visible outside of this definition or declaration
+  156 | void updateStatusMotorPin(struct GPIOPin *motor_pin, enum StatusMotorPin status) {
+      |                                                           ^~~~~~~~~~~~~~
+../Core/Src/robot.c:156:74: error: parameter 2 ('status') has incomplete type
+  156 | void updateStatusMotorPin(struct GPIOPin *motor_pin, enum StatusMotorPin status) {
+      |                                                      ~~~~~~~~~~~~~~~~~~~~^~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+21:03:19 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8196	     20	   1804	  10020	   2724	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+21:09:57 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'initMotorPin':
+../Core/Src/robot.c:59:6: error: static declaration of 'initMotor' follows non-static declaration
+   59 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:36:6: note: previous declaration of 'initMotor' was here
+   36 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2);
+      |      ^~~~~~~~~
+../Core/Src/main.c: In function 'initMotorPin':
+../Core/Src/robot.c:67:6: error: static declaration of 'initRobot' follows non-static declaration
+   67 | void initRobot(struct Motor *motor_right, struct Motor *motor_left) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:38:6: note: previous declaration of 'initRobot' was here
+   38 | void initRobot(struct Motor *motor_right, struct Motor *motor_left);
+      |      ^~~~~~~~~
+../Core/Src/main.c:50:13: error: invalid storage class for function 'MX_GPIO_Init'
+   50 | static void MX_GPIO_Init(void);
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:51:13: error: invalid storage class for function 'MX_USART2_UART_Init'
+   51 | static void MX_USART2_UART_Init(void);
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:65:5: warning: 'main' is normally a non-static function [-Wmain]
+   65 | int main(void)
+      |     ^~~~
+../Core/Src/robot.c:77:6: error: static declaration of 'updateStatusRobot' follows non-static declaration
+   77 | void updateStatusRobot(enum StatusRobot status) {
+      |      ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:40:6: note: previous declaration of 'updateStatusRobot' was here
+   40 | void updateStatusRobot(enum StatusRobot status);
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:86:6: error: static declaration of 'updateRobot' follows non-static declaration
+   86 | void updateRobot() {
+      |      ^~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:41:6: note: previous declaration of 'updateRobot' was here
+   41 | void updateRobot();
+      |      ^~~~~~~~~~~
+../Core/Src/robot.c:124:6: error: static declaration of 'updateStatusMotor' follows non-static declaration
+  124 | void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
+      |      ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:43:6: note: previous declaration of 'updateStatusMotor' was here
+   43 | void updateStatusMotor(struct Motor *motor, enum StatusMotor status);
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:138:6: error: static declaration of 'updateMotor' follows non-static declaration
+  138 | void updateMotor(struct Motor *motor) {
+      |      ^~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:44:6: note: previous declaration of 'updateMotor' was here
+   44 | void updateMotor(struct Motor *motor);
+      |      ^~~~~~~~~~~
+../Core/Src/robot.c:167:6: error: static declaration of 'updateStatusMotorPin' follows non-static declaration
+  167 | void updateStatusMotorPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:46:6: note: previous declaration of 'updateStatusMotorPin' was here
+   46 | void updateStatusMotorPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status);
+      |      ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:177:6: error: static declaration of 'updateMotorPin' follows non-static declaration
+  177 | void updateMotorPin(struct GPIOPin *motor_pin) {
+      |      ^~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:47:6: note: previous declaration of 'updateMotorPin' was here
+   47 | void updateMotorPin(struct GPIOPin *gpio_pin);
+      |      ^~~~~~~~~~~~~~
+../Core/Src/robot.c:188:1: error: expected declaration or statement at end of input
+  188 | }
+      | ^
+At top level:
+../Core/Src/robot.c:177:6: warning: 'updateMotorPin' defined but not used [-Wunused-function]
+  177 | void updateMotorPin(struct GPIOPin *motor_pin) {
+      |      ^~~~~~~~~~~~~~
+../Core/Src/robot.c:167:6: warning: 'updateStatusMotorPin' defined but not used [-Wunused-function]
+  167 | void updateStatusMotorPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:138:6: warning: 'updateMotor' defined but not used [-Wunused-function]
+  138 | void updateMotor(struct Motor *motor) {
+      |      ^~~~~~~~~~~
+../Core/Src/robot.c:124:6: warning: 'updateStatusMotor' defined but not used [-Wunused-function]
+  124 | void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:86:6: warning: 'updateRobot' defined but not used [-Wunused-function]
+   86 | void updateRobot() {
+      |      ^~~~~~~~~~~
+../Core/Src/robot.c:77:6: warning: 'updateStatusRobot' defined but not used [-Wunused-function]
+   77 | void updateStatusRobot(enum StatusRobot status) {
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:67:6: warning: 'initRobot' defined but not used [-Wunused-function]
+   67 | void initRobot(struct Motor *motor_right, struct Motor *motor_left) {
+      |      ^~~~~~~~~
+../Core/Src/robot.c:59:6: warning: 'initMotor' defined but not used [-Wunused-function]
+   59 | void initMotor(struct Motor *motor, struct GPIOPin *pin_1, struct GPIOPin *pin_2) {
+      |      ^~~~~~~~~
+../Core/Src/robot.c:44:6: warning: 'initMotorPin' defined but not used [-Wunused-function]
+   44 | void initMotorPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin) {
+      |      ^~~~~~~~~~~~
+../Core/Src/robot.c:16:6: warning: 'createRobot' defined but not used [-Wunused-function]
+   16 | void createRobot() {
+      |      ^~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:88:3: warning: implicit declaration of function 'MX_GPIO_Init'; did you mean 'HAL_GPIO_Init'? [-Wimplicit-function-declaration]
+   88 |   MX_GPIO_Init();
+      |   ^~~~~~~~~~~~
+      |   HAL_GPIO_Init
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+../Core/Src/main.c:89:3: warning: implicit declaration of function 'MX_USART2_UART_Init' [-Wimplicit-function-declaration]
+   89 |   MX_USART2_UART_Init();
+      |   ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'initMotorPin':
+../Core/Src/main.c:117:6: error: static declaration of 'SystemClock_Config' follows non-static declaration
+  117 | void SystemClock_Config(void)
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:49:6: note: previous declaration of 'SystemClock_Config' was here
+   49 | void SystemClock_Config(void);
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:161:13: error: invalid storage class for function 'MX_USART2_UART_Init'
+  161 | static void MX_USART2_UART_Init(void)
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:194:13: error: invalid storage class for function 'MX_GPIO_Init'
+  194 | static void MX_GPIO_Init(void)
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:230:6: error: static declaration of 'Error_Handler' follows non-static declaration
+  230 | void Error_Handler(void)
+      |      ^~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:55:6: note: previous declaration of 'Error_Handler' was here
+   55 | void Error_Handler(void);
+      |      ^~~~~~~~~~~~~
+../Core/Src/main.c:239:1: error: expected declaration or statement at end of input
+  239 | }
+      | ^
+At top level:
+../Core/Src/main.c:230:6: warning: 'Error_Handler' defined but not used [-Wunused-function]
+  230 | void Error_Handler(void)
+      |      ^~~~~~~~~~~~~
+../Core/Src/main.c:194:13: warning: 'MX_GPIO_Init' defined but not used [-Wunused-function]
+  194 | static void MX_GPIO_Init(void)
+      |             ^~~~~~~~~~~~
+../Core/Src/main.c:161:13: warning: 'MX_USART2_UART_Init' defined but not used [-Wunused-function]
+  161 | static void MX_USART2_UART_Init(void)
+      |             ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:117:6: warning: 'SystemClock_Config' defined but not used [-Wunused-function]
+  117 | void SystemClock_Config(void)
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:65:5: warning: 'main' defined but not used [-Wunused-function]
+   65 | int main(void)
+      |     ^~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/main.o] Error 1
+../Core/Src/stm32l1xx_it.c: In function 'initMotorPin':
+../Core/Src/stm32l1xx_it.c:69:6: error: static declaration of 'NMI_Handler' follows non-static declaration
+   69 | void NMI_Handler(void)
+      |      ^~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:49:6: note: previous declaration of 'NMI_Handler' was here
+   49 | void NMI_Handler(void);
+      |      ^~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:84:6: error: static declaration of 'HardFault_Handler' follows non-static declaration
+   84 | void HardFault_Handler(void)
+      |      ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:50:6: note: previous declaration of 'HardFault_Handler' was here
+   50 | void HardFault_Handler(void);
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:99:6: error: static declaration of 'MemManage_Handler' follows non-static declaration
+   99 | void MemManage_Handler(void)
+      |      ^~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:51:6: note: previous declaration of 'MemManage_Handler' was here
+   51 | void MemManage_Handler(void);
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:114:6: error: static declaration of 'BusFault_Handler' follows non-static declaration
+  114 | void BusFault_Handler(void)
+      |      ^~~~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:52:6: note: previous declaration of 'BusFault_Handler' was here
+   52 | void BusFault_Handler(void);
+      |      ^~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:129:6: error: static declaration of 'UsageFault_Handler' follows non-static declaration
+  129 | void UsageFault_Handler(void)
+      |      ^~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:53:6: note: previous declaration of 'UsageFault_Handler' was here
+   53 | void UsageFault_Handler(void);
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:144:6: error: static declaration of 'SVC_Handler' follows non-static declaration
+  144 | void SVC_Handler(void)
+      |      ^~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:54:6: note: previous declaration of 'SVC_Handler' was here
+   54 | void SVC_Handler(void);
+      |      ^~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:157:6: error: static declaration of 'DebugMon_Handler' follows non-static declaration
+  157 | void DebugMon_Handler(void)
+      |      ^~~~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:55:6: note: previous declaration of 'DebugMon_Handler' was here
+   55 | void DebugMon_Handler(void);
+      |      ^~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:170:6: error: static declaration of 'PendSV_Handler' follows non-static declaration
+  170 | void PendSV_Handler(void)
+      |      ^~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:56:6: note: previous declaration of 'PendSV_Handler' was here
+   56 | void PendSV_Handler(void);
+      |      ^~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:183:6: error: static declaration of 'SysTick_Handler' follows non-static declaration
+  183 | void SysTick_Handler(void)
+      |      ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/stm32l1xx_it.c:22:
+../Core/Inc/stm32l1xx_it.h:57:6: note: previous declaration of 'SysTick_Handler' was here
+   57 | void SysTick_Handler(void);
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:192:1: error: expected declaration or statement at end of input
+  192 | }
+      | ^
+../Core/Src/stm32l1xx_hal_msp.c: In function 'initMotorPin':
+../Core/Src/stm32l1xx_hal_msp.c:145:1: error: expected declaration or statement at end of input
+  145 | }
+      | ^
+At top level:
+../Core/Src/stm32l1xx_it.c:183:6: warning: 'SysTick_Handler' defined but not used [-Wunused-function]
+  183 | void SysTick_Handler(void)
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:170:6: warning: 'PendSV_Handler' defined but not used [-Wunused-function]
+  170 | void PendSV_Handler(void)
+      |      ^~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:157:6: warning: 'DebugMon_Handler' defined but not used [-Wunused-function]
+  157 | void DebugMon_Handler(void)
+      |      ^~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:144:6: warning: 'SVC_Handler' defined but not used [-Wunused-function]
+  144 | void SVC_Handler(void)
+      |      ^~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:129:6: warning: 'UsageFault_Handler' defined but not used [-Wunused-function]
+  129 | void UsageFault_Handler(void)
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:114:6: warning: 'BusFault_Handler' defined but not used [-Wunused-function]
+  114 | void BusFault_Handler(void)
+      |      ^~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:99:6: warning: 'MemManage_Handler' defined but not used [-Wunused-function]
+   99 | void MemManage_Handler(void)
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:84:6: warning: 'HardFault_Handler' defined but not used [-Wunused-function]
+   84 | void HardFault_Handler(void)
+      |      ^~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_it.c:69:6: warning: 'NMI_Handler' defined but not used [-Wunused-function]
+   69 | void NMI_Handler(void)
+      |      ^~~~~~~~~~~
+At top level:
+../Core/Src/stm32l1xx_hal_msp.c:124:6: warning: 'HAL_UART_MspDeInit' defined but not used [-Wunused-function]
+  124 | void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_hal_msp.c:88:6: warning: 'HAL_UART_MspInit' defined but not used [-Wunused-function]
+   88 | void HAL_UART_MspInit(UART_HandleTypeDef* huart)
+      |      ^~~~~~~~~~~~~~~~
+../Core/Src/stm32l1xx_hal_msp.c:63:6: warning: 'HAL_MspInit' defined but not used [-Wunused-function]
+   63 | void HAL_MspInit(void)
+      |      ^~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/stm32l1xx_it.o] Error 1
+make: *** [Core/Src/subdir.mk:40: Core/Src/stm32l1xx_hal_msp.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+21:10:25 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8104	     20	   1828	   9952	   26e0	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+21:14:48 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/main.c:20:
+../Core/Inc/robot.h:40:76: warning: 'struct Buzzer' declared inside parameter list will not be visible outside of this definition or declaration
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct Buzzer *buzzer);
+      |                                                                            ^~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_hal_msp.c:22:
+../Core/Inc/robot.h:40:76: warning: 'struct Buzzer' declared inside parameter list will not be visible outside of this definition or declaration
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct Buzzer *buzzer);
+      |                                                                            ^~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:40:76: warning: 'struct Buzzer' declared inside parameter list will not be visible outside of this definition or declaration
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct Buzzer *buzzer);
+      |                                                                            ^~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_it.c:21:
+../Core/Inc/robot.h:40:76: warning: 'struct Buzzer' declared inside parameter list will not be visible outside of this definition or declaration
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct Buzzer *buzzer);
+      |                                                                            ^~~~~~
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:29:3: error: too few arguments to function 'initRobot'
+   29 |   initRobot(&s_motor_right, &s_motor_left);
+      |   ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:40:6: note: declared here
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct Buzzer *buzzer);
+      |      ^~~~~~~~~
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:79:6: error: conflicting types for 'initRobot'
+   79 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct GPIOPin *buzzer) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:40:6: note: previous declaration of 'initRobot' was here
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct Buzzer *buzzer);
+      |      ^~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+21:15:05 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:29:3: error: too few arguments to function 'initRobot'
+   29 |   initRobot(&s_motor_right, &s_motor_left);
+      |   ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:40:6: note: declared here
+   40 | void initRobot(struct Motor *motor_right, struct Motor *motor_left, struct GPIOPin *buzzer);
+      |      ^~~~~~~~~
+make: *** [Core/Src/subdir.mk:40: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+21:18:23 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8328	     20	   1828	  10176	   27c0	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+16:45:13 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/handler.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/handler.d" -MT"Core/Src/handler.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/handler.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+arm-none-eabi-gcc "../Core/Src/syscalls.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/syscalls.d" -MT"Core/Src/syscalls.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/syscalls.o"
+arm-none-eabi-gcc "../Core/Src/sysmem.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/sysmem.d" -MT"Core/Src/sysmem.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/sysmem.o"
+arm-none-eabi-gcc "../Core/Src/system_stm32l1xx.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/system_stm32l1xx.d" -MT"Core/Src/system_stm32l1xx.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/system_stm32l1xx.o"
+arm-none-eabi-gcc "../Core/Src/utils.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/utils.d" -MT"Core/Src/utils.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/utils.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8356	     20	   1828	  10204	   27dc	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+17:11:14 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/handler.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/handler.d" -MT"Core/Src/handler.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/handler.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:28:3: warning: implicit declaration of function 'initMotorPin'; did you mean 'initMotor'? [-Wimplicit-function-declaration]
+   28 |   initMotorPin(&s_pin_1_motor_left, GPIOB, 8);
+      |   ^~~~~~~~~~~~
+      |   initMotor
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:60:6: error: conflicting types for 'initTimer'
+   60 | void initTimer(struct Timer *timer, TIM_TypeDef *tim, char pin) {
+      |      ^~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:47:6: note: previous declaration of 'initTimer' was here
+   47 | void initTimer(struct Timer *timer, volatile uint32_t cr1, volatile uint32_t psc,
+      |      ^~~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:12:46 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:28:3: warning: implicit declaration of function 'initMotorPin'; did you mean 'initMotor'? [-Wimplicit-function-declaration]
+   28 |   initMotorPin(&s_pin_1_motor_left, GPIOB, 8);
+      |   ^~~~~~~~~~~~
+      |   initMotor
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: ./Core/Src/robot.o: in function `createRobot':
+/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:28: undefined reference to `initMotorPin'
+/opt/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.linux64_1.0.100.202210260954/tools/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/bin/ld: /home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/Debug/../Core/Src/robot.c:29: undefined reference to `initMotorPin'
+collect2: error: ld returned 1 exit status
+make: *** [makefile:64: nucleo-lab2.elf] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:13:09 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8224	     20	   1844	  10088	   2768	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
+ 
+17:13:34 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:172:11: error: 'struct GPIOPin' has no member named 'status'
+  172 |   gpio_pin->status = status;
+      |           ^~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:182:20: error: 'struct GPIOPin' has no member named 'status'
+  182 |   switch (motor_pin->status) {
+      |                    ^~
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:14:04 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'updateStatusMotor':
+../Core/Src/robot.c:130:8: error: 'struct Motor' has no member named 'status'
+  130 |   motor->status = status;
+      |        ^~
+../Core/Src/robot.c: In function 'updateMotor':
+../Core/Src/robot.c:146:16: error: 'struct Motor' has no member named 'status'
+  146 |   switch (motor->status) {
+      |                ^~
+../Core/Src/robot.c: In function 'updateStatusMotorPin':
+../Core/Src/robot.c:172:11: error: 'struct GPIOPin' has no member named 'status'
+  172 |   gpio_pin->status = status;
+      |           ^~
+../Core/Src/robot.c: In function 'updateMotorPin':
+../Core/Src/robot.c:182:20: error: 'struct GPIOPin' has no member named 'status'
+  182 |   switch (motor_pin->status) {
+      |                    ^~
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:20:23 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:34:20: error: 's_buzzer' has an incomplete type 'struct GPIOPin'
+   34 |   g_robot.buzzer = s_buzzer;
+      |                    ^~~~~~~~
+../Core/Src/robot.c: In function 'initGPIOPin':
+../Core/Src/robot.c:45:11: error: invalid use of undefined type 'struct GPIOPin'
+   45 |   gpio_pin->gpio = gpio;
+      |           ^~
+../Core/Src/robot.c:46:11: error: invalid use of undefined type 'struct GPIOPin'
+   46 |   gpio_pin->pin = pin;
+      |           ^~
+../Core/Src/robot.c: In function 'initTimer':
+../Core/Src/robot.c:62:8: error: invalid use of undefined type 'struct Timer'
+   62 |   timer->tim = tim;
+      |        ^~
+../Core/Src/robot.c:63:8: error: invalid use of undefined type 'struct Timer'
+   63 |   timer->pin = pin;
+      |        ^~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:71:18: error: invalid use of undefined type 'struct GPIOPin'
+   71 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:72:18: error: invalid use of undefined type 'struct GPIOPin'
+   72 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:165:6: error: conflicting types for 'updateStatusGPIOPin'
+  165 | void updateStatusGPIOPin(struct Pin *gpio_pin, enum StatusGPIOPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:52:6: note: previous declaration of 'updateStatusGPIOPin' was here
+   52 | void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status);
+      |      ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c: In function 'updateStatusGPIOPin':
+../Core/Src/robot.c:168:7: error: 'motor_pin' undeclared (first use in this function)
+  168 |       motor_pin->gpio->BSRR |= (1 << motor_pin->number);
+      |       ^~~~~~~~~
+../Core/Src/robot.c:168:7: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:5:23: error: storage size of 's_pin_1_motor_right' isn't known
+    5 | static struct GPIOPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                       ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:5:44: error: storage size of 's_pin_2_motor_right' isn't known
+    5 | static struct GPIOPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                                            ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:23: error: storage size of 's_pin_1_motor_left' isn't known
+    8 | static struct GPIOPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:43: error: storage size of 's_pin_2_motor_left' isn't known
+    8 | static struct GPIOPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:11:23: error: storage size of 's_buzzer' isn't known
+   11 | static struct GPIOPin s_buzzer;
+      |                       ^~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_hal_msp.c:22:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/stm32l1xx_hal_msp.o] Error 1
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/main.c:20:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_it.c:21:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+make: *** [Core/Src/subdir.mk:43: Core/Src/stm32l1xx_it.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:20:25 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_it.c:21:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/stm32l1xx_it.o] Error 1
+make: *** Waiting for unfinished jobs....
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/main.c:20:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+In file included from ../Core/Inc/main.h:35,
+                 from ../Core/Src/stm32l1xx_hal_msp.c:22:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:20:18: error: field 'pin_1' has incomplete type
+   20 |   struct GPIOPin pin_1;
+      |                  ^~~~~
+../Core/Inc/robot.h:21:18: error: field 'pin_2' has incomplete type
+   21 |   struct GPIOPin pin_2;
+      |                  ^~~~~
+../Core/Inc/robot.h:25:16: error: field 'trigger' has incomplete type
+   25 |   struct Timer trigger;
+      |                ^~~~~~~
+../Core/Inc/robot.h:33:18: error: field 'buzzer' has incomplete type
+   33 |   struct GPIOPin buzzer;
+      |                  ^~~~~~
+../Core/Src/robot.c: In function 'createRobot':
+../Core/Src/robot.c:34:20: error: 's_buzzer' has an incomplete type 'struct GPIOPin'
+   34 |   g_robot.buzzer = s_buzzer;
+      |                    ^~~~~~~~
+../Core/Src/robot.c: In function 'initGPIOPin':
+../Core/Src/robot.c:45:11: error: invalid use of undefined type 'struct GPIOPin'
+   45 |   gpio_pin->gpio = gpio;
+      |           ^~
+../Core/Src/robot.c:46:11: error: invalid use of undefined type 'struct GPIOPin'
+   46 |   gpio_pin->pin = pin;
+      |           ^~
+../Core/Src/robot.c: In function 'initTimer':
+../Core/Src/robot.c:62:8: error: invalid use of undefined type 'struct Timer'
+   62 |   timer->tim = tim;
+      |        ^~
+../Core/Src/robot.c:63:8: error: invalid use of undefined type 'struct Timer'
+   63 |   timer->pin = pin;
+      |        ^~
+../Core/Src/robot.c: In function 'initMotor':
+../Core/Src/robot.c:71:18: error: invalid use of undefined type 'struct GPIOPin'
+   71 |   motor->pin_1 = *pin_1;
+      |                  ^
+../Core/Src/robot.c:72:18: error: invalid use of undefined type 'struct GPIOPin'
+   72 |   motor->pin_2 = *pin_2;
+      |                  ^
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:165:6: error: conflicting types for 'updateStatusGPIOPin'
+  165 | void updateStatusGPIOPin(struct Pin *gpio_pin, enum StatusGPIOPin status) {
+      |      ^~~~~~~~~~~~~~~~~~~
+In file included from ../Core/Src/robot.c:1:
+../Core/Inc/robot.h:52:6: note: previous declaration of 'updateStatusGPIOPin' was here
+   52 | void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status);
+      |      ^~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/stm32l1xx_hal_msp.o] Error 1
+../Core/Src/robot.c: In function 'updateStatusGPIOPin':
+../Core/Src/robot.c:168:7: error: 'motor_pin' undeclared (first use in this function)
+  168 |       motor_pin->gpio->BSRR |= (1 << motor_pin->number);
+      |       ^~~~~~~~~
+../Core/Src/robot.c:168:7: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/robot.c: At top level:
+../Core/Src/robot.c:5:23: error: storage size of 's_pin_1_motor_right' isn't known
+    5 | static struct GPIOPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                       ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:5:44: error: storage size of 's_pin_2_motor_right' isn't known
+    5 | static struct GPIOPin s_pin_1_motor_right, s_pin_2_motor_right;
+      |                                            ^~~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:23: error: storage size of 's_pin_1_motor_left' isn't known
+    8 | static struct GPIOPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                       ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:8:43: error: storage size of 's_pin_2_motor_left' isn't known
+    8 | static struct GPIOPin s_pin_1_motor_left, s_pin_2_motor_left;
+      |                                           ^~~~~~~~~~~~~~~~~~
+../Core/Src/robot.c:11:23: error: storage size of 's_buzzer' isn't known
+   11 | static struct GPIOPin s_buzzer;
+      |                       ^~~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:20:55 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_hal_msp.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_hal_msp.d" -MT"Core/Src/stm32l1xx_hal_msp.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32l1xx_it.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l1xx_it.d" -MT"Core/Src/stm32l1xx_it.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/stm32l1xx_it.o"
+../Core/Src/robot.c: In function 'updateStatusGPIOPin':
+../Core/Src/robot.c:168:7: error: 'motor_pin' undeclared (first use in this function)
+  168 |       motor_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |       ^~~~~~~~~
+../Core/Src/robot.c:168:7: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:21:20 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+../Core/Src/robot.c: In function 'updateStatusGPIOPin':
+../Core/Src/robot.c:168:37: error: 'motor_pin' undeclared (first use in this function)
+  168 |       gpio_pin->gpio->BSRR |= (1 << motor_pin->pin);
+      |                                     ^~~~~~~~~
+../Core/Src/robot.c:168:37: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:43: Core/Src/robot.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+17:21:39 **** Incremental Build of configuration Debug for project nucleo-lab2 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/robot.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L152xE -c -I../Core/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc -I../Drivers/STM32L1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/robot.d" -MT"Core/Src/robot.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/robot.o"
+arm-none-eabi-gcc -o "nucleo-lab2.elf" @"objects.list"   -mcpu=cortex-m3 -T"/home/me/MEGA/Uni/3YEAR/Q2/05 Microprocessor/Labs/stm32-kart/nucleo-lab2/STM32L152RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="nucleo-lab2.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: nucleo-lab2.elf
+ 
+arm-none-eabi-size   nucleo-lab2.elf 
+arm-none-eabi-objdump -h -S  nucleo-lab2.elf  > "nucleo-lab2.list"
+   text	   data	    bss	    dec	    hex	filename
+   8152	     20	   1772	   9944	   26d8	nucleo-lab2.elf
+Finished building: default.size.stdout
+ 
+Finished building: nucleo-lab2.list
  

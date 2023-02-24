@@ -89,6 +89,8 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+  createRobot();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -96,6 +98,12 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+    updateStatusRobot(ROBOT_FORWARD);
+    updateStatusRobot(ROBOT_RIGHT);
+    updateStatusRobot(ROBOT_BACKWARD);
+
+    updateStatusRobot(ROBOT_LEFT);
+
 
     /* USER CODE BEGIN 3 */
   }

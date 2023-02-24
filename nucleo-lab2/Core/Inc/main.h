@@ -32,7 +32,7 @@ extern "C" {
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "utils.h"
-#include "robot.c"
+#include "robot.h"
 
 /* USER CODE END Includes */
 
