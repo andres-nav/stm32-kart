@@ -19,6 +19,7 @@ org.eclipse.cdt.debug.ui.ModulesDetailPaneFont=1|Monospace|12.0|0|GTK|1|;
 org.eclipse.cdt.internal.ui.compare.AsmMergeViewer=1|JetBrainsMonoNL Nerd Font|12.0|0|GTK|1|;
 org.eclipse.cdt.internal.ui.compare.CMergeViewer=1|JetBrainsMonoNL Nerd Font|12.0|0|GTK|1|;
 org.eclipse.cdt.make.internal.ui.compare.MakefileMergeViewer=1|Monospace|12.0|0|GTK|1|;
+org.eclipse.cdt.ui.ColoredLabels.match_highlight=206,92,0
 org.eclipse.cdt.ui.ColoredLabels.writeaccess_highlight=255,128,128
 org.eclipse.cdt.ui.buildconsole.ConsoleFont=1|Monospace|12.0|0|GTK|1|;
 org.eclipse.cdt.ui.editors.textfont=1|JetBrainsMonoNL Nerd Font|12.0|0|GTK|1|;

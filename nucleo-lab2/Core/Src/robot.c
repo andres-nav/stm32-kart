@@ -8,8 +8,9 @@ static struct Motor s_motor_right;
 static struct GPIOPin s_pin_1_motor_left, s_pin_2_motor_left;
 static struct Motor s_motor_left;
 
-static struct GPIOPin s_buzzer;
+static struct GPIOPin s_pin_buzzer;
 
+static struct GPIOPin s_pin_ultrasound_trigger;
 static struct Ultrasound s_ultrasound;
 
 /*
@@ -18,24 +19,47 @@ static struct Ultrasound s_ultrasound;
 void createRobot() {
   // Motor right is set to the output of the left driver (due to the placement
   // of the driver)
-  initGPIOPin(&s_pin_1_motor_right, GPIOB, 9);
-  initGPIOPin(&s_pin_2_motor_right, GPIOA, 12);
-  initMotor(&s_motor_right, &s_pin_1_motor_right, &s_pin_2_motor_right);
+  initOutputGPIOPin(&s_pin_1_motor_right, GPIOB, 9);
+  initOutputGPIOPin(&s_pin_2_motor_right, GPIOA, 12);
+  s_motor_right.pin_1 = s_pin_1_motor_right;
+  s_motor_right.pin_2 = s_pin_2_motor_right;
   g_robot.motor_right = s_motor_right;
 
   // Motor left is set to the output of the right driver (due to the placement
   // of the driver)
-  initGPIOPin(&s_pin_1_motor_left, GPIOB, 8);
-  initGPIOPin(&s_pin_2_motor_left, GPIOA, 11);
-  initMotor(&s_motor_left, &s_pin_1_motor_left, &s_pin_2_motor_left);
+  initOutputGPIOPin(&s_pin_1_motor_left, GPIOB, 8);
+  initOutputGPIOPin(&s_pin_2_motor_left, GPIOA, 11);
+  s_motor_left.pin_1 = s_pin_1_motor_left;
+  s_motor_left.pin_2 = s_pin_2_motor_left;
   g_robot.motor_left = s_motor_left;
 
-  initGPIOPin(&s_buzzer, GPIOA, 1);
-  g_robot.buzzer = s_buzzer;
+  // Initializes the buzzer
+  initOutputGPIOPin(&s_pin_buzzer, GPIOA, 1);
+  g_robot.buzzer = s_pin_buzzer;
 
-  initUltrasound(&s_ultrasound);
+  // Initializes the ultrasonic sensor
+  initAFGPIOPin(&s_pin_ultrasound_trigger, GPIOB, 6, 2);
+  s_ultrasound.trigger = &s_pin_ultrasound_trigger;
+  s_ultrasound.timer = TIM4; // will use PA5 that is associated to TIM2_CH1
+  TIM4->CR1 = 0x0000; // ARPE = 0, CEN = 0
+  TIM4->CR2 = 0x0000;
+  TIM4->SMCR = 0x0000;
+  TIM4->PSC = 32000 - 1;
+  TIM4->CNT = 0;
+  TIM4->ARR = 0xFFFF;
+  TIM4->CCR1 = 1000;
+  TIM4->DIER |= (1 << 1); // channel 1
+  TIM4->CCMR1 &= ~(0x00FF); // CCyS = 0; OCyM = 000; OCyPE = 0
+  TIM4->CCMR1 |= 0x0030;
+  TIM4->CCER &= ~(0x000F); // CCyP = 0; CCyE = 0
+  TIM4->CCER |= 0x0001;
 
-  updateStatusRobot(ROBOT_STOPPED);
+  //enableling the counter
+  TIM4->CR1 |= 0x0001;
+  TIM4->EGR |= 0x0001;
+  TIM4->SR = 0;
+
+  NVIC->ISER[0] |= (1 << 30);
 }
 
 /*
@@ -45,53 +69,41 @@ void initGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin) {
   gpio_pin->gpio = gpio;
   gpio_pin->pin = pin;
 
-  gpio->MODER &= ~(1 << (pin * 2 + 1));
-  gpio->MODER |= (1 << (pin * 2));
-
   gpio->OTYPER &= ~(1 << pin);
 
   gpio->OSPEEDR &= ~(1 << (pin * 2 + 1));
   gpio->OSPEEDR &= ~(1 << (pin * 2));
 }
 
-/*
- * Initializes the timer based on its characteristics
- */
-void initTimer(struct Timer *timer, TIM_TypeDef *tim, char pin) {
-  // TODO join the init gpio and timer with a common enum in TIM_TypeDef
-  timer->tim = tim;
-  timer->pin = pin;
+void initOutputGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin) {
+  initGPIOPin(gpio_pin, gpio, pin);
+
+  // 01 the register
+  gpio->MODER &= ~(1 << (pin * 2 + 1));
+  gpio->MODER |= (1 << (pin * 2));
 }
 
-/*
- * Initializes the motor with the corresponding pins.
- */
-void initMotor(struct Motor *motor, struct GPIOPin *pin_1,
-               struct GPIOPin *pin_2) {
-  motor->pin_1 = *pin_1;
-  motor->pin_2 = *pin_2;
+void initAFGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin, char af) {
+  initGPIOPin(gpio_pin, gpio, pin);
+
+  // 10 the register
+  gpio->MODER |= (1 << (pin * 2 + 1));
+  gpio->MODER &= ~(1 << (pin * 2));
+
+  char afr = pin < 8 ? 0 : 1;
+  gpio->AFR[afr] |= (af << (pin * 4));
 }
 
-void initUltrasound(struct Ultrasound *ultrasound) {
-
-}
 
 /*
  * Updates the status of the motor and calls to implement the status.
+ *    All the movements are with respect to the whole robot.
+ *
  */
 void updateStatusRobot(enum StatusRobot status) {
-  g_robot.status = status;
-  updateRobot();
-}
-
-/*
- * Updates the robot to its according status
- *  All the movements are with respect to the whole robot.
- */
-void updateRobot() {
   enum StatusMotor status_motor_right, status_motor_left;
 
-  switch (g_robot.status) {
+  switch (status) {
   case ROBOT_STOPPED:
     status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_STOPPED;
