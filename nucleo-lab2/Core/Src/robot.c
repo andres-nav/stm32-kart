@@ -16,7 +16,7 @@ static struct Ultrasound s_ultrasound;
 /*
  * Creates a new robot and initializes all global and static variables
  */
-void createRobot() {
+void createRobot(void) {
   // Motor right is set to the output of the left driver (due to the placement
   // of the driver)
   initOutputGPIOPin(&s_pin_1_motor_right, GPIOB, 9);
@@ -41,25 +41,7 @@ void createRobot() {
   initAFGPIOPin(&s_pin_ultrasound_trigger, GPIOB, 6, 2);
   s_ultrasound.trigger = &s_pin_ultrasound_trigger;
   s_ultrasound.timer = TIM4; // will use PA5 that is associated to TIM2_CH1
-  TIM4->CR1 = 0x0000; // ARPE = 0, CEN = 0
-  TIM4->CR2 = 0x0000;
-  TIM4->SMCR = 0x0000;
-  TIM4->PSC = 32000 - 1;
-  TIM4->CNT = 0;
-  TIM4->ARR = 0xFFFF;
-  TIM4->CCR1 = 1000;
-  TIM4->DIER |= (1 << 1); // channel 1
-  TIM4->CCMR1 &= ~(0x00FF); // CCyS = 0; OCyM = 000; OCyPE = 0
-  TIM4->CCMR1 |= 0x0030;
-  TIM4->CCER &= ~(0x000F); // CCyP = 0; CCyE = 0
-  TIM4->CCER |= 0x0001;
 
-  //enableling the counter
-  TIM4->CR1 |= 0x0001;
-  TIM4->EGR |= 0x0001;
-  TIM4->SR = 0;
-
-  NVIC->ISER[0] |= (1 << 30);
 }
 
 /*

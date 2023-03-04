@@ -58,13 +58,12 @@ static void MX_TIM4_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-//void TIM4_IRQHandler(void) {
-//  if ((TIM4->SR & 0x0002) != 0) {
-//    g_robot.ultrasound.timer = TIM3;
-//
-//    TIM4->SR &= ~(1 << 1);
-//  }
-//}
+void TIM4_IRQHandler(void) {
+  if ((TIM4->SR & (BIT_1)) != 0) {
+    TIM4->SR &= ~(1 << 1);
+    g_robot.buzzer.pin = 100;
+  }
+}
 
 /* USER CODE END 0 */
 
@@ -99,9 +98,27 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
-
   createRobot();
 
+  TIM4->CR1 = 0x0000; // ARPE = 0, CEN = 0
+    TIM4->CR2 = 0x0000;
+    TIM4->SMCR = 0x0000;
+    TIM4->PSC = 3200 - 1;
+    TIM4->CNT = 0;
+    TIM4->ARR = 0xFFFF;
+    TIM4->CCR1 = 1000;
+    TIM4->DIER |= (1 << 1); // channel 1
+    TIM4->CCMR1 &= ~(0x00FF); // CCyS = 0; OCyM = 000; OCyPE = 0
+    TIM4->CCMR1 |= 0x0030;
+    TIM4->CCER &= ~(0x000F); // CCyP = 0; CCyE = 0
+    TIM4->CCER |= 0x0001;
+
+    //enableling the counter
+    TIM4->CR1 |= 0x0001;
+    TIM4->EGR |= 0x0001;
+    TIM4->SR = 0;
+
+    NVIC->ISER[0] |= (1 << 30);
 
   /* USER CODE END 2 */
 
@@ -109,8 +126,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    g_robot.ultrasound.timer = TIM3;
-    return 0;
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -256,12 +272,6 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : LD2_Pin */
   GPIO_InitStruct.Pin = LD2_Pin;

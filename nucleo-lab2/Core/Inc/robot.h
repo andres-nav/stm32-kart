@@ -31,7 +31,7 @@ struct Robot {
   struct Ultrasound ultrasound;
 };
 
-void createRobot();
+void createRobot(void);
 
 void initGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin);
 void initOutputGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin);
