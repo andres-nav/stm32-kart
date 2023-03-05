@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -65,6 +66,7 @@ unsigned char is_trigger_on = 0;
 unsigned short time_init = 0;
 unsigned char do_calculate_time = 0;
 unsigned short delay = 0;
+float distance = 0;
 
 void TIM3_IRQHandler(void) {
   if ((TIM3->SR & 0x0002) != 0) {  // If the comparison is successful, then the IRQ is
@@ -73,11 +75,13 @@ void TIM3_IRQHandler(void) {
     if (is_trigger_on == 1) {
       GPIOC->BSRR |= (1 << 2) << 16;
       is_trigger_on = 0;
-      TIM3->CR1 &= ~(0x0001);   // CEN = 0 -> Stop counter
+      TIM3->CR1 &= ~(0x0001);   // CxEN = 0 -> Stop counter
 
       TIM2->CR1 |= 0x0001;   // CEN = 1 -> Start counter
       TIM2->EGR |= 0x0001;   // UG = 1 -> Generate update event
       TIM2->SR = 0;
+      time_init = TIM2->CCR1;
+
     } else if (is_trigger_on == 0) {
       GPIOC->BSRR |= (1 << 2);
       is_trigger_on = 1;
@@ -93,8 +97,10 @@ void TIM2_IRQHandler(void) {
     } else {
       delay = TIM2->CCR1 - time_init;
       if (delay<0) delay += 0x0FFFF;      // Handle counter overflows
+      distance = delay * 0.00068;
       time_init = 0;
       do_calculate_time = 1;
+
 
       TIM2->CR1 &= ~(0x0001);   // CEN = 0 -> Stop counter
 
@@ -143,6 +149,16 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
+  // Buzzer
+  GPIOA->MODER &= ~(1 << (2*1 + 1)); // pa1
+  GPIOA->MODER |= (1 << (2*1));
+
+  GPIOA->OTYPER &= ~(1 << 1);
+
+  GPIOA->OSPEEDR &= ~(1 << (2*1 +1));
+  GPIOA->OSPEEDR &= ~(1 << (2*1));
+
+  // Trigger
   GPIOC->MODER &= ~(1 << (2*2 + 1)); // pc2
   GPIOC->MODER |= (1 << (2*2));
 
@@ -174,15 +190,11 @@ int main(void)
   TIM3->CCER |= 0x0001;  // CC1P = 0   (always)
   // CC1E = 1   (hardware output activated)
   // Counter enabling
-  TIM3->CR1 |= 0x0001;   // CEN = 1 -> Start counter
-  TIM3->EGR |= 0x0001;   // UG = 1 -> Generate update event
-  TIM3->SR = 0;          // Counter flags cleared (for all channels)
   // Enabling TIM3_IRQ at NVIC (position 30).
   NVIC->ISER[0] |= (1 << 29);
 
 
   //----------------------------------
-  // PA0 (USER button) as AF for TIM2
   GPIOA->MODER |= 1 << (2*5 +1);    // MODER = 10 (AF) for PA5
   GPIOA->MODER &= ~(1 << (2*5));
   GPIOA->AFR[0] |= (1 << (4*5));          // AFR for PA5 as AF1 (TIM2)
@@ -192,19 +204,30 @@ int main(void)
   TIM2->CR2 = 0x0000;       // CCyIE = 0 -> No IRQ
   TIM2->SMCR = 0x0000;      // Always 0 in this course
   // Counter setting: PSC, CNT, ARR y CCRx
-  TIM2->PSC = 1;      // Pre-scaler=1 -> 2.5 microseconds/step
+  TIM2->PSC = 2;      // Pre-scaler=1 -> 2.5 microseconds/step
   TIM2->CNT = 0;          // Counter initialized to 0
   TIM2->ARR = 0xFFFF;     // As recommended when no PWM
   // IRQ or not IRQ selection: DIER
   TIM2->DIER = 0x0002;    // IRQ generate for TIC
   // External pin behaviour
   TIM2->CCMR1 = 0x0001;  // CCyS = 1 (TIC); OCyM = 000 y OCyPE = 0 (always in TIC)
-  TIM2->CCER = 0x0001;   // CCyNP:CCyP = 00 (rising edge active)
+  TIM2->CCER = 0x0001;   // CCyNP:CCyP = 00 (rising and falling edge active)
+  TIM2->CCER |= (1 << 1);
+  TIM2->CCER |= (1 << 3);
+
+  NVIC->ISER[0] |= (1 << 28);
+
+  // Turn on timers
+  TIM3->CR1 |= 0x0001;   // CEN = 1 -> Start counter
+  TIM3->EGR |= 0x0001;   // UG = 1 -> Generate update event
+  TIM3->SR = 0;          // Counter flags cleared (for all channels)
+
+
   // CCyE = 1        (capture enabled for TIC)
   // Habilitación de contador
   TIM2->SR = 0;          // Clear flags
-  NVIC->ISER[0] |= (1 << 28);
 
+  unsigned char count = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -214,9 +237,15 @@ int main(void)
     /* USER CODE END WHILE */
     if (do_calculate_time == 1) {
       do_calculate_time = 0;
-    }
-    if ((GPIOA->IDR & (1 << 5)) != 0) {
-      delay = 0;
+      if (distance <= 10) {
+        count++;
+        if (count > 10) {
+          GPIOA->BSRR |= (1 << 1);
+        }
+      } else {
+        count = 0;
+        GPIOA->BSRR |= (1 << 1) << 16;
+      }
     }
 
     /* USER CODE BEGIN 3 */
