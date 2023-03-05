@@ -74,18 +74,18 @@ void TIM3_IRQHandler(void) {
   // which event launched the ISR
     if (is_trigger_on == 1) {
       GPIOC->BSRR |= (1 << 2) << 16;
-      is_trigger_on = 0;
-      TIM3->CR1 &= ~(0x0001);   // CxEN = 0 -> Stop counter
+      is_trigger_on = 2;
+      //TIM3->CR1 &= ~(0x0001);   // CxEN = 0 -> Stop counter
 
       TIM2->CR1 |= 0x0001;   // CEN = 1 -> Start counter
       TIM2->EGR |= 0x0001;   // UG = 1 -> Generate update event
       TIM2->SR = 0;
-      time_init = TIM2->CCR1;
 
     } else if (is_trigger_on == 0) {
       GPIOC->BSRR |= (1 << 2);
       is_trigger_on = 1;
     }
+
     TIM3->SR = 0;
   }
 }
@@ -97,14 +97,15 @@ void TIM2_IRQHandler(void) {
     } else {
       delay = TIM2->CCR1 - time_init;
       if (delay<0) delay += 0x0FFFF;      // Handle counter overflows
-      distance = delay * 0.00068;
+      distance = delay * 0.00100 * 2;
       time_init = 0;
       do_calculate_time = 1;
+      is_trigger_on = 0;
 
 
       TIM2->CR1 &= ~(0x0001);   // CEN = 0 -> Stop counter
 
-      TIM3->CR1 |= 0x0001;   // CEN = 1 -> Start counter
+      //TIM3->CR1 |= 0x0001;   // CEN = 1 -> Start counter
       TIM3->EGR |= 0x0001;   // UG = 1 -> Generate update event
       TIM3->SR = 0;
     }
@@ -204,11 +205,11 @@ int main(void)
   TIM2->CR2 = 0x0000;       // CCyIE = 0 -> No IRQ
   TIM2->SMCR = 0x0000;      // Always 0 in this course
   // Counter setting: PSC, CNT, ARR y CCRx
-  TIM2->PSC = 2;      // Pre-scaler=1 -> 2.5 microseconds/step
+  TIM2->PSC = 4 - 1;      // Pre-scaler=2 -> 5 microseconds/step
   TIM2->CNT = 0;          // Counter initialized to 0
   TIM2->ARR = 0xFFFF;     // As recommended when no PWM
   // IRQ or not IRQ selection: DIER
-  TIM2->DIER = 0x0002;    // IRQ generate for TIC
+  TIM2->DIER |= (1 << 1);    // IRQ generate for TIC
   // External pin behaviour
   TIM2->CCMR1 = 0x0001;  // CCyS = 1 (TIC); OCyM = 000 y OCyPE = 0 (always in TIC)
   TIM2->CCER = 0x0001;   // CCyNP:CCyP = 00 (rising and falling edge active)
@@ -222,9 +223,6 @@ int main(void)
   TIM3->EGR |= 0x0001;   // UG = 1 -> Generate update event
   TIM3->SR = 0;          // Counter flags cleared (for all channels)
 
-
-  // CCyE = 1        (capture enabled for TIC)
-  // Habilitación de contador
   TIM2->SR = 0;          // Clear flags
 
   unsigned char count = 0;
@@ -238,13 +236,17 @@ int main(void)
     if (do_calculate_time == 1) {
       do_calculate_time = 0;
       if (distance <= 10) {
-        count++;
         if (count > 10) {
           GPIOA->BSRR |= (1 << 1);
+        } else {
+          count ++;
         }
       } else {
-        count = 0;
-        GPIOA->BSRR |= (1 << 1) << 16;
+        if (count > 0) {
+          count --;
+        } else {
+          GPIOA->BSRR |= (1 << 1) << 16;
+        }
       }
     }
 
