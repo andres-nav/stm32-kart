@@ -44,6 +44,7 @@ ADC_HandleTypeDef hadc;
 
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
+TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN PV */
 
@@ -56,6 +57,7 @@ static void MX_ADC_Init(void);
 static void MX_TS_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM2_Init(void);
+static void MX_TIM4_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -65,15 +67,28 @@ static void MX_TIM2_Init(void);
 unsigned char is_trigger_on = 0;
 unsigned short time_init = 0;
 unsigned char do_calculate_time = 0;
+unsigned char toggle_led = 0;
 unsigned short delay = 0;
 float distance = 0;
+
+void TIM4_IRQHandler(void) {
+  if ((TIM4->SR & 0x0002) != 0) {  // If the comparison is successful, then the IRQ is
+    if ((GPIOA->IDR & (1 << 1)) == 0) {
+      GPIOA->BSRR |= (1 << 1);
+    } else {
+      GPIOA->BSRR |= (1 << 1)<<16;
+    }
+    TIM4->CNT = 0;
+    TIM4->SR = 0;
+  }
+}
 
 void TIM3_IRQHandler(void) {
   if ((TIM3->SR & 0x0002) != 0) {  // If the comparison is successful, then the IRQ is
   // launched and this ISR is executed. This line check
   // which event launched the ISR
     if (is_trigger_on == 1) {
-      GPIOC->BSRR |= (1 << 2) << 16;
+      GPIOD->BSRR |= (1 << 2) << 16;
       is_trigger_on = 2;
       //TIM3->CR1 &= ~(0x0001);   // CxEN = 0 -> Stop counter
 
@@ -82,7 +97,7 @@ void TIM3_IRQHandler(void) {
       TIM2->SR = 0;
 
     } else if (is_trigger_on == 0) {
-      GPIOC->BSRR |= (1 << 2);
+      GPIOD->BSRR |= (1 << 2);
 
       is_trigger_on = 1;
     }
@@ -105,6 +120,7 @@ void TIM2_IRQHandler(void) {
 
 
       TIM2->CR1 &= ~(0x0001);   // CEN = 0 -> Stop counter
+
       TIM3->CCR1 = TIM3->CNT + 4;
       //TIM3->CR1 |= 0x0001;   // CEN = 1 -> Start counter
       TIM3->EGR |= 0x0001;   // UG = 1 -> Generate update event
@@ -113,11 +129,6 @@ void TIM2_IRQHandler(void) {
 
     TIM2->SR = 0;                    // Clear flags
   }
-}
-
-void espera(void) {
-  for(int i = 0; i < 1000000; i++);
-
 }
 
 /* USER CODE END 0 */
@@ -154,6 +165,7 @@ int main(void)
   MX_TS_Init();
   MX_TIM3_Init();
   MX_TIM2_Init();
+  MX_TIM4_Init();
   /* USER CODE BEGIN 2 */
 
   // Buzzer
@@ -166,13 +178,38 @@ int main(void)
   GPIOA->OSPEEDR &= ~(1 << (2*1));
 
   // Trigger
-  GPIOC->MODER &= ~(1 << (2*2 + 1)); // pc2
-  GPIOC->MODER |= (1 << (2*2));
+  GPIOD->MODER &= ~(1 << (2*2 + 1)); // pd2
+  GPIOD->MODER |= (1 << (2*2));
 
-  GPIOC->OTYPER &= ~(1 << 2);
+  GPIOD->OTYPER &= ~(1 << 2);
 
-  GPIOC->OSPEEDR &= ~(1 << (2*2 +1));
-  GPIOC->OSPEEDR &= ~(1 << (2*2));
+  GPIOD->OSPEEDR &= ~(1 << (2*2 +1));
+  GPIOD->OSPEEDR &= ~(1 << (2*2));
+
+  //Toggle
+  TIM4->CR1 = 0x0000;                    // ARPE = 0; CEN = 0; Counter OFF
+  TIM4->CR2 = 0x0000;                    // Always 0 in this course
+  TIM4->SMCR = 0x0000;                   // Always 0 in this course
+  // Counter setting: PSC, CNT, ARR and CCRx
+
+  TIM4->PSC = 700 - 1;      // Pre-scaler=400 -> 1 millisecond /step
+  TIM4->CNT = 0;          // Initialize counter to 0
+  TIM4->ARR = 0xFFFF;     // Maximum excursion of CNT
+  TIM4->CCR1 = 1000;
+  // Select, or not, IRQ: DIER
+  TIM4->DIER |= (1<<1);   // IRQ when CCR1 is reached -> CCyIE = 1
+  // Output mode
+  TIM4->CCMR1 &= ~(0x00FF); // Clear all channel 1 information
+  TIM4->CCMR1 |= 0x0030;    // CC1S = 0   (TOC, PWM)
+  // OC1M = 011 (Toggle)
+  // OC1PE = 0  (without preload)
+  TIM4->CCER &= ~(0x000F);
+
+  TIM4->CCER |= 0x0001;  // CC1P = 0   (always)
+  // CC1E = 1   (hardware output activated)
+  // Counter enabling
+  // Enabling TIM4_IRQ at NVIC (position 30).
+  NVIC->ISER[0] |= (1 << 30);
 
 
   // Internal clock selection: CR1, CR2, SMRC
@@ -230,6 +267,7 @@ int main(void)
   TIM3->SR = 0;          // Counter flags cleared (for all channels)
 
   TIM2->SR = 0;          // Clear flags
+  TIM4->SR = 0;
 
   unsigned char count = 0;
   /* USER CODE END 2 */
@@ -238,10 +276,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+
     if (do_calculate_time == 1) {
       do_calculate_time = 0;
       if (distance <= 10) {
+        toggle_led = 0;
+
         if (count > 10) {
           GPIOA->BSRR |= (1 << 1);
         } else {
@@ -249,17 +289,16 @@ int main(void)
         }
       } else if (distance <= 20) {
         if (count > 10) {
-          if ((GPIOA->IDR & (1 << 1)) == 0) {
-            GPIOA->BSRR |= (1 << 1);
-          } else {
-            GPIOA->BSRR |= (1 << 1)<<16;
+          if (toggle_led != 2) {
+            toggle_led = 1;
           }
-          espera();
         } else {
+          toggle_led = 0;
           count ++;
         }
 
       } else {
+        toggle_led = 0;
         if (count > 0) {
           count --;
         } else {
@@ -267,6 +306,15 @@ int main(void)
         }
       }
     }
+    if (toggle_led == 1) {
+      TIM4->CR1 |= 0x0001;   // CEN = 1 -> Start counter
+      TIM4->EGR |= 0x0001;
+      toggle_led = 2;
+    } else if (toggle_led == 0) {
+      TIM4->CR1 &= ~(0x0001);
+      TIM4->CNT = 0;
+    }
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
@@ -458,6 +506,51 @@ static void MX_TIM3_Init(void)
   /* USER CODE BEGIN TIM3_Init 2 */
 
   /* USER CODE END TIM3_Init 2 */
+
+}
+
+/**
+  * @brief TIM4 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM4_Init(void)
+{
+
+  /* USER CODE BEGIN TIM4_Init 0 */
+
+  /* USER CODE END TIM4_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM4_Init 1 */
+
+  /* USER CODE END TIM4_Init 1 */
+  htim4.Instance = TIM4;
+  htim4.Init.Prescaler = 0;
+  htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim4.Init.Period = 65535;
+  htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM4_Init 2 */
+
+  /* USER CODE END TIM4_Init 2 */
 
 }
 
