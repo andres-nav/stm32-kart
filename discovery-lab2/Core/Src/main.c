@@ -83,6 +83,7 @@ void TIM3_IRQHandler(void) {
 
     } else if (is_trigger_on == 0) {
       GPIOC->BSRR |= (1 << 2);
+
       is_trigger_on = 1;
     }
 
@@ -104,7 +105,7 @@ void TIM2_IRQHandler(void) {
 
 
       TIM2->CR1 &= ~(0x0001);   // CEN = 0 -> Stop counter
-
+      TIM3->CCR1 = TIM3->CNT + 4;
       //TIM3->CR1 |= 0x0001;   // CEN = 1 -> Start counter
       TIM3->EGR |= 0x0001;   // UG = 1 -> Generate update event
       TIM3->SR = 0;
@@ -112,6 +113,11 @@ void TIM2_IRQHandler(void) {
 
     TIM2->SR = 0;                    // Clear flags
   }
+}
+
+void espera(void) {
+  for(int i = 0; i < 1000000; i++);
+
 }
 
 /* USER CODE END 0 */
@@ -241,6 +247,18 @@ int main(void)
         } else {
           count ++;
         }
+      } else if (distance <= 20) {
+        if (count > 10) {
+          if ((GPIOA->IDR & (1 << 1)) == 0) {
+            GPIOA->BSRR |= (1 << 1);
+          } else {
+            GPIOA->BSRR |= (1 << 1)<<16;
+          }
+          espera();
+        } else {
+          count ++;
+        }
+
       } else {
         if (count > 0) {
           count --;
