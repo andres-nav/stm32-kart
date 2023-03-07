@@ -78,7 +78,6 @@ void TIM4_IRQHandler(void) {
     } else {
       GPIOA->BSRR |= (1 << 1)<<16;
     }
-    TIM4->CNT = 0;
     TIM4->SR = 0;
   }
 }
@@ -192,7 +191,7 @@ int main(void)
   TIM4->SMCR = 0x0000;                   // Always 0 in this course
   // Counter setting: PSC, CNT, ARR and CCRx
 
-  TIM4->PSC = 700 - 1;      // Pre-scaler=400 -> 1 millisecond /step
+  TIM4->PSC = 400 - 1;      // Pre-scaler=400 -> 1 millisecond /step
   TIM4->CNT = 0;          // Initialize counter to 0
   TIM4->ARR = 0xFFFF;     // Maximum excursion of CNT
   TIM4->CCR1 = 1000;
@@ -280,9 +279,8 @@ int main(void)
     if (do_calculate_time == 1) {
       do_calculate_time = 0;
       if (distance <= 10) {
-        toggle_led = 0;
-
         if (count > 10) {
+          toggle_led = 0;
           GPIOA->BSRR |= (1 << 1);
         } else {
           count ++;
@@ -298,10 +296,10 @@ int main(void)
         }
 
       } else {
-        toggle_led = 0;
         if (count > 0) {
           count --;
         } else {
+          toggle_led = 0;
           GPIOA->BSRR |= (1 << 1) << 16;
         }
       }
