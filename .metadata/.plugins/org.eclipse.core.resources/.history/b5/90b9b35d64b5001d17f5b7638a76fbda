@@ -1,9 +1,0 @@
-#include "handler.h"
-
-void TIM2_IRQHandler(void) {
-  if ((TIM2->SR & BIT_2) != 0) {
-    g_robot.ultrasound.timer = TIM4;
-
-    TIM2->SR &= ~(1 << 1)
-  }
-}
