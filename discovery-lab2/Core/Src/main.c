@@ -146,11 +146,12 @@ void TIM2_IRQHandler(void) {
       uint32_t time = TIM2->CCR1;
       delay = time - time_init;
       int delay1 = delay;
-      if (delay < 0)
+      if (delay < 0) {
         delay += 0xFFFF; // Handle counter overflows
+      }
       int delay2 = delay;
       distance_prev = distance;
-      distance = delay * 0.00100 * 2;
+      distance = ((delay) * 0.034) / 2;
       float distance2 = distance;
       do_calculate_time = 1;
       is_trigger_on = 0;
@@ -280,7 +281,7 @@ int main(void) {
   TIM2->CR2 = 0x0000;  // CCyIE = 0 -> No IRQ
   TIM2->SMCR = 0x0000; // Always 0 in this course
   // Counter setting: PSC, CNT, ARR y CCRx
-  TIM2->PSC = 4 - 1;  // Pre-scaler=2 -> 5 microseconds/step
+  TIM2->PSC = 32 - 1;  // Pre-scaler=5 -> 10 microseconds/step
   TIM2->CNT = 0;      // Counter initialized to 0
   TIM2->ARR = 0xFFFF; // As recommended when no PWM
   // IRQ or not IRQ selection: DIER
