@@ -69,7 +69,6 @@ static void MX_TIM4_Init(void);
 /*
  * Timer for counters such as the beeping of the buzzer
  */
-// ------------- Toggle Buzzer Timer -----------------------
 void TIM4_IRQHandler(void) {
   if ((TIM4->SR & 0x0002) != 0) {
     if (g_robot.buzzer->status == BUZZER_BEEPING) {
@@ -80,7 +79,6 @@ void TIM4_IRQHandler(void) {
   }
 }
 
-// ------------- Trigger Timer -----------------------
 void TIM3_IRQHandler(void) {
   if ((TIM3->SR & 0x0002) != 0) { // Channel 1
     if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_START) {
@@ -97,7 +95,6 @@ void TIM3_IRQHandler(void) {
   }
 }
 
-// ------------- Echo Timer -----------------------
 void TIM2_IRQHandler(void) {
   if ((TIM2->SR & 0x0002) != 0) { // Channel 1
     if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_SENT) {
