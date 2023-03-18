@@ -115,7 +115,7 @@ static void initTimer4(void) {
   TIM4->CR2 = 0x0000;
   TIM4->SMCR = 0x0000;
 
-  TIM4->PSC = 500 - 1;
+  TIM4->PSC = 400 - 1;
   TIM4->CNT = 0;
   TIM4->ARR = 0xFFFF;
   TIM4->CCR1 = 500;
@@ -156,7 +156,6 @@ static void initUltrasonicAndBuzzerModule(void) {
   TIM2->SR = 0; // Clear flags
 
   TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
-  TIM3->EGR |= 0x0001; // UG = 1 -> Generate update event
   TIM3->SR = 0; // Clear flags
 
   TIM4->CR1 |= 0x0001;
@@ -244,15 +243,11 @@ void updateStatusBuzzer(enum StatusBuzzer status) {
   switch (g_robot.buzzer->status) {
   case BUZZER_ON:
     updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_UP);
-    TIM4->CR1 &= ~(0x0001);
     break;
   case BUZZER_OFF:
     updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_DOWN);
-    TIM4->CR1 &= ~(0x0001);
     break;
   case BUZZER_BEEPING:
-    TIM4->CR1 |= 0x0001; // CEN = 1 -> Start counters
-    TIM4->EGR |= 0x0001;
     break;
   }
 }

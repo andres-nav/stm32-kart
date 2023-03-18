@@ -69,16 +69,23 @@ static void MX_TIM4_Init(void);
 /*
  * Timer for counters such as the beeping of the buzzer
  */
+// ------------- Toggle Buzzer Timer -----------------------
 void TIM4_IRQHandler(void) {
   if ((TIM4->SR & 0x0002) != 0) {
     if (g_robot.buzzer->status == BUZZER_BEEPING) {
       toggleGPIOPin(g_robot.buzzer->gpio_pin);
     }
 
+    if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
+      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
+      TIM3->EGR |= 0x0001; // UG = 1 -> Generate update event
+    }
+
     TIM4->SR = 0;
   }
 }
 
+// ------------- Trigger Timer -----------------------
 void TIM3_IRQHandler(void) {
   if ((TIM3->SR & 0x0002) != 0) { // Channel 1
     if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_START) {
@@ -95,6 +102,7 @@ void TIM3_IRQHandler(void) {
   }
 }
 
+// ------------- Echo Timer -----------------------
 void TIM2_IRQHandler(void) {
   if ((TIM2->SR & 0x0002) != 0) { // Channel 1
     if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_SENT) {
@@ -102,6 +110,7 @@ void TIM2_IRQHandler(void) {
       g_robot.ultrasound->time_init = TIM2->CCR1;
 
     } else if(g_robot.ultrasound->status == ULTRASOUND_MEASURING) {
+      g_robot.ultrasound->status = ULTRASOUND_STOPPED;
       int delay = TIM2->CCR1 - g_robot.ultrasound->time_init;
       if (delay < 0) {
         delay += 0xFFFF; // Handle counter overflows
@@ -113,9 +122,6 @@ void TIM2_IRQHandler(void) {
         }
         g_robot.ultrasound->distance = distance;
       }
-
-      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
-      TIM3->EGR |= 0x0001; // UG = 1 -> Generate update event
     }
 
     TIM2->SR = 0; // Clear flags
