@@ -71,40 +71,29 @@ static void MX_TIM4_Init(void);
  */
 // ------------- Toggle Buzzer Timer -----------------------
 void TIM4_IRQHandler(void) {
-  if ((TIM4->SR & 0x0002) != 0) {
+  if ((TIM4->SR & (1 << 1)) != 0) {
     if (g_robot.buzzer->status == BUZZER_BEEPING) {
       toggleGPIOPin(g_robot.buzzer->gpio_pin);
     }
 
     if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
-      TIM3->EGR |= 0x0001; // UG = 1 -> Generate update event
+      TIM2->EGR |= (1 << 2); // UG = 1 -> Generate update event
     }
 
-    TIM4->SR = 0;
+    TIM4->SR &= ~(1 << 1);
   }
 }
 
-// ------------- Trigger Timer -----------------------
+
 void TIM3_IRQHandler(void) {
-  if ((TIM3->SR & 0x0002) != 0) { // Channel 1
-    if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_START) {
-      updateStatusGPIOPin(g_robot.ultrasound->trigger, GPIO_PIN_UP);
-      TIM3->CCR1 = TIM3->CNT + 10;
-      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_ON;
 
-    } else if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_ON) {
-      updateStatusGPIOPin(g_robot.ultrasound->trigger, GPIO_PIN_DOWN);
-      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_SENT;
-    }
-
-    TIM3->SR = 0;
-  }
 }
 
-// ------------- Echo Timer -----------------------
+
 void TIM2_IRQHandler(void) {
-  if ((TIM2->SR & 0x0002) != 0) { // Channel 1
+  if ((TIM2->SR & (1 << 1)) != 0) { // Channel 1
+    // ------------- Echo Timer -----------------------
     if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_SENT) {
       g_robot.ultrasound->status = ULTRASOUND_MEASURING;
       g_robot.ultrasound->time_init = TIM2->CCR1;
@@ -124,7 +113,21 @@ void TIM2_IRQHandler(void) {
       }
     }
 
-    TIM2->SR = 0; // Clear flags
+    TIM2->SR &= ~(1 << 1);
+
+  } else if ((TIM2->SR & (1 << 2)) != 0) { // Channel 2
+    // ------------- Trigger Timer -----------------------
+    if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_START) {
+      updateStatusGPIOPin(g_robot.ultrasound->trigger, GPIO_PIN_UP);
+      TIM2->CCR2 = TIM2->CNT + 10;
+      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_ON;
+
+    } else if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_ON) {
+      updateStatusGPIOPin(g_robot.ultrasound->trigger, GPIO_PIN_DOWN);
+      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_SENT;
+    }
+
+    TIM2->SR = ~(1 << 2); // Clear flags
   }
 }
 

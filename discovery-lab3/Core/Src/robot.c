@@ -65,7 +65,7 @@ static void initDriveModule(void) {
 }
 
 static void initTimer2(void) {
-  // ------------- Echo Timer -----------------------
+  // ------------- Echo Timer (Channel 1) ---------------
   TIM2->CR1 = 0x0000;
   TIM2->CR2 = 0x0000;
   TIM2->SMCR = 0x0000;
@@ -82,30 +82,18 @@ static void initTimer2(void) {
   TIM2->CCER |= (1 << 1);
   TIM2->CCER |= (1 << 3);
 
+  // ------------- Trigger Timer (Channel 2) -----------
+  TIM2->CCR2 = 10;
+
+  TIM2->DIER |= (1 << 2); // IRQ when CCR2 is reached
+
+  TIM2->CCMR1 &= ~(0xFF00); // Clear all channel 2 information
+  TIM2->CCMR1 |= 0x3000;    // CC2S = 0 (TOC, PWM) OC2M = 011 (Toggle) OC2PE = 0  (without preload)
+
+  TIM2->CCER &= ~(0x00F0);
+  TIM2->CCER |= 0x0010; // CC2P = 0   (always)
+
   NVIC->ISER[0] |= (1 << 28);
-}
-
-static void initTimer3(void) {
-  // ------------- Trigger Timer -----------------------
-  TIM3->CR1 = 0x0000;
-  TIM3->CR2 = 0x0000;
-  TIM3->SMCR = 0x0000;
-
-  TIM3->PSC = 32 - 1;
-  TIM3->CNT = 0;
-  TIM3->ARR = 0xFFFF;
-  TIM3->CCR1 = 10;
-
-
-  TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
-
-  TIM3->CCMR1 &= ~(0x00FF); // Clear all channel 1 information
-  TIM3->CCMR1 |= 0x0030;    // CC1S = 0 (TOC, PWM) OC1M = 011 (Toggle) OC1PE = 0  (without preload)
-
-  TIM3->CCER &= ~(0x000F);
-  TIM3->CCER |= 0x0001; // CC1P = 0   (always)
-
-  NVIC->ISER[0] |= (1 << 29);
 }
 
 
@@ -149,19 +137,13 @@ static void initUltrasonicAndBuzzerModule(void) {
   g_robot.ultrasound = &s_ultrasound;
 
   initTimer2();
-  initTimer3();
   initTimer4();
 
   TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
   TIM2->SR = 0; // Clear flags
 
-  TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
-  TIM3->SR = 0; // Clear flags
-
   TIM4->CR1 |= 0x0001;
   TIM4->SR = 0; // Clear flags
-
-  g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
 }
 
 /*
