@@ -167,22 +167,22 @@ int main(void)
     if ((g_robot.ultrasound->status != ULTRASOUND_MEASURING) && g_robot.ultrasound->status_distance == DISTANCE_CHANGED) {
       g_robot.ultrasound->status_distance = DISTANCE_DID_NOT_CHANGE;
 
-      enum StatusBuzzer status_buzzer;
       enum StatusRobot status_robot;
+      unsigned char speed = 0;
 
       if (g_robot.ultrasound->distance < 10) {
-        status_buzzer = BUZZER_ON;
         status_robot = ROBOT_STOPPED;
       } else if (g_robot.ultrasound->distance < 20) {
-        status_buzzer = BUZZER_BEEPING;
-        status_robot = ROBOT_RIGHT;
+        status_robot = ROBOT_FORWARD;
+        speed = (g_robot.ultrasound->distance - 9) * 10;
       } else {
-        status_buzzer = BUZZER_OFF;
-        status_robot = ROBOT_LEFT;
+        status_robot = ROBOT_FORWARD;
+        speed = MAX_SPEED;
       }
 
-      updateStatusBuzzer(status_buzzer);
+      updateSpeedRobot(speed);
       updateStatusRobot(status_robot);
+      updateBuzzer();
     }
 
 

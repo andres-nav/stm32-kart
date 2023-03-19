@@ -56,11 +56,11 @@ static void initTimer4(void) {
   TIM4->CR2 = 0x0000;
   TIM4->SMCR = 0x0000;
 
-  TIM4->PSC = 32000 - 1; // T = 2 ms
+  TIM4->PSC = 64000 - 1; // T = 2 ms
   TIM4->CNT = 0;
   TIM4->ARR = MAX_SPEED - 1; // Tpwm = 1s
-  TIM4->CCR3 = 100;
-  TIM4->CCR4 = 100; // DC = 10%
+  TIM4->CCR3 = 40;
+  TIM4->CCR4 = 40; // DC = 10%
 
   TIM4->CCMR2 &= ~(0xFFFF); // Clear all channel 4 information
   TIM4->CCMR2 |= 0x6868; // CCyS = 0 (TOC) OCyM = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
@@ -76,7 +76,6 @@ static void initDriveModule(void) {
   s_motor_right.pin_speed = s_pin_speed_motor_right;
   s_motor_right.pin_direction = s_pin_direction_motor_right;
   s_motor_right.channel = 4;
-  s_motor_left.speed = MAX_SPEED;
   g_robot.motor_right = &s_motor_right;
 
   // Motor left is set to the output of the right driver (due to the placement
@@ -86,13 +85,13 @@ static void initDriveModule(void) {
   s_motor_left.pin_speed = s_pin_speed_motor_left;
   s_motor_left.pin_direction = s_pin_direction_motor_left;
   s_motor_left.channel = 3;
-  s_motor_left.speed = MAX_SPEED;
   g_robot.motor_left = &s_motor_left;
 
-  initTimer4();
+  g_robot.speed = MAX_SPEED;
+  g_robot.status = ROBOT_FORWARD;
+  g_robot.status_obstacle = OBSTACLE_NONE;
 
-  TIM4->CR1 |= 0x0001;
-  TIM4->SR = 0; // Clear flags
+  initTimer4();
 }
 
 static void initTimer2(void) {
@@ -152,7 +151,7 @@ static void initTimer3(void) {
 static void initUltrasonicAndBuzzerModule(void) {
   initOutputGPIOPin(&s_pin_buzzer, GPIOA, 1);
   s_buzzer.gpio_pin = &s_pin_buzzer;
-  s_buzzer.status = BUZZER_OFF;
+  s_buzzer.status = BUZZER_ON;
   g_robot.buzzer = &s_buzzer;
 
   initOutputGPIOPin(&s_pin_ultrasound_trigger, GPIOD, 2);
@@ -163,17 +162,11 @@ static void initUltrasonicAndBuzzerModule(void) {
 
   s_ultrasound.status = ULTRASOUND_STOPPED;
   s_ultrasound.distance = 0;
-  s_ultrasound.status_distance = DISTANCE_CHANGED;
+  s_ultrasound.status_distance = DISTANCE_DID_NOT_CHANGE;
   g_robot.ultrasound = &s_ultrasound;
 
   initTimer2();
   initTimer3();
-
-  TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
-  TIM2->SR = 0; // Clear flags
-
-  TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
-  TIM3->SR = 0; // Clear flags
 }
 
 /*
@@ -237,6 +230,19 @@ static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
 void createRobot(void) {
   initDriveModule();
   initUltrasonicAndBuzzerModule();
+
+  TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
+  TIM2->SR = 0; // Clear flags
+
+  TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
+  TIM3->SR = 0; // Clear flags
+
+  TIM4->CR1 |= 0x0001;
+  TIM4->SR = 0; // Clear flags
+
+  updateSpeedRobot(0);
+  updateStatusRobot(ROBOT_STOPPED);
+  updateStatusBuzzer(BUZZER_OFF);
 }
 
 void toggleGPIOPin(struct GPIOPin *gpio_pin) {
@@ -265,6 +271,19 @@ void updateStatusBuzzer(enum StatusBuzzer status) {
   }
 }
 
+void updateBuzzer() {
+  enum StatusBuzzer status_buzzer;
+
+  if (g_robot.ultrasound->distance < 10) {
+    status_buzzer = BUZZER_ON;
+  } else if (g_robot.ultrasound->distance < 20) {
+    status_buzzer = BUZZER_BEEPING;
+  } else {
+    status_buzzer = BUZZER_OFF;
+  }
+
+  updateStatusBuzzer(status_buzzer);
+}
 
 
 
@@ -274,6 +293,11 @@ void updateStatusBuzzer(enum StatusBuzzer status) {
  *
  */
 void updateStatusRobot(enum StatusRobot status) {
+  if (g_robot.status == status) {
+    return;
+  }
+
+  g_robot.status = status;
   enum StatusMotor status_motor_right, status_motor_left;
 
   switch (status) {
@@ -293,13 +317,13 @@ void updateStatusRobot(enum StatusRobot status) {
 
     break;
   case ROBOT_RIGHT:
-    status_motor_right = MOTOR_BACKWARD;
+    status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_FORWARD;
 
     break;
   case ROBOT_LEFT:
     status_motor_right = MOTOR_FORWARD;
-    status_motor_left = MOTOR_BACKWARD;
+    status_motor_left = MOTOR_STOPPED;
 
     break;
   }
@@ -309,5 +333,17 @@ void updateStatusRobot(enum StatusRobot status) {
 }
 
 void updateSpeedRobot(unsigned char speed) {
+  if (g_robot.speed == speed) {
+    return;
+  }
+
+  if (speed > MAX_SPEED) {
+    speed = MAX_SPEED;
+  }
+
+  g_robot.speed = speed;
+
+  TIM4->CCR3 = speed;
+  TIM4->CCR4 = speed;
 
 }

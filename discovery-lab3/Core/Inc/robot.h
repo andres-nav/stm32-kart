@@ -3,7 +3,7 @@
 
 #include "stm32l1xx_hal.h"
 
-#define MAX_SPEED 1000;
+#define MAX_SPEED 100
 
 extern struct Robot g_robot;
 
@@ -12,7 +12,8 @@ enum StatusMotor { MOTOR_STOPPED, MOTOR_FORWARD, MOTOR_BACKWARD };
 enum StatusUltrasound { ULTRASOUND_STOPPED, ULTRASOUND_TRIGGER_START, ULTRASOUND_TRIGGER_ON, ULTRASOUND_TRIGGER_SENT, ULTRASOUND_MEASURING };
 enum StatusUltrasoundDistance { DISTANCE_CHANGED, DISTANCE_DID_NOT_CHANGE };
 enum StatusBuzzer { BUZZER_OFF, BUZZER_ON, BUZZER_BEEPING };
-enum StatusRobot { ROBOT_STOPPED, ROBOT_FORWARD, ROBOT_BACKWARD, ROBOT_RIGHT, ROBOT_LEFT };
+enum StatusRobot { ROBOT_STOPPED, ROBOT_FORWARD, ROBOT_BACKWARD, ROBOT_RIGHT, ROBOT_LEFT};
+enum StatusObstacle { OBSTACLE_NONE, OBSTACLE_IN_FRONT, OBSTACLE_WAITING, OBSTACLE_RIGHT, OBSTACLE_RIGHT_BACK, OBSTACLE_LEFT };
 
 struct GPIOPin {
   GPIO_TypeDef *gpio;
@@ -23,7 +24,6 @@ struct Motor {
   struct GPIOPin pin_speed;
   struct GPIOPin pin_direction;
   unsigned char channel;
-  unsigned char speed;
 };
 
 struct Ultrasound {
@@ -41,6 +41,9 @@ struct Buzzer {
 };
 
 struct Robot {
+  enum StatusRobot status;
+  enum StatusObstacle status_obstacle;
+  unsigned char speed;
   struct Motor *motor_right;
   struct Motor *motor_left;
   struct Buzzer *buzzer;
@@ -53,6 +56,8 @@ void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status);
 void toggleGPIOPin(struct GPIOPin *gpio_pin);
 
 void updateStatusBuzzer(enum StatusBuzzer status);
+void updateBuzzer();
+
 void updateStatusRobot(enum StatusRobot status);
 void updateSpeedRobot(unsigned char speed);
 
