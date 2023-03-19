@@ -2,10 +2,10 @@
 
 struct Robot g_robot;
 
-static struct GPIOPin s_pin_1_motor_right, s_pin_2_motor_right;
+static struct GPIOPin s_pin_speed_motor_right, s_pin_direction_motor_right;
 static struct Motor s_motor_right;
 
-static struct GPIOPin s_pin_1_motor_left, s_pin_2_motor_left;
+static struct GPIOPin s_pin_speed_motor_left, s_pin_direction_motor_left;
 static struct Motor s_motor_left;
 
 static struct GPIOPin s_pin_buzzer;
@@ -56,36 +56,37 @@ static void initTimer4(void) {
   TIM4->CR2 = 0x0000;
   TIM4->SMCR = 0x0000;
 
-  TIM4->DIER |= (1 << 4); // IRQ when CCR4 is reacheds
-
-  TIM4->PSC = 64000 - 1; // T = 2 ms
+  TIM4->PSC = 32000 - 1; // T = 2 ms
   TIM4->CNT = 0;
-  TIM4->ARR = 1000 - 1; // Tpwm = 1s
-  TIM4->CCR4 = 50; // DC = 10%
+  TIM4->ARR = MAX_SPEED - 1; // Tpwm = 1s
+  TIM4->CCR3 = 100;
+  TIM4->CCR4 = 100; // DC = 10%
 
-  TIM4->CCMR2 &= ~(0xFF00); // Clear all channel 4 information
-  TIM4->CCMR2 |= 0x6800; // CC1S = 0 (TOC) OC1M = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
+  TIM4->CCMR2 &= ~(0xFFFF); // Clear all channel 4 information
+  TIM4->CCMR2 |= 0x6868; // CCyS = 0 (TOC) OCyM = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
 
-  TIM4->CCER |= 0xB000; // CC4NP:CC4P = 11 (rising and falling edge active) CC4E
-
-  NVIC->ISER[0] |= (1 << 30); // Enabling TIM4_IRQ at NVIC (position 30).
+  TIM4->CCER |= 0xBB00; // CC4NP:CC4P = 11 (rising and falling edge active) CC4E
 }
 
 static void initDriveModule(void) {
   // Motor right is set to the output of the left driver (due to the placement
   // of the driver)
-  initAFGPIOPin(&s_pin_1_motor_right, GPIOB, 9, 2);
-  initOutputGPIOPin(&s_pin_2_motor_right, GPIOA, 12);
-  s_motor_right.pin_1 = s_pin_1_motor_right;
-  s_motor_right.pin_2 = s_pin_2_motor_right;
+  initAFGPIOPin(&s_pin_speed_motor_right, GPIOB, 9, 2);
+  initOutputGPIOPin(&s_pin_direction_motor_right, GPIOA, 12);
+  s_motor_right.pin_speed = s_pin_speed_motor_right;
+  s_motor_right.pin_direction = s_pin_direction_motor_right;
+  s_motor_right.channel = 4;
+  s_motor_left.speed = MAX_SPEED;
   g_robot.motor_right = &s_motor_right;
 
   // Motor left is set to the output of the right driver (due to the placement
   // of the driver)
-  initOutputGPIOPin(&s_pin_1_motor_left, GPIOB, 8);
-  initOutputGPIOPin(&s_pin_2_motor_left, GPIOA, 11);
-  s_motor_left.pin_1 = s_pin_1_motor_left;
-  s_motor_left.pin_2 = s_pin_2_motor_left;
+  initAFGPIOPin(&s_pin_speed_motor_left, GPIOB, 8, 2);
+  initOutputGPIOPin(&s_pin_direction_motor_left, GPIOA, 11);
+  s_motor_left.pin_speed = s_pin_speed_motor_left;
+  s_motor_left.pin_direction = s_pin_direction_motor_left;
+  s_motor_left.channel = 3;
+  s_motor_left.speed = MAX_SPEED;
   g_robot.motor_left = &s_motor_left;
 
   initTimer4();
@@ -162,7 +163,7 @@ static void initUltrasonicAndBuzzerModule(void) {
 
   s_ultrasound.status = ULTRASOUND_STOPPED;
   s_ultrasound.distance = 0;
-  s_ultrasound.status_distance = DISTANCE_DID_NOT_CHANGE;
+  s_ultrasound.status_distance = DISTANCE_CHANGED;
   g_robot.ultrasound = &s_ultrasound;
 
   initTimer2();
@@ -203,28 +204,29 @@ void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status) {
  * flipped. (hardware)
  */
 static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
-  enum StatusGPIOPin status_gpio_pin_1, status_motor_pin_2;
+  enum StatusGPIOPin status_motor_pin_direction;
+  unsigned char offset_enable = ((motor->channel - 1) * 4);
+  unsigned char offset_pwm_mode = ((motor->channel - 3) * 8) + 4;
 
-    switch (status) {
-    case MOTOR_STOPPED:
-      status_gpio_pin_1 = GPIO_PIN_UP;
-      status_motor_pin_2 = GPIO_PIN_UP;
+  switch (status) {
+  case MOTOR_STOPPED:
+    TIM4->CCER &= ~(11 << offset_enable); // Turn off PWM
+    status_motor_pin_direction = GPIO_PIN_DOWN;
+    break;
+  case MOTOR_FORWARD:
+    TIM4->CCER |= (11 << offset_enable); // Turn on PWM
+    TIM4->CCMR2 |= (1 << offset_pwm_mode); // OCyM = 111
+    status_motor_pin_direction = GPIO_PIN_DOWN;
+    break;
+  case MOTOR_BACKWARD:
+    TIM4->CCER |= (11 << offset_enable);
+    TIM4->CCMR2 &= ~(1 << offset_pwm_mode); // OCyM = 110
+    status_motor_pin_direction = GPIO_PIN_UP;
 
-      break;
-    case MOTOR_FORWARD:
-      status_gpio_pin_1 = GPIO_PIN_UP;
-      status_motor_pin_2 = GPIO_PIN_DOWN;
-
-      break;
-    case MOTOR_BACKWARD:
-      status_gpio_pin_1 = GPIO_PIN_DOWN;
-      status_motor_pin_2 = GPIO_PIN_UP;
-
-      break;
-    }
-
-    updateStatusGPIOPin(&(motor->pin_1), status_gpio_pin_1);
-    updateStatusGPIOPin(&(motor->pin_2), status_motor_pin_2);
+    break;
+  }
+  TIM4->CNT = 0;
+  updateStatusGPIOPin(&(motor->pin_direction), status_motor_pin_direction);
 }
 
 
@@ -304,4 +306,8 @@ void updateStatusRobot(enum StatusRobot status) {
 
   updateStatusMotor(g_robot.motor_right, status_motor_right);
   updateStatusMotor(g_robot.motor_left, status_motor_left);
+}
+
+void updateSpeedRobot(unsigned char speed) {
+
 }

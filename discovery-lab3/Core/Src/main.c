@@ -65,18 +65,6 @@ static void MX_TIM4_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-
-/*
- * Timer for counters such as the beeping of the buzzer
- */
-// ------------- Toggle Buzzer Timer -----------------------
-void TIM4_IRQHandler(void) {
-  if ((TIM4->SR & (1 << 4)) != 0) { // Channel 1
-    TIM4->SR &= ~(1 << 4);
-  }
-}
-
-
 void TIM3_IRQHandler(void) {
   if ((TIM3->SR & (1 << 1)) != 0) {
     if (g_robot.buzzer->status == BUZZER_BEEPING) {
@@ -180,16 +168,21 @@ int main(void)
       g_robot.ultrasound->status_distance = DISTANCE_DID_NOT_CHANGE;
 
       enum StatusBuzzer status_buzzer;
+      enum StatusRobot status_robot;
 
       if (g_robot.ultrasound->distance < 10) {
         status_buzzer = BUZZER_ON;
+        status_robot = ROBOT_STOPPED;
       } else if (g_robot.ultrasound->distance < 20) {
         status_buzzer = BUZZER_BEEPING;
+        status_robot = ROBOT_RIGHT;
       } else {
         status_buzzer = BUZZER_OFF;
+        status_robot = ROBOT_LEFT;
       }
 
       updateStatusBuzzer(status_buzzer);
+      updateStatusRobot(status_robot);
     }
 
 

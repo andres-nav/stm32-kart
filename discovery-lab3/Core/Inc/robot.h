@@ -3,6 +3,8 @@
 
 #include "stm32l1xx_hal.h"
 
+#define MAX_SPEED 1000;
+
 extern struct Robot g_robot;
 
 enum StatusGPIOPin { GPIO_PIN_UP, GPIO_PIN_DOWN};
@@ -18,8 +20,10 @@ struct GPIOPin {
 };
 
 struct Motor {
-  struct GPIOPin pin_1;
-  struct GPIOPin pin_2;
+  struct GPIOPin pin_speed;
+  struct GPIOPin pin_direction;
+  unsigned char channel;
+  unsigned char speed;
 };
 
 struct Ultrasound {
@@ -50,6 +54,7 @@ void toggleGPIOPin(struct GPIOPin *gpio_pin);
 
 void updateStatusBuzzer(enum StatusBuzzer status);
 void updateStatusRobot(enum StatusRobot status);
+void updateSpeedRobot(unsigned char speed);
 
 
 
