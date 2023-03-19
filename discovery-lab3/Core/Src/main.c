@@ -71,9 +71,8 @@ static void MX_TIM4_Init(void);
  */
 // ------------- Toggle Buzzer Timer -----------------------
 void TIM4_IRQHandler(void) {
-  if ((TIM4->SR & (1 << 1)) != 0) { // Channel 1
-    //toggleGPIOPin(g_robot.buzzer->gpio_pin);
-    TIM4->SR &= ~(1 << 1);
+  if ((TIM4->SR & (1 << 4)) != 0) { // Channel 1
+    TIM4->SR &= ~(1 << 4);
   }
 }
 

@@ -43,13 +43,38 @@ static void initAFGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin
   gpio->MODER &= ~(1 << (pin * 2));
 
   unsigned char afr = pin < 8 ? 0 : 1;
+  pin = (pin - (8 * afr));
+  gpio->AFR[afr] &= ~(0xF << (pin * 4));
   gpio->AFR[afr] |= (af << (pin * 4));
+}
+
+static void initTimer4(void) {
+  // ------------- Motor Speed Timer -----------------------
+  // Channel 3 for PB8
+  // Channel 4 for PB9
+  TIM4->CR1 = 0x0080;
+  TIM4->CR2 = 0x0000;
+  TIM4->SMCR = 0x0000;
+
+  TIM4->DIER |= (1 << 4); // IRQ when CCR4 is reacheds
+
+  TIM4->PSC = 64000 - 1; // T = 2 ms
+  TIM4->CNT = 0;
+  TIM4->ARR = 1000 - 1; // Tpwm = 1s
+  TIM4->CCR4 = 50; // DC = 10%
+
+  TIM4->CCMR2 &= ~(0xFF00); // Clear all channel 4 information
+  TIM4->CCMR2 |= 0x6800; // CC1S = 0 (TOC) OC1M = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
+
+  TIM4->CCER |= 0xB000; // CC4NP:CC4P = 11 (rising and falling edge active) CC4E
+
+  NVIC->ISER[0] |= (1 << 30); // Enabling TIM4_IRQ at NVIC (position 30).
 }
 
 static void initDriveModule(void) {
   // Motor right is set to the output of the left driver (due to the placement
   // of the driver)
-  initOutputGPIOPin(&s_pin_1_motor_right, GPIOB, 9);
+  initAFGPIOPin(&s_pin_1_motor_right, GPIOB, 9, 2);
   initOutputGPIOPin(&s_pin_2_motor_right, GPIOA, 12);
   s_motor_right.pin_1 = s_pin_1_motor_right;
   s_motor_right.pin_2 = s_pin_2_motor_right;
@@ -62,6 +87,11 @@ static void initDriveModule(void) {
   s_motor_left.pin_1 = s_pin_1_motor_left;
   s_motor_left.pin_2 = s_pin_2_motor_left;
   g_robot.motor_left = &s_motor_left;
+
+  initTimer4();
+
+  TIM4->CR1 |= 0x0001;
+  TIM4->SR = 0; // Clear flags
 }
 
 static void initTimer2(void) {
@@ -118,28 +148,6 @@ static void initTimer3(void) {
   NVIC->ISER[0] |= (1 << 29);
 }
 
-
-static void initTimer4(void) {
-  // ------------- Motor Speed Timer -----------------------
-  TIM4->CR1 = 0x0080;
-  TIM4->CR2 = 0x0000;
-  TIM4->SMCR = 0x0000;
-
-  TIM4->DIER |= (1 << 1); // IRQ when CCR1 is reacheds
-
-  TIM4->PSC = 64000 - 1; // T = 2 ms
-  TIM4->CNT = 0;
-  TIM4->ARR = 1000 - 1; // Tpwm = 1s
-  TIM4->CCR1 = 10; // DC = 10%
-
-  TIM4->CCMR1 &= ~(0x00FF); // Clear all channel 1 information
-  TIM4->CCMR1 |= 0x0068; // CC1S = 0 (TOC) OC1M = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
-
-  TIM4->CCER &= ~(0x000F); // No hardware output
-
-  NVIC->ISER[0] |= (1 << 30); // Enabling TIM4_IRQ at NVIC (position 30).
-}
-
 static void initUltrasonicAndBuzzerModule(void) {
   initOutputGPIOPin(&s_pin_buzzer, GPIOA, 1);
   s_buzzer.gpio_pin = &s_pin_buzzer;
@@ -159,16 +167,12 @@ static void initUltrasonicAndBuzzerModule(void) {
 
   initTimer2();
   initTimer3();
-  initTimer4();
 
   TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
   TIM2->SR = 0; // Clear flags
 
   TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
   TIM3->SR = 0; // Clear flags
-
-  TIM4->CR1 |= 0x0001;
-  TIM4->SR = 0; // Clear flags
 }
 
 /*
