@@ -71,23 +71,26 @@ static void MX_TIM4_Init(void);
  */
 // ------------- Toggle Buzzer Timer -----------------------
 void TIM4_IRQHandler(void) {
-  if ((TIM4->SR & (1 << 1)) != 0) {
-    if (g_robot.buzzer->status == BUZZER_BEEPING) {
-      toggleGPIOPin(g_robot.buzzer->gpio_pin);
-    }
-
-    if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
-      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
-      TIM2->EGR |= (1 << 2); // UG = 1 -> Generate update event
-    }
-
+  if ((TIM4->SR & (1 << 1)) != 0) { // Channel 1
+    //toggleGPIOPin(g_robot.buzzer->gpio_pin);
     TIM4->SR &= ~(1 << 1);
   }
 }
 
 
 void TIM3_IRQHandler(void) {
+  if ((TIM3->SR & (1 << 1)) != 0) {
+    if (g_robot.buzzer->status == BUZZER_BEEPING) {
+      toggleGPIOPin(g_robot.buzzer->gpio_pin);
+    }
 
+    if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
+      g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
+      TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
+    }
+
+    TIM3->SR &= ~(1 << 1);
+  }
 }
 
 

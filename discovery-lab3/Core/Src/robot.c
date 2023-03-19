@@ -96,25 +96,46 @@ static void initTimer2(void) {
   NVIC->ISER[0] |= (1 << 28);
 }
 
+static void initTimer3(void) {
+  // ------------- Toggle Buzzer Timer -----------------------
+  TIM3->CR1 = 0x0000;
+  TIM3->CR2 = 0x0000;
+  TIM3->SMCR = 0x0000;
+
+  TIM3->PSC = 400 - 1;
+  TIM3->CNT = 0;
+  TIM3->ARR = 0xFFFF;
+  TIM3->CCR1 = 500;
+
+  TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
+
+  TIM3->CCMR1 &= ~(0x00FF);
+  TIM3->CCMR1 |= 0x0030;    // CC1S = 0 (TOC, PWM) OC1M = 011 (Toggle) OC1PE = 0  (without preload)
+
+  TIM3->CCER &= ~(0x000F);
+  TIM3->CCER |= 0x0001; // CC1P = 0 (always) CC1E = 1   (hardware output activated)
+
+  NVIC->ISER[0] |= (1 << 29);
+}
+
 
 static void initTimer4(void) {
-  // ------------- Toggle Buzzer Timer -----------------------
-  TIM4->CR1 = 0x0000;
+  // ------------- Motor Speed Timer -----------------------
+  TIM4->CR1 = 0x0080;
   TIM4->CR2 = 0x0000;
   TIM4->SMCR = 0x0000;
 
-  TIM4->PSC = 400 - 1;
+  TIM4->DIER |= (1 << 1); // IRQ when CCR1 is reacheds
+
+  TIM4->PSC = 64000 - 1; // T = 2 ms
   TIM4->CNT = 0;
-  TIM4->ARR = 0xFFFF;
-  TIM4->CCR1 = 500;
+  TIM4->ARR = 1000 - 1; // Tpwm = 1s
+  TIM4->CCR1 = 10; // DC = 10%
 
-  TIM4->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
+  TIM4->CCMR1 &= ~(0x00FF); // Clear all channel 1 information
+  TIM4->CCMR1 |= 0x0068; // CC1S = 0 (TOC) OC1M = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
 
-  TIM4->CCMR1 &= ~(0x00FF);
-  TIM4->CCMR1 |= 0x0030;    // CC1S = 0 (TOC, PWM) OC1M = 011 (Toggle) OC1PE = 0  (without preload)
-
-  TIM4->CCER &= ~(0x000F);
-  TIM4->CCER |= 0x0001; // CC1P = 0 (always) CC1E = 1   (hardware output activated)
+  TIM4->CCER &= ~(0x000F); // No hardware output
 
   NVIC->ISER[0] |= (1 << 30); // Enabling TIM4_IRQ at NVIC (position 30).
 }
@@ -137,10 +158,14 @@ static void initUltrasonicAndBuzzerModule(void) {
   g_robot.ultrasound = &s_ultrasound;
 
   initTimer2();
+  initTimer3();
   initTimer4();
 
   TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
   TIM2->SR = 0; // Clear flags
+
+  TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
+  TIM3->SR = 0; // Clear flags
 
   TIM4->CR1 |= 0x0001;
   TIM4->SR = 0; // Clear flags
