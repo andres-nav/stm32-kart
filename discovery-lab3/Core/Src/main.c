@@ -71,12 +71,14 @@ void TIM3_IRQHandler(void) {
       toggleGPIOPin(g_robot.buzzer->gpio_pin);
     }
 
+    TIM3->SR &= ~(1 << 1);
+  } else if ((TIM3->SR & (1 << 2)) != 0) {
     if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
       TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
     }
-
-    TIM3->SR &= ~(1 << 1);
+    TIM3->CCR2 = TIM3->CNT + 50;
+    TIM3->SR &= ~(1 << 2);
   }
 }
 
@@ -101,6 +103,7 @@ void TIM2_IRQHandler(void) {
         }
         g_robot.ultrasound->distance = distance;
       }
+
     }
 
     TIM2->SR &= ~(1 << 1);
@@ -170,11 +173,12 @@ int main(void)
       enum StatusRobot status_robot;
       unsigned char speed = 0;
 
+
       if (g_robot.ultrasound->distance < 10) {
         status_robot = ROBOT_STOPPED;
       } else if (g_robot.ultrasound->distance < 20) {
         status_robot = ROBOT_FORWARD;
-        speed = (g_robot.ultrasound->distance - 9) * 10;
+        speed = (g_robot.ultrasound->distance - 8) * 10;
       } else {
         status_robot = ROBOT_FORWARD;
         speed = MAX_SPEED;

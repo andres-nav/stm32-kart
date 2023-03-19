@@ -132,18 +132,20 @@ static void initTimer3(void) {
   TIM3->CR2 = 0x0000;
   TIM3->SMCR = 0x0000;
 
-  TIM3->PSC = 400 - 1;
+  TIM3->PSC = 320 - 1;
   TIM3->CNT = 0;
   TIM3->ARR = 0xFFFF;
-  TIM3->CCR1 = 500;
+  TIM3->CCR1 = 1000;
+  TIM3->CCR2 = 50;
 
   TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
+  TIM3->DIER |= (1 << 2);
 
-  TIM3->CCMR1 &= ~(0x00FF);
-  TIM3->CCMR1 |= 0x0030;    // CC1S = 0 (TOC, PWM) OC1M = 011 (Toggle) OC1PE = 0  (without preload)
+  TIM3->CCMR1 &= ~(0xFFFF);
+  TIM3->CCMR1 |= 0x3030;    // CC1S = 0 (TOC, PWM) OC1M = 011 (Toggle) OC1PE = 0  (without preload)
 
-  TIM3->CCER &= ~(0x000F);
-  TIM3->CCER |= 0x0001; // CC1P = 0 (always) CC1E = 1   (hardware output activated)
+  TIM3->CCER &= ~(0x00FF);
+  TIM3->CCER |= 0x0011; // CC1P = 0 (always) CC1E = 1   (hardware output activated)
 
   NVIC->ISER[0] |= (1 << 29);
 }
@@ -324,6 +326,16 @@ void updateStatusRobot(enum StatusRobot status) {
   case ROBOT_LEFT:
     status_motor_right = MOTOR_FORWARD;
     status_motor_left = MOTOR_STOPPED;
+
+    break;
+  case ROBOT_BACKWARD_RIGHT:
+    status_motor_right = MOTOR_BACKWARD;
+    status_motor_left = MOTOR_STOPPED;
+
+    break;
+  case ROBOT_BACKWARD_LEFT:
+    status_motor_right = MOTOR_STOPPED;
+    status_motor_left = MOTOR_BACKWARD;
 
     break;
   }
