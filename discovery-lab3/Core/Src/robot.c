@@ -135,8 +135,8 @@ static void initTimer3(void) {
 
   TIM3->PSC = 3200 - 1;
   TIM3->CNT = 0;
-  TIM3->ARR = 5000;
-  TIM3->CCR1 = 5000;
+  TIM3->ARR = 4500;
+  TIM3->CCR1 = 4500;
   TIM3->CCR2 = 50;
 
   TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
@@ -164,7 +164,7 @@ static void initUltrasonicAndBuzzerModule(void) {
   s_ultrasound.echo = &s_pin_ultrasound_echo;
 
   s_ultrasound.status = ULTRASOUND_STOPPED;
-  s_ultrasound.distance = 0;
+  s_ultrasound.distance = 100;
   g_robot.ultrasound = &s_ultrasound;
 
   initTimer2();
@@ -367,8 +367,6 @@ void updateRobot() {
 
   switch(g_robot.status_obstacle) {
   case OBSTACLE_NONE:
-    while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING)); // Wait until measure is finished
-
     if (g_robot.ultrasound->distance < 20) {
       speed = (g_robot.ultrasound->distance - 3) * 10;
       status_robot = ROBOT_FORWARD;
@@ -394,13 +392,19 @@ void updateRobot() {
     do_wait = 1;
     break;
 
-  case OBSTACLE_LEFT:
   case OBSTACLE_RIGHT_BACK:
   case OBSTACLE_LEFT_BACK:
     speed = MAX_SPEED;
     status_robot = ROBOT_LEFT;
-    do_wait = 0;
+    do_wait = 1;
     break;
+
+  case OBSTACLE_LEFT:
+    speed = MAX_SPEED;
+    status_robot = ROBOT_BACKWARD_LEFT;
+    do_wait = 1;
+    break;
+
   }
 
   updateSpeedRobot(speed);

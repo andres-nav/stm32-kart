@@ -83,7 +83,6 @@ void TIM3_IRQHandler(void) {
     if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
       TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
-
     }
 
     TIM3->CCR2 = TIM3->CNT + 50;
@@ -179,7 +178,6 @@ int main(void)
   while (1) {
     switch(g_robot.status_obstacle) {
     case OBSTACLE_NONE:
-      while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING));
       if (g_robot.ultrasound->distance < 10) {
         g_robot.status_obstacle = OBSTACLE_IN_FRONT;
       }
@@ -194,7 +192,6 @@ int main(void)
       break;
 
     case OBSTACLE_RIGHT_MEASURE:
-      while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING));
       if (g_robot.ultrasound->distance > 20) {
         g_robot.status_obstacle = OBSTACLE_NONE;
       } else {
@@ -211,7 +208,6 @@ int main(void)
       break;
 
     case OBSTACLE_LEFT_MEASURE:
-      while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING));
       if (g_robot.ultrasound->distance > 20) {
         g_robot.status_obstacle = OBSTACLE_NONE;
       } else {
@@ -225,6 +221,7 @@ int main(void)
     }
 
     updateRobot();
+
 
 
     /* USER CODE END WHILE */
