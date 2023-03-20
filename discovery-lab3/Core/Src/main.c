@@ -67,10 +67,6 @@ static void MX_TIM4_Init(void);
 
 void TIM3_IRQHandler(void) {
   if ((TIM3->SR & (1 << 1)) != 0) {
-    if (g_robot.buzzer->status == BUZZER_BEEPING) {
-      toggleGPIOPin(g_robot.buzzer->gpio_pin);
-    }
-
     if (g_robot.delay == DELAY_START) {
       g_robot.delay = DELAY_WAITING;
     } else if (g_robot.delay == DELAY_WAITING) {
@@ -87,9 +83,20 @@ void TIM3_IRQHandler(void) {
 
     TIM3->CCR2 = TIM3->CNT + 50;
     if (TIM3->CCR2 > TIM3->ARR) {
-      TIM3->CCR2 = 50; // Handle counter overflows
+      TIM3->CCR2 = TIM3->CCR2 - TIM3->ARR; // Handle counter overflows
     }
     TIM3->SR &= ~(1 << 2);
+  } else if ((TIM3->SR & (1 << 3)) != 0) {
+
+    if (g_robot.buzzer->status == BUZZER_BEEPING) {
+      toggleGPIOPin(g_robot.buzzer->gpio_pin);
+    }
+    TIM3->CCR3 = TIM3->CNT + 1500;
+    if (TIM3->CCR2 > TIM3->ARR) {
+      TIM3->CCR3 = TIM3->CCR3 - TIM3->ARR; // Handle counter overflows
+    }
+    TIM3->SR &= ~(1 << 3);
+
   }
 }
 
