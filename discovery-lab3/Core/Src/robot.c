@@ -56,11 +56,11 @@ static void initTimer4(void) {
   TIM4->CR2 = 0x0000;
   TIM4->SMCR = 0x0000;
 
-  TIM4->PSC = 64000 - 1; // T = 2 ms
+  TIM4->PSC = 640 - 1; // T = 2 ms
   TIM4->CNT = 0;
   TIM4->ARR = MAX_SPEED - 1; // Tpwm = 1s
-  TIM4->CCR3 = 40;
-  TIM4->CCR4 = 40; // DC = 10%
+  TIM4->CCR3 = MAX_SPEED;
+  TIM4->CCR4 = MAX_SPEED; // DC = 10%
 
   TIM4->CCMR2 &= ~(0xFFFF); // Clear all channel 4 information
   TIM4->CCMR2 |= 0x6868; // CCyS = 0 (TOC) OCyM = 110 (PPM starting in 1) OC1PE = 1 (Preload enable for PWM)
@@ -135,7 +135,7 @@ static void initTimer3(void) {
   TIM3->PSC = 320 - 1;
   TIM3->CNT = 0;
   TIM3->ARR = 0xFFFF;
-  TIM3->CCR1 = 1000;
+  TIM3->CCR1 = 2000;
   TIM3->CCR2 = 50;
 
   TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
@@ -358,4 +358,44 @@ void updateSpeedRobot(unsigned char speed) {
   TIM4->CCR3 = speed;
   TIM4->CCR4 = speed;
 
+}
+
+void updateRobot() {
+  enum StatusRobot status_robot = ROBOT_STOPPED;
+  unsigned char speed = 0;
+
+  switch(g_robot.status_obstacle) {
+  case OBSTACLE_NONE:
+    if (g_robot.ultrasound->distance < 20) {
+      speed = (g_robot.ultrasound->distance - 8) * 10;
+      status_robot = ROBOT_FORWARD;
+    } else {
+      status_robot = ROBOT_FORWARD;
+      speed = MAX_SPEED;
+    }
+
+    break;
+
+  case OBSTACLE_IN_FRONT:
+  case OBSTACLE_WAITING:
+  case OBSTACLE_RIGHT_MEASURE:
+  case OBSTACLE_RIGHT_BACK_WAITING:
+    speed = 0;
+    status_robot = ROBOT_STOPPED;
+    break;
+
+  case OBSTACLE_RIGHT:
+    speed = MAX_SPEED;
+    status_robot = ROBOT_BACKWARD_RIGHT;
+    break;
+
+  case OBSTACLE_LEFT:
+  case OBSTACLE_RIGHT_BACK:
+    speed = MAX_SPEED;
+    status_robot = ROBOT_LEFT;
+    break;
+  }
+
+  updateSpeedRobot(speed);
+  updateStatusRobot(status_robot);
 }
