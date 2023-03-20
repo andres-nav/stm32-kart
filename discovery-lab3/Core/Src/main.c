@@ -71,21 +71,10 @@ void TIM3_IRQHandler(void) {
       toggleGPIOPin(g_robot.buzzer->gpio_pin);
     }
 
-    if (g_robot.status_obstacle != OBSTACLE_NONE) {
-      if (g_robot.status_obstacle == OBSTACLE_IN_FRONT) {
-        g_robot.status_obstacle = OBSTACLE_WAITING;
-      } else if (g_robot.status_obstacle == OBSTACLE_WAITING) {
-        g_robot.status_obstacle = OBSTACLE_RIGHT;
-      } else if (g_robot.status_obstacle == OBSTACLE_RIGHT) {
-        g_robot.status_obstacle = OBSTACLE_RIGHT_MEASURE;
-      } else if (g_robot.status_obstacle == OBSTACLE_RIGHT_BACK_WAITING) {
-        g_robot.status_obstacle = OBSTACLE_RIGHT_BACK;
-      } else if (g_robot.status_obstacle == OBSTACLE_RIGHT_BACK) {
-        g_robot.status_obstacle = OBSTACLE_LEFT;
-      } else if (g_robot.status_obstacle == OBSTACLE_LEFT) {
-        g_robot.status_obstacle = OBSTACLE_NONE;
-      }
-      updateRobot();
+    if (g_robot.delay == DELAY_START) {
+      g_robot.delay = DELAY_WAITING;
+    } else if (g_robot.delay == DELAY_WAITING) {
+      g_robot.delay = DELAY_OFF;
     }
 
     TIM3->SR &= ~(1 << 1);
@@ -94,8 +83,13 @@ void TIM3_IRQHandler(void) {
     if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
       TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
+
     }
 
+    TIM3->CCR2 = TIM3->CNT + 50;
+    if (TIM3->CCR2 > TIM3->ARR) {
+      TIM3->CCR2 = 50; // Handle counter overflows
+    }
     TIM3->SR &= ~(1 << 2);
   }
 }
@@ -115,13 +109,10 @@ void TIM2_IRQHandler(void) {
       }
       int distance = ((delay) * 0.034) / 2;
       if (g_robot.ultrasound->distance != distance) {
-        if (g_robot.ultrasound->distance != 0) {
-          g_robot.ultrasound->status_distance = DISTANCE_CHANGED;
-        }
         g_robot.ultrasound->distance = distance;
+        updateBuzzer();
       }
 
-      TIM3->CCR2 = TIM3->CNT + 50;
       g_robot.ultrasound->status = ULTRASOUND_STOPPED;
     }
 
@@ -186,25 +177,54 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    if ((g_robot.ultrasound->status != ULTRASOUND_MEASURING)) {
-      // TODO delete status distance
-      g_robot.ultrasound->status_distance = DISTANCE_DID_NOT_CHANGE;
-
-      if (g_robot.status_obstacle == OBSTACLE_NONE) {
-        if (g_robot.ultrasound->distance < 10) {
-          g_robot.status_obstacle = OBSTACLE_IN_FRONT;
-        }
-      } else if (g_robot.status_obstacle == OBSTACLE_RIGHT_MEASURE) {
-        if (g_robot.ultrasound->distance < 20) {
-          g_robot.status_obstacle = OBSTACLE_RIGHT_BACK_WAITING;
-        } else {
-          g_robot.status_obstacle = OBSTACLE_NONE;
-        }
+    switch(g_robot.status_obstacle) {
+    case OBSTACLE_NONE:
+      while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING));
+      if (g_robot.ultrasound->distance < 10) {
+        g_robot.status_obstacle = OBSTACLE_IN_FRONT;
       }
+      break;
 
-      updateRobot();
-      updateBuzzer();
+    case OBSTACLE_IN_FRONT:
+      g_robot.status_obstacle = OBSTACLE_RIGHT;
+      break;
+
+    case OBSTACLE_RIGHT:
+      g_robot.status_obstacle = OBSTACLE_RIGHT_MEASURE;
+      break;
+
+    case OBSTACLE_RIGHT_MEASURE:
+      while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING));
+      if (g_robot.ultrasound->distance > 20) {
+        g_robot.status_obstacle = OBSTACLE_NONE;
+      } else {
+        g_robot.status_obstacle = OBSTACLE_RIGHT_BACK;
+      }
+      break;
+
+    case OBSTACLE_RIGHT_BACK:
+      g_robot.status_obstacle = OBSTACLE_LEFT;
+      break;
+
+    case OBSTACLE_LEFT:
+      g_robot.status_obstacle = OBSTACLE_LEFT_MEASURE;
+      break;
+
+    case OBSTACLE_LEFT_MEASURE:
+      while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING));
+      if (g_robot.ultrasound->distance > 20) {
+        g_robot.status_obstacle = OBSTACLE_NONE;
+      } else {
+        g_robot.status_obstacle = OBSTACLE_LEFT_BACK;
+      }
+      break;
+
+    case OBSTACLE_LEFT_BACK:
+      g_robot.status_obstacle = OBSTACLE_NONE;
+      break;
     }
+
+    updateRobot();
 
 
     /* USER CODE END WHILE */

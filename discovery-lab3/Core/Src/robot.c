@@ -90,6 +90,7 @@ static void initDriveModule(void) {
   g_robot.speed = MAX_SPEED;
   g_robot.status = ROBOT_FORWARD;
   g_robot.status_obstacle = OBSTACLE_NONE;
+  g_robot.delay = DELAY_OFF;
 
   initTimer4();
 }
@@ -132,10 +133,10 @@ static void initTimer3(void) {
   TIM3->CR2 = 0x0000;
   TIM3->SMCR = 0x0000;
 
-  TIM3->PSC = 320 - 1;
+  TIM3->PSC = 3200 - 1;
   TIM3->CNT = 0;
-  TIM3->ARR = 0xFFFF;
-  TIM3->CCR1 = 2000;
+  TIM3->ARR = 5000;
+  TIM3->CCR1 = 5000;
   TIM3->CCR2 = 50;
 
   TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
@@ -164,7 +165,6 @@ static void initUltrasonicAndBuzzerModule(void) {
 
   s_ultrasound.status = ULTRASOUND_STOPPED;
   s_ultrasound.distance = 0;
-  s_ultrasound.status_distance = DISTANCE_DID_NOT_CHANGE;
   g_robot.ultrasound = &s_ultrasound;
 
   initTimer2();
@@ -363,39 +363,52 @@ void updateSpeedRobot(unsigned char speed) {
 void updateRobot() {
   enum StatusRobot status_robot = ROBOT_STOPPED;
   unsigned char speed = 0;
+  unsigned char do_wait = 0;
 
   switch(g_robot.status_obstacle) {
   case OBSTACLE_NONE:
+    while ((g_robot.ultrasound->status == ULTRASOUND_MEASURING)); // Wait until measure is finished
+
     if (g_robot.ultrasound->distance < 20) {
-      speed = (g_robot.ultrasound->distance - 8) * 10;
+      speed = (g_robot.ultrasound->distance - 3) * 10;
       status_robot = ROBOT_FORWARD;
     } else {
-      status_robot = ROBOT_FORWARD;
       speed = MAX_SPEED;
+      status_robot = ROBOT_FORWARD;
     }
+    do_wait = 0;
 
     break;
 
   case OBSTACLE_IN_FRONT:
-  case OBSTACLE_WAITING:
   case OBSTACLE_RIGHT_MEASURE:
-  case OBSTACLE_RIGHT_BACK_WAITING:
+  case OBSTACLE_LEFT_MEASURE:
     speed = 0;
     status_robot = ROBOT_STOPPED;
+    do_wait = 1;
     break;
 
   case OBSTACLE_RIGHT:
     speed = MAX_SPEED;
     status_robot = ROBOT_BACKWARD_RIGHT;
+    do_wait = 1;
     break;
 
   case OBSTACLE_LEFT:
   case OBSTACLE_RIGHT_BACK:
+  case OBSTACLE_LEFT_BACK:
     speed = MAX_SPEED;
     status_robot = ROBOT_LEFT;
+    do_wait = 0;
     break;
   }
 
   updateSpeedRobot(speed);
   updateStatusRobot(status_robot);
+
+  while (do_wait != 0) {
+    g_robot.delay = DELAY_START;
+    while(g_robot.delay != DELAY_OFF);
+    do_wait --;
+  }
 }
