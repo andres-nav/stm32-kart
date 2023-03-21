@@ -59,7 +59,7 @@ static void initTimer4(void) {
   TIM4->CR2 = 0x0000;
   TIM4->SMCR = 0x0000;
 
-  TIM4->PSC = 640 - 1; // T = 2 ms
+  TIM4->PSC = TIMER_4_PSC - 1; // T = 2 ms
   TIM4->CNT = 0;
   TIM4->ARR = MAX_SPEED - 1; // Tpwm = 1s
   TIM4->CCR3 = MAX_SPEED;
@@ -79,6 +79,7 @@ static void initDriveModule(void) {
   s_motor_right.pin_speed = s_pin_speed_motor_right;
   s_motor_right.pin_direction = s_pin_direction_motor_right;
   s_motor_right.channel = 4;
+  s_motor_right.status = MOTOR_FORWARD;
   g_robot.motor_right = &s_motor_right;
 
   // Motor left is set to the output of the right driver (due to the placement
@@ -88,6 +89,7 @@ static void initDriveModule(void) {
   s_motor_left.pin_speed = s_pin_speed_motor_left;
   s_motor_left.pin_direction = s_pin_direction_motor_left;
   s_motor_left.channel = 3;
+  s_motor_right.status = MOTOR_FORWARD;
   g_robot.motor_left = &s_motor_left;
 
   g_robot.speed = MAX_SPEED;
@@ -104,7 +106,7 @@ static void initTimer2(void) {
   TIM2->CR2 = 0x0000;
   TIM2->SMCR = 0x0000;
 
-  TIM2->PSC = 32 - 1;
+  TIM2->PSC = TIMER_2_PSC - 1;
   TIM2->CNT = 0;
   TIM2->ARR = 0xFFFF;
 
@@ -117,7 +119,7 @@ static void initTimer2(void) {
   TIM2->CCER |= (1 << 3);
 
   // ------------- Trigger Timer (Channel 2) -----------
-  TIM2->CCR2 = 10;
+  TIM2->CCR2 = TIMER_2_CH_2_CNT;
 
   TIM2->DIER |= (1 << 2); // IRQ when CCR2 is reached
 
@@ -136,12 +138,12 @@ static void initTimer3(void) {
   TIM3->CR2 = 0x0000;
   TIM3->SMCR = 0x0000;
 
-  TIM3->PSC = 3200 - 1;
+  TIM3->PSC = TIMER_3_PSC - 1;
   TIM3->CNT = 0;
-  TIM3->ARR = 4500;
-  TIM3->CCR1 = 4500;
-  TIM3->CCR2 = 50;
-  TIM3->CCR3 = 2250;
+  TIM3->ARR = TIMER_3_CH_1_CNT;
+  TIM3->CCR1 = TIMER_3_CH_1_CNT;
+  TIM3->CCR2 = TIMER_3_CH_2_CNT;
+  TIM3->CCR3 = TIMER_3_CH_3_CNT;
 
   TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
   TIM3->DIER |= (1 << 2);
@@ -249,6 +251,12 @@ void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status) {
  * flipped. (hardware)
  */
 static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
+  if (motor->status == status) {
+    return;
+  }
+
+  motor->status = status;
+
   enum StatusGPIOPin status_motor_pin_direction;
   unsigned char offset_enable = ((motor->channel - 1) * 4);
   unsigned char offset_pwm_mode = ((motor->channel - 3) * 8) + 4;
@@ -325,8 +333,10 @@ static void updateStatusRobot(enum StatusRobot status) {
     break;
   }
 
-  updateStatusMotor(g_robot.motor_right, status_motor_right);
+  // TODO enable motor
   updateStatusMotor(g_robot.motor_left, status_motor_left);
+  updateStatusMotor(g_robot.motor_right, status_motor_right);
+
 }
 
 static void updateSpeedRobot(unsigned char speed) {
@@ -380,9 +390,9 @@ void toggleGPIOPin(struct GPIOPin *gpio_pin) {
 void updateBuzzer() {
   enum StatusBuzzer status_buzzer;
 
-  if (g_robot.ultrasound->distance < 10) {
+  if (g_robot.ultrasound->distance < SHORT_DISTANCE) {
     status_buzzer = BUZZER_ON;
-  } else if (g_robot.ultrasound->distance < 20) {
+  } else if (g_robot.ultrasound->distance < LONG_DISTANCE) {
     status_buzzer = BUZZER_BEEPING;
   } else {
     status_buzzer = BUZZER_OFF;
@@ -399,6 +409,10 @@ void updateMaxSpeed() {
   g_robot.speed_selector.max_speed = (int) (MAX_SPEED * percentage);
 }
 
+/*
+ * It uses a TURN_SPEED so the angle is constant for a 0.5 second delay
+ * Otherwise depending on the speed will make different angle of turns.
+ */
 void updateRobot() {
   enum StatusRobot status_robot = ROBOT_STOPPED;
   unsigned char speed = 0;
@@ -406,8 +420,12 @@ void updateRobot() {
 
   switch(g_robot.status_obstacle) {
   case OBSTACLE_NONE:
-    if (g_robot.ultrasound->distance < 20) {
-      float percentage = (g_robot.ultrasound->distance - 12) * 0.1;
+    if (g_robot.ultrasound->distance < LONG_DISTANCE) {
+      /*
+       * SHORT_DISTANCE + 2 is done so when the robot is at 10 the speed is not 0
+       * Therefore the speed is from 20% to 100% the maximum
+       */
+      float percentage = (g_robot.ultrasound->distance - (SHORT_DISTANCE + 2)) * 0.1;
       speed = (int) (g_robot.speed_selector.max_speed * percentage) + MIN_SPEED;
     } else {
       speed = g_robot.speed_selector.max_speed;
@@ -425,26 +443,27 @@ void updateRobot() {
   case OBSTACLE_IN_FRONT:
   case OBSTACLE_RIGHT_MEASURE:
   case OBSTACLE_LEFT_MEASURE:
+  case OBSTACLE_FINAL:
     speed = 0;
     status_robot = ROBOT_STOPPED;
     do_wait = 1;
     break;
 
   case OBSTACLE_RIGHT:
-    speed = MAX_SPEED;
+    speed = TURN_SPEED;
     status_robot = ROBOT_BACKWARD_RIGHT;
     do_wait = 1;
     break;
 
   case OBSTACLE_RIGHT_BACK:
   case OBSTACLE_LEFT_BACK:
-    speed = MAX_SPEED;
+    speed = TURN_SPEED;
     status_robot = ROBOT_LEFT;
     do_wait = 1;
     break;
 
   case OBSTACLE_LEFT:
-    speed = MAX_SPEED;
+    speed = TURN_SPEED;
     status_robot = ROBOT_BACKWARD_LEFT;
     do_wait = 1;
     break;

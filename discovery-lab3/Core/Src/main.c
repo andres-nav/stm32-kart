@@ -83,7 +83,7 @@ void TIM3_IRQHandler(void) {
       TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
     }
 
-    TIM3->CCR2 = TIM3->CNT + 50;
+    TIM3->CCR2 = TIM3->CNT + TIMER_3_CH_2_CNT;
     if (TIM3->CCR2 > TIM3->ARR) {
       TIM3->CCR2 = TIM3->CCR2 - TIM3->ARR; // Handle counter overflows
     }
@@ -94,10 +94,6 @@ void TIM3_IRQHandler(void) {
       toggleGPIOPin(g_robot.buzzer->gpio_pin);
     }
 
-//    TIM3->CCR3 = TIM3->CNT + 2250;
-//    if (TIM3->CCR2 > TIM3->ARR) {
-//      TIM3->CCR3 = TIM3->CCR3 - TIM3->ARR; // Handle counter overflows
-//    }
     TIM3->SR &= ~(1 << 3);
 
   }
@@ -116,7 +112,7 @@ void TIM2_IRQHandler(void) {
       if (delay < 0) {
         delay += 0xFFFF; // Handle counter overflows
       }
-      int distance = ((delay) * 0.034) / 2;
+      int distance = ((delay) * SPEED_SOUND_CM_MS) / 2;
       if (g_robot.ultrasound->distance != distance) {
         g_robot.ultrasound->distance = distance;
         updateBuzzer();
@@ -131,7 +127,7 @@ void TIM2_IRQHandler(void) {
     // ------------- Trigger Timer -----------------------
     if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_START) {
       updateStatusGPIOPin(g_robot.ultrasound->trigger, GPIO_PIN_UP);
-      TIM2->CCR2 = TIM2->CNT + 10;
+      TIM2->CCR2 = TIM2->CNT + TIMER_2_CH_2_CNT;
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_ON;
 
     } else if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_ON) {
@@ -202,7 +198,7 @@ int main(void)
       break;
 
     case OBSTACLE_RIGHT_MEASURE:
-      if (g_robot.ultrasound->distance > 20) {
+      if (g_robot.ultrasound->distance > LONG_DISTANCE) {
         g_robot.status_obstacle = OBSTACLE_NONE;
       } else {
         g_robot.status_obstacle = OBSTACLE_RIGHT_BACK;
@@ -218,7 +214,7 @@ int main(void)
       break;
 
     case OBSTACLE_LEFT_MEASURE:
-      if (g_robot.ultrasound->distance > 20) {
+      if (g_robot.ultrasound->distance > LONG_DISTANCE) {
         g_robot.status_obstacle = OBSTACLE_NONE;
       } else {
         g_robot.status_obstacle = OBSTACLE_LEFT_BACK;
@@ -226,8 +222,12 @@ int main(void)
       break;
 
     case OBSTACLE_LEFT_BACK:
-      g_robot.status_obstacle = OBSTACLE_NONE;
+      g_robot.status_obstacle = OBSTACLE_FINAL;
       break;
+
+    case OBSTACLE_FINAL:
+        g_robot.status_obstacle = OBSTACLE_NONE;
+        break;
     }
 
     updateRobot();
