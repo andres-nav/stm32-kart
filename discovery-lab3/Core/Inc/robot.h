@@ -4,6 +4,8 @@
 #include "stm32l1xx_hal.h"
 
 #define MAX_SPEED 100
+#define MIN_SPEED 30
+#define MAX_VALUE_ADC 4095
 
 extern struct Robot g_robot;
 
@@ -40,6 +42,12 @@ struct Buzzer {
   struct GPIOPin *gpio_pin;
 };
 
+struct SpeedSelector {
+  unsigned short max_speed;
+  struct GPIOPin *gpio_pin;
+  ADC_TypeDef *adc;
+};
+
 struct Robot {
   enum StatusRobot status;
   enum StatusObstacle status_obstacle;
@@ -49,6 +57,7 @@ struct Robot {
   struct Motor *motor_left;
   struct Buzzer *buzzer;
   struct Ultrasound *ultrasound;
+  struct SpeedSelector speed_selector;
 };
 
 void createRobot(void);
@@ -56,11 +65,8 @@ void createRobot(void);
 void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status);
 void toggleGPIOPin(struct GPIOPin *gpio_pin);
 
-void updateStatusBuzzer(enum StatusBuzzer status);
 void updateBuzzer();
-
-void updateStatusRobot(enum StatusRobot status);
-void updateSpeedRobot(unsigned char speed);
+void updateMaxSpeed();
 
 void updateRobot();
 

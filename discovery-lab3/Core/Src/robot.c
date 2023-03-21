@@ -14,6 +14,9 @@ static struct Buzzer s_buzzer;
 static struct GPIOPin s_pin_ultrasound_trigger, s_pin_ultrasound_echo;
 static struct Ultrasound s_ultrasound;
 
+static struct GPIOPin s_pin_speed_selector;
+static struct SpeedSelector s_speed_selector;
+
 /*
  * Initializes the basic structure of a gpio pin with the default speed
  */
@@ -138,7 +141,7 @@ static void initTimer3(void) {
   TIM3->ARR = 4500;
   TIM3->CCR1 = 4500;
   TIM3->CCR2 = 50;
-  TIM3->CCR1 = 1500;
+  TIM3->CCR3 = 2250;
 
   TIM3->DIER |= (1 << 1); // IRQ when CCR1 is reached -> CCyIE = 1
   TIM3->DIER |= (1 << 2);
@@ -147,7 +150,7 @@ static void initTimer3(void) {
   TIM3->CCMR1 &= ~(0xFFFF);
   TIM3->CCMR1 |= 0x3030;    // CC1S = 0 (TOC, PWM) OC1M = 011 (Toggle) OC1PE = 0  (without preload)
 
-  TIM3->CCMR2 &= ~(0xFFFF);
+  TIM3->CCMR2 &= ~(0x00FF);
   TIM3->CCMR2 |= 0x0030;
 
   TIM3->CCER &= ~(0x0FFF);
@@ -174,6 +177,48 @@ static void initUltrasonicAndBuzzerModule(void) {
 
   initTimer2();
   initTimer3();
+}
+
+static void initSpeedSelectorModule(void) {
+  initGPIOPin(&s_pin_speed_selector, GPIOA, 4);
+  s_speed_selector.adc = ADC1;
+
+  s_pin_speed_selector.gpio->MODER |= (3 << (s_pin_speed_selector.pin * 2));
+
+  s_speed_selector.adc->CR2 &= ~(1 << 0);
+  s_speed_selector.adc->CR1 = 0;  // OVRIE = 0 (overrun IRQ disabled) RES = 00 (resolution = 12 bits) SCAN = 0 (scan mode disabled) EOCIE = 0 (EOC IRQ disabled)
+  s_speed_selector.adc->CR2 = 0x00000412; // EOCS = 1 (EOC is activated after each conv.) DELS = 001 (delay till data is read) CONT = 1 (continuous conversion)
+
+  s_speed_selector.adc->SQR1 = 0x00000000;       // 1 channel in the sequence
+  s_speed_selector.adc->SQR5 = 0x00000004;       // The selected channel is AIN4
+
+  s_speed_selector.adc->CR2 |= (1 << 0);       // ADON = 1 (ADC powered on)
+
+  while ((s_speed_selector.adc->SR & 0x0040) == 0);  // If ADCONS = 0, I wait till converter is ready
+  s_speed_selector.adc->CR2 |= 0x40000000;       // When ADCONS = 1, I start conv. (SWSTART = 1)
+
+  s_speed_selector.gpio_pin = &s_pin_speed_selector;
+  s_speed_selector.max_speed = MAX_SPEED;
+
+  g_robot.speed_selector = s_speed_selector;
+}
+
+static void updateStatusBuzzer(enum StatusBuzzer status) {
+  if (g_robot.buzzer->status == status) {
+    return;
+  }
+
+  g_robot.buzzer->status = status;
+  switch (g_robot.buzzer->status) {
+  case BUZZER_ON:
+    updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_UP);
+    break;
+  case BUZZER_OFF:
+    updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_DOWN);
+    break;
+  case BUZZER_BEEPING:
+    break;
+  }
 }
 
 /*
@@ -212,6 +257,7 @@ static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
   case MOTOR_STOPPED:
     TIM4->CCER &= ~(11 << offset_enable); // Turn off PWM
     status_motor_pin_direction = GPIO_PIN_DOWN;
+    TIM4->CNT = 0;
     break;
   case MOTOR_FORWARD:
     TIM4->CCER |= (11 << offset_enable); // Turn on PWM
@@ -225,81 +271,15 @@ static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
 
     break;
   }
-  TIM4->CNT = 0;
   updateStatusGPIOPin(&(motor->pin_direction), status_motor_pin_direction);
 }
-
-
-
-/*
- * Creates a new robot and initializes all global and static variables
- */
-void createRobot(void) {
-  initDriveModule();
-  initUltrasonicAndBuzzerModule();
-
-  TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
-  TIM2->SR = 0; // Clear flags
-
-  TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
-  TIM3->SR = 0; // Clear flags
-
-  TIM4->CR1 |= 0x0001;
-  TIM4->SR = 0; // Clear flags
-
-  updateSpeedRobot(0);
-  updateStatusRobot(ROBOT_STOPPED);
-  updateStatusBuzzer(BUZZER_OFF);
-}
-
-void toggleGPIOPin(struct GPIOPin *gpio_pin) {
-  if ((gpio_pin->gpio->IDR & (1 << gpio_pin->pin)) == 0) {
-    gpio_pin->gpio->BSRR |= (1 << gpio_pin->pin);
-  } else {
-    gpio_pin->gpio->BSRR |= (1 << gpio_pin->pin) << 16;
-  }
-}
-
-void updateStatusBuzzer(enum StatusBuzzer status) {
-  if (g_robot.buzzer->status == status) {
-    return;
-  }
-
-  g_robot.buzzer->status = status;
-  switch (g_robot.buzzer->status) {
-  case BUZZER_ON:
-    updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_UP);
-    break;
-  case BUZZER_OFF:
-    updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_DOWN);
-    break;
-  case BUZZER_BEEPING:
-    break;
-  }
-}
-
-void updateBuzzer() {
-  enum StatusBuzzer status_buzzer;
-
-  if (g_robot.ultrasound->distance < 10) {
-    status_buzzer = BUZZER_ON;
-  } else if (g_robot.ultrasound->distance < 20) {
-    status_buzzer = BUZZER_BEEPING;
-  } else {
-    status_buzzer = BUZZER_OFF;
-  }
-
-  updateStatusBuzzer(status_buzzer);
-}
-
-
 
 /*
  * Updates the status of the motor and calls to implement the status.
  *    All the movements are with respect to the whole robot.
  *
  */
-void updateStatusRobot(enum StatusRobot status) {
+static void updateStatusRobot(enum StatusRobot status) {
   if (g_robot.status == status) {
     return;
   }
@@ -349,7 +329,7 @@ void updateStatusRobot(enum StatusRobot status) {
   updateStatusMotor(g_robot.motor_left, status_motor_left);
 }
 
-void updateSpeedRobot(unsigned char speed) {
+static void updateSpeedRobot(unsigned char speed) {
   if (g_robot.speed == speed) {
     return;
   }
@@ -362,7 +342,61 @@ void updateSpeedRobot(unsigned char speed) {
 
   TIM4->CCR3 = speed;
   TIM4->CCR4 = speed;
+}
 
+
+
+
+/*
+ * Creates a new robot and initializes all global and static variables
+ */
+void createRobot(void) {
+  initDriveModule();
+  initUltrasonicAndBuzzerModule();
+  initSpeedSelectorModule();
+
+  TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
+  TIM2->SR = 0; // Clear flags
+
+  TIM3->CR1 |= 0x0001; // CEN = 1 -> Start counter
+  TIM3->SR = 0; // Clear flags
+
+  TIM4->CR1 |= 0x0001;
+  TIM4->SR = 0; // Clear flags
+
+  updateSpeedRobot(0);
+  updateStatusRobot(ROBOT_STOPPED);
+  updateStatusBuzzer(BUZZER_OFF);
+}
+
+void toggleGPIOPin(struct GPIOPin *gpio_pin) {
+  if ((gpio_pin->gpio->IDR & (1 << gpio_pin->pin)) == 0) {
+    gpio_pin->gpio->BSRR |= (1 << gpio_pin->pin);
+  } else {
+    gpio_pin->gpio->BSRR |= (1 << gpio_pin->pin) << 16;
+  }
+}
+
+void updateBuzzer() {
+  enum StatusBuzzer status_buzzer;
+
+  if (g_robot.ultrasound->distance < 10) {
+    status_buzzer = BUZZER_ON;
+  } else if (g_robot.ultrasound->distance < 20) {
+    status_buzzer = BUZZER_BEEPING;
+  } else {
+    status_buzzer = BUZZER_OFF;
+  }
+
+  updateStatusBuzzer(status_buzzer);
+}
+
+void updateMaxSpeed() {
+  uint32_t value = g_robot.speed_selector.adc->DR;
+
+  float percentage = (((float) value * 0.5) / MAX_VALUE_ADC) + 0.5;
+
+  g_robot.speed_selector.max_speed = (int) (MAX_SPEED * percentage);
 }
 
 void updateRobot() {
@@ -373,12 +407,17 @@ void updateRobot() {
   switch(g_robot.status_obstacle) {
   case OBSTACLE_NONE:
     if (g_robot.ultrasound->distance < 20) {
-      speed = (g_robot.ultrasound->distance - 3) * 10;
-      status_robot = ROBOT_FORWARD;
+      float percentage = (g_robot.ultrasound->distance - 12) * 0.1;
+      speed = (int) (g_robot.speed_selector.max_speed * percentage) + MIN_SPEED;
     } else {
-      speed = MAX_SPEED;
-      status_robot = ROBOT_FORWARD;
+      speed = g_robot.speed_selector.max_speed;
     }
+
+    if (speed < MIN_SPEED) {
+      speed = MIN_SPEED;
+    }
+
+    status_robot = ROBOT_FORWARD;
     do_wait = 0;
 
     break;

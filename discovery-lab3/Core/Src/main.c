@@ -73,6 +73,8 @@ void TIM3_IRQHandler(void) {
       g_robot.delay = DELAY_OFF;
     }
 
+    updateMaxSpeed();
+
     TIM3->SR &= ~(1 << 1);
 
   } else if ((TIM3->SR & (1 << 2)) != 0) {
@@ -91,10 +93,11 @@ void TIM3_IRQHandler(void) {
     if (g_robot.buzzer->status == BUZZER_BEEPING) {
       toggleGPIOPin(g_robot.buzzer->gpio_pin);
     }
-    TIM3->CCR3 = TIM3->CNT + 1500;
-    if (TIM3->CCR2 > TIM3->ARR) {
-      TIM3->CCR3 = TIM3->CCR3 - TIM3->ARR; // Handle counter overflows
-    }
+
+//    TIM3->CCR3 = TIM3->CNT + 2250;
+//    if (TIM3->CCR2 > TIM3->ARR) {
+//      TIM3->CCR3 = TIM3->CCR3 - TIM3->ARR; // Handle counter overflows
+//    }
     TIM3->SR &= ~(1 << 3);
 
   }
