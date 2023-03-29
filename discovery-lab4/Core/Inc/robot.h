@@ -21,6 +21,9 @@
 
 #define TIMER_4_PSC 640
 
+#define DATA_RECEIVED_LENGHT 1
+#define DATA_SEND_LENGTH 50
+
 
 extern struct Robot g_robot;
 
@@ -29,9 +32,11 @@ enum StatusMotor { MOTOR_STOPPED, MOTOR_FORWARD, MOTOR_BACKWARD };
 enum StatusUltrasound { ULTRASOUND_STOPPED, ULTRASOUND_TRIGGER_START, ULTRASOUND_TRIGGER_ON, ULTRASOUND_TRIGGER_SENT, ULTRASOUND_MEASURING };
 enum StatusBuzzer { BUZZER_OFF, BUZZER_ON, BUZZER_BEEPING };
 enum StatusDelay {DELAY_START, DELAY_WAITING, DELAY_OFF };
-enum StatusRobot { ROBOT_STOPPED, ROBOT_FORWARD, ROBOT_BACKWARD, ROBOT_RIGHT, ROBOT_LEFT, ROBOT_BACKWARD_RIGHT, ROBOT_BACKWARD_LEFT};
+
 enum StatusObstacle { OBSTACLE_NONE, OBSTACLE_IN_FRONT, OBSTACLE_RIGHT, OBSTACLE_RIGHT_MEASURE, OBSTACLE_RIGHT_BACK,
     OBSTACLE_LEFT, OBSTACLE_LEFT_MEASURE, OBSTACLE_LEFT_BACK, OBSTACLE_FINAL };
+enum StatusMode { MODE_DEFAULT, MODE_AUTOMATIC, MODE_MANUAL };
+enum StatusRobot { ROBOT_DEFAULT, ROBOT_STOPPED, ROBOT_FORWARD, ROBOT_BACKWARD, ROBOT_RIGHT, ROBOT_LEFT, ROBOT_BACKWARD_RIGHT, ROBOT_BACKWARD_LEFT};
 
 struct GPIOPin {
   GPIO_TypeDef *gpio;
@@ -64,9 +69,15 @@ struct SpeedSelector {
   ADC_TypeDef *adc;
 };
 
+struct Bluetooth {
+  UART_HandleTypeDef *huart;
+  unsigned char *data_send, *data_received;
+};
+
 struct Robot {
-  enum StatusRobot status;
+  enum StatusRobot status_robot;
   enum StatusObstacle status_obstacle;
+  enum StatusMode status_mode;
   enum StatusDelay delay;
   unsigned char speed;
   struct Motor *motor_right;
@@ -74,17 +85,24 @@ struct Robot {
   struct Buzzer *buzzer;
   struct Ultrasound *ultrasound;
   struct SpeedSelector speed_selector;
+  struct Bluetooth bluetooth;
 };
 
-void createRobot(void);
+void createRobot(UART_HandleTypeDef *huart);
 
 void updateStatusGPIOPin(struct GPIOPin *gpio_pin, enum StatusGPIOPin status);
 void toggleGPIOPin(struct GPIOPin *gpio_pin);
 
+void updateStatusBuzzer(enum StatusBuzzer status);
 void updateBuzzer();
 void updateMaxSpeed();
 
+
+void updateStatusRobot(enum StatusRobot status);
+void updateSpeedRobot(unsigned char speed);
 void updateRobot();
+
+void startReceiveBluetooth();
 
 
 

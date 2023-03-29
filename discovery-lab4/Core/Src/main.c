@@ -49,7 +49,6 @@ TIM_HandleTypeDef htim4;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint8_t rxData;
 
 /* USER CODE END PV */
 
@@ -180,65 +179,65 @@ int main(void)
   MX_TIM4_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  createRobot();
-  HAL_UART_Receive_IT(&huart1,&rxData,1);
+
+  createRobot(&huart1);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1) {
-    switch(g_robot.status_obstacle) {
-    case OBSTACLE_NONE:
-      if (g_robot.ultrasound->distance < 10) {
-        g_robot.status_obstacle = OBSTACLE_IN_FRONT;
-      }
-      break;
-
-    case OBSTACLE_IN_FRONT:
-      g_robot.status_obstacle = OBSTACLE_RIGHT;
-      break;
-
-    case OBSTACLE_RIGHT:
-      g_robot.status_obstacle = OBSTACLE_RIGHT_MEASURE;
-      break;
-
-    case OBSTACLE_RIGHT_MEASURE:
-      if (g_robot.ultrasound->distance > LONG_DISTANCE) {
-        g_robot.status_obstacle = OBSTACLE_NONE;
-      } else {
-        g_robot.status_obstacle = OBSTACLE_RIGHT_BACK;
-      }
-      break;
-
-    case OBSTACLE_RIGHT_BACK:
-      g_robot.status_obstacle = OBSTACLE_LEFT;
-      break;
-
-    case OBSTACLE_LEFT:
-      g_robot.status_obstacle = OBSTACLE_LEFT_MEASURE;
-      break;
-
-    case OBSTACLE_LEFT_MEASURE:
-      if (g_robot.ultrasound->distance > LONG_DISTANCE) {
-        g_robot.status_obstacle = OBSTACLE_NONE;
-      } else {
-        g_robot.status_obstacle = OBSTACLE_LEFT_BACK;
-      }
-      break;
-
-    case OBSTACLE_LEFT_BACK:
-      g_robot.status_obstacle = OBSTACLE_FINAL;
-      break;
-
-    case OBSTACLE_FINAL:
-        g_robot.status_obstacle = OBSTACLE_NONE;
+    if (g_robot.status_mode == MODE_AUTOMATIC) {
+      switch(g_robot.status_obstacle) {
+      case OBSTACLE_NONE:
+        if (g_robot.ultrasound->distance < 10) {
+          g_robot.status_obstacle = OBSTACLE_IN_FRONT;
+        }
         break;
+
+      case OBSTACLE_IN_FRONT:
+        g_robot.status_obstacle = OBSTACLE_RIGHT;
+        break;
+
+      case OBSTACLE_RIGHT:
+        g_robot.status_obstacle = OBSTACLE_RIGHT_MEASURE;
+        break;
+
+      case OBSTACLE_RIGHT_MEASURE:
+        if (g_robot.ultrasound->distance > LONG_DISTANCE) {
+          g_robot.status_obstacle = OBSTACLE_NONE;
+        } else {
+          g_robot.status_obstacle = OBSTACLE_RIGHT_BACK;
+        }
+        break;
+
+      case OBSTACLE_RIGHT_BACK:
+        g_robot.status_obstacle = OBSTACLE_LEFT;
+        break;
+
+      case OBSTACLE_LEFT:
+        g_robot.status_obstacle = OBSTACLE_LEFT_MEASURE;
+        break;
+
+      case OBSTACLE_LEFT_MEASURE:
+        if (g_robot.ultrasound->distance > LONG_DISTANCE) {
+          g_robot.status_obstacle = OBSTACLE_NONE;
+        } else {
+          g_robot.status_obstacle = OBSTACLE_LEFT_BACK;
+        }
+        break;
+
+      case OBSTACLE_LEFT_BACK:
+        g_robot.status_obstacle = OBSTACLE_FINAL;
+        break;
+
+      case OBSTACLE_FINAL:
+          g_robot.status_obstacle = OBSTACLE_NONE;
+          break;
+      }
+
+      updateRobot();
     }
-
-    updateRobot();
-
-
 
     /* USER CODE END WHILE */
 
@@ -602,19 +601,52 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-  if(huart->Instance==USART1)
-  {
-    if(rxData==79) // Ascii value of 'O' is 79
-    {
-      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, 1);
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+  if(huart->Instance == USART1) {
+    enum StatusRobot status_robot = ROBOT_STOPPED;
+    enum StatusMode status_mode = MODE_DEFAULT;
+
+    switch(g_robot.bluetooth.data_received[0]) {
+    case 'A':
+      status_mode = MODE_AUTOMATIC;
+      status_robot = ROBOT_STOPPED;
+      break;
+    case 'S':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_STOPPED;
+      break;
+    case 'F':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_FORWARD;
+      break;
+    case 'B':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_BACKWARD;
+      break;
+    case 'R':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_RIGHT;
+      break;
+    case 'L':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_LEFT;
+      break;
+    case 'X':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_BACKWARD_RIGHT;
+      break;
+    case 'Y':
+      status_mode = MODE_MANUAL;
+      status_robot = ROBOT_BACKWARD_LEFT;
+      break;
     }
-    else if (rxData==88) // Ascii value of 'X' is 88
-    {
-      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, 0);
+
+    if (status_mode != MODE_DEFAULT) {
+      g_robot.status_mode = status_mode;
+      updateStatusRobot(status_robot);
     }
-    HAL_UART_Receive_IT(&huart1,&rxData,1); // Enabling interrupt receive again
+
+    startReceiveBluetooth();
   }
 }
 

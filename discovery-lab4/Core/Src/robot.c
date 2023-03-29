@@ -17,6 +17,10 @@ static struct Ultrasound s_ultrasound;
 static struct GPIOPin s_pin_speed_selector;
 static struct SpeedSelector s_speed_selector;
 
+static unsigned char s_data_send[DATA_SEND_LENGTH], s_data_received[DATA_RECEIVED_LENGHT];
+static struct Bluetooth s_bluetooth;
+
+
 /*
  * Initializes the basic structure of a gpio pin with the default speed
  */
@@ -93,9 +97,13 @@ static void initDriveModule(void) {
   g_robot.motor_left = &s_motor_left;
 
   g_robot.speed = MAX_SPEED;
-  g_robot.status = ROBOT_FORWARD;
+  g_robot.status_robot = ROBOT_DEFAULT;
   g_robot.status_obstacle = OBSTACLE_NONE;
+  g_robot.status_mode = MODE_MANUAL;
   g_robot.delay = DELAY_OFF;
+
+  updateSpeedRobot(0);
+  updateStatusRobot(ROBOT_STOPPED);
 
   initTimer4();
 }
@@ -177,6 +185,8 @@ static void initUltrasonicAndBuzzerModule(void) {
   s_ultrasound.distance = 100;
   g_robot.ultrasound = &s_ultrasound;
 
+  updateStatusBuzzer(BUZZER_OFF);
+
   initTimer2();
   initTimer3();
 }
@@ -205,7 +215,17 @@ static void initSpeedSelectorModule(void) {
   g_robot.speed_selector = s_speed_selector;
 }
 
-static void updateStatusBuzzer(enum StatusBuzzer status) {
+static void initBluetoothModule(UART_HandleTypeDef *huart) {
+  s_bluetooth.data_received = s_data_received;
+  s_bluetooth.data_send = s_data_send;
+  s_bluetooth.huart = huart;
+
+  g_robot.bluetooth = s_bluetooth;
+
+  startReceiveBluetooth();
+}
+
+void updateStatusBuzzer(enum StatusBuzzer status) {
   if (g_robot.buzzer->status == status) {
     return;
   }
@@ -287,15 +307,16 @@ static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
  *    All the movements are with respect to the whole robot.
  *
  */
-static void updateStatusRobot(enum StatusRobot status) {
-  if (g_robot.status == status) {
+void updateStatusRobot(enum StatusRobot status) {
+  if (g_robot.status_robot == status) {
     return;
   }
 
-  g_robot.status = status;
+  g_robot.status_robot = status;
   enum StatusMotor status_motor_right, status_motor_left;
 
   switch (status) {
+  case ROBOT_DEFAULT:
   case ROBOT_STOPPED:
     status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_STOPPED;
@@ -339,7 +360,7 @@ static void updateStatusRobot(enum StatusRobot status) {
 
 }
 
-static void updateSpeedRobot(unsigned char speed) {
+void updateSpeedRobot(unsigned char speed) {
   if (g_robot.speed == speed) {
     return;
   }
@@ -360,12 +381,11 @@ static void updateSpeedRobot(unsigned char speed) {
 /*
  * Creates a new robot and initializes all global and static variables
  */
-void createRobot(void) {
+void createRobot(UART_HandleTypeDef *huart) {
   initDriveModule();
   initUltrasonicAndBuzzerModule();
   initSpeedSelectorModule();
-
-  HAL_UART_Receive_IT(&huart1,&rxData,1); // Turn on bluetooth receiver
+  initBluetoothModule(huart);
 
   TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
   TIM2->SR = 0; // Clear flags
@@ -375,10 +395,6 @@ void createRobot(void) {
 
   TIM4->CR1 |= 0x0001;
   TIM4->SR = 0; // Clear flags
-
-  updateSpeedRobot(0);
-  updateStatusRobot(ROBOT_STOPPED);
-  updateStatusBuzzer(BUZZER_OFF);
 }
 
 void toggleGPIOPin(struct GPIOPin *gpio_pin) {
@@ -409,6 +425,10 @@ void updateMaxSpeed() {
   float percentage = (((float) value * 0.5) / MAX_VALUE_ADC) + 0.5;
 
   g_robot.speed_selector.max_speed = (int) (MAX_SPEED * percentage);
+
+  if (g_robot.status_mode == MODE_MANUAL) {
+    updateSpeedRobot(g_robot.speed_selector.max_speed);
+  }
 }
 
 /*
@@ -480,4 +500,8 @@ void updateRobot() {
     while(g_robot.delay != DELAY_OFF);
     do_wait --;
   }
+}
+
+void startReceiveBluetooth() {
+  HAL_UART_Receive_IT(g_robot.bluetooth.huart, (g_robot.bluetooth.data_received), DATA_RECEIVED_LENGHT); // Turn on bluetooth receiver
 }
