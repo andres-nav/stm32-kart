@@ -119,6 +119,7 @@ void TIM2_IRQHandler(void) {
       if (g_robot.ultrasound->distance != distance) {
         g_robot.ultrasound->distance = distance;
         updateBuzzer();
+        sendDistanceData();
       }
 
       g_robot.ultrasound->status = ULTRASOUND_STOPPED;
@@ -609,7 +610,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     switch(g_robot.bluetooth.data_received[0]) {
     case 'A':
       status_mode = MODE_AUTOMATIC;
-      status_robot = ROBOT_STOPPED;
+      status_robot = ROBOT_DEFAULT;
       break;
     case 'S':
       status_mode = MODE_MANUAL;
@@ -642,11 +643,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     }
 
     if (status_mode != MODE_DEFAULT) {
-      g_robot.status_mode = status_mode;
+      updateStatusMode(status_mode);
       updateStatusRobot(status_robot);
     }
 
-    startReceiveBluetooth();
+    receiveData();
   }
 }
 

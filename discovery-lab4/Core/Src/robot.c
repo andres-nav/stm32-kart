@@ -17,7 +17,7 @@ static struct Ultrasound s_ultrasound;
 static struct GPIOPin s_pin_speed_selector;
 static struct SpeedSelector s_speed_selector;
 
-static unsigned char s_data_send[DATA_SEND_LENGTH], s_data_received[DATA_RECEIVED_LENGHT];
+static char s_data_send[DATA_SEND_LENGTH], s_data_received[DATA_RECEIVED_LENGHT];
 static struct Bluetooth s_bluetooth;
 
 
@@ -182,6 +182,7 @@ static void initUltrasonicAndBuzzerModule(void) {
   s_ultrasound.echo = &s_pin_ultrasound_echo;
 
   s_ultrasound.status = ULTRASOUND_STOPPED;
+  s_ultrasound.status_distance = DISTANCE_NONE;
   s_ultrasound.distance = 100;
   g_robot.ultrasound = &s_ultrasound;
 
@@ -222,7 +223,7 @@ static void initBluetoothModule(UART_HandleTypeDef *huart) {
 
   g_robot.bluetooth = s_bluetooth;
 
-  startReceiveBluetooth();
+  receiveData();
 }
 
 void updateStatusBuzzer(enum StatusBuzzer status) {
@@ -302,6 +303,19 @@ static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
   updateStatusGPIOPin(&(motor->pin_direction), status_motor_pin_direction);
 }
 
+void updateStatusMode(enum StatusMode status) {
+  if (g_robot.status_mode == status) {
+     return;
+  }
+
+  g_robot.status_mode = status;
+
+  if (g_robot.status_mode == MODE_AUTOMATIC) {
+    g_robot.bluetooth.data_send = "Automatic mode started\n";
+    sendData();
+  }
+}
+
 /*
  * Updates the status of the motor and calls to implement the status.
  *    All the movements are with respect to the whole robot.
@@ -314,40 +328,51 @@ void updateStatusRobot(enum StatusRobot status) {
 
   g_robot.status_robot = status;
   enum StatusMotor status_motor_right, status_motor_left;
+  char *message = NULL;
 
   switch (status) {
   case ROBOT_DEFAULT:
+    status_motor_right = MOTOR_STOPPED;
+    status_motor_left = MOTOR_STOPPED;
+    break;
   case ROBOT_STOPPED:
+    message = "Robot stopped\n";
     status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_STOPPED;
 
     break;
   case ROBOT_FORWARD:
+    message = "Robot moving forward\n";
     status_motor_right = MOTOR_FORWARD;
     status_motor_left = MOTOR_FORWARD;
 
     break;
   case ROBOT_BACKWARD:
+    message = "Robot moving backwards\n";
     status_motor_right = MOTOR_BACKWARD;
     status_motor_left = MOTOR_BACKWARD;
 
     break;
   case ROBOT_RIGHT:
+    message = "Robot turning right\n";
     status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_FORWARD;
 
     break;
   case ROBOT_LEFT:
+    message = "Robot turning left\n";
     status_motor_right = MOTOR_FORWARD;
     status_motor_left = MOTOR_STOPPED;
 
     break;
   case ROBOT_BACKWARD_RIGHT:
+    message = "Robot turning backwards right\n";
     status_motor_right = MOTOR_BACKWARD;
     status_motor_left = MOTOR_STOPPED;
 
     break;
   case ROBOT_BACKWARD_LEFT:
+    message = "Robot turning backwards left\n";
     status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_BACKWARD;
 
@@ -357,6 +382,11 @@ void updateStatusRobot(enum StatusRobot status) {
   // TODO enable motor
   updateStatusMotor(g_robot.motor_left, status_motor_left);
   updateStatusMotor(g_robot.motor_right, status_motor_right);
+
+  if (message != NULL) {
+    g_robot.bluetooth.data_send = message;
+    sendData();
+  }
 
 }
 
@@ -502,6 +532,42 @@ void updateRobot() {
   }
 }
 
-void startReceiveBluetooth() {
-  HAL_UART_Receive_IT(g_robot.bluetooth.huart, (g_robot.bluetooth.data_received), DATA_RECEIVED_LENGHT); // Turn on bluetooth receiver
+void receiveData() {
+  HAL_UART_Receive_IT(g_robot.bluetooth.huart, (unsigned char *) (g_robot.bluetooth.data_received), DATA_RECEIVED_LENGHT); // Turn on bluetooth receiver
+}
+
+void sendDistanceData() {
+  char *message = NULL;
+  if ((g_robot.ultrasound->distance >= 4) && (g_robot.ultrasound->distance <= 14)) {
+    if (g_robot.ultrasound->status_distance == DISTANCE_10) {
+      return;
+    }
+    message = "Object at 10 cm approx \n";
+    g_robot.ultrasound->status_distance = DISTANCE_10;
+
+  } else if ((g_robot.ultrasound->distance >= 16) && (g_robot.ultrasound->distance <= 24)) {
+    if (g_robot.ultrasound->status_distance == DISTANCE_20) {
+      return;
+    }
+    message = "Object at 20 cm approx \n";
+    g_robot.ultrasound->status_distance = DISTANCE_20;
+
+  } else {
+    return;
+  }
+
+  g_robot.bluetooth.data_send = message;
+  sendData();
+}
+
+void sendData() {
+  unsigned length = 0;
+  while (length < DATA_SEND_LENGTH) {
+    if (g_robot.bluetooth.data_send[length] == '\0'){
+      break;
+    }
+    length++;
+  }
+
+  HAL_UART_Transmit_IT(g_robot.bluetooth.huart, (unsigned char *) (g_robot.bluetooth.data_send), length);
 }

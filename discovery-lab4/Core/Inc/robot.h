@@ -30,6 +30,7 @@ extern struct Robot g_robot;
 enum StatusGPIOPin { GPIO_PIN_UP, GPIO_PIN_DOWN};
 enum StatusMotor { MOTOR_STOPPED, MOTOR_FORWARD, MOTOR_BACKWARD };
 enum StatusUltrasound { ULTRASOUND_STOPPED, ULTRASOUND_TRIGGER_START, ULTRASOUND_TRIGGER_ON, ULTRASOUND_TRIGGER_SENT, ULTRASOUND_MEASURING };
+enum StatusDistance { DISTANCE_NONE, DISTANCE_10, DISTANCE_20 };
 enum StatusBuzzer { BUZZER_OFF, BUZZER_ON, BUZZER_BEEPING };
 enum StatusDelay {DELAY_START, DELAY_WAITING, DELAY_OFF };
 
@@ -52,6 +53,7 @@ struct Motor {
 
 struct Ultrasound {
   enum StatusUltrasound status;
+  enum StatusDistance status_distance;
   struct GPIOPin *trigger;
   struct GPIOPin *echo;
   uint16_t time_init;
@@ -71,7 +73,7 @@ struct SpeedSelector {
 
 struct Bluetooth {
   UART_HandleTypeDef *huart;
-  unsigned char *data_send, *data_received;
+  char *data_send, *data_received;
 };
 
 struct Robot {
@@ -97,12 +99,16 @@ void updateStatusBuzzer(enum StatusBuzzer status);
 void updateBuzzer();
 void updateMaxSpeed();
 
+void updateStatusMode(enum StatusMode status);
 
 void updateStatusRobot(enum StatusRobot status);
 void updateSpeedRobot(unsigned char speed);
 void updateRobot();
 
-void startReceiveBluetooth();
+void receiveData();
+
+void sendDistanceData();
+void sendData();
 
 
 
