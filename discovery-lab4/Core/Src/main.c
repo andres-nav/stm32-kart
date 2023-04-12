@@ -76,20 +76,32 @@ void TIM3_IRQHandler(void) {
       g_robot.delay = DELAY_OFF;
     }
 
-    updateMaxSpeed();
+    switch (g_robot.buzzer->status) {
+    case BUZZER_ON:
+      updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_UP);
+      break;
+    case BUZZER_OFF:
+      updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_DOWN);
+      break;
+    case BUZZER_BEEPING:
+      toggleGPIOPin(g_robot.buzzer->gpio_pin);
+      break;
+    }
 
-    if (g_robot.buzzer->status == BUZZER_BEEPING) {
-       toggleGPIOPin(g_robot.buzzer->gpio_pin);
-     }
+    if ((g_robot.ultrasound->status == ULTRASOUND_TRIGGER_SENT) || (g_robot.ultrasound->status == ULTRASOUND_MEASURING)) {
+      g_robot.ultrasound->status = ULTRASOUND_STOPPED;
+    }
 
+    TIM3->CCR1 = TIM3->CNT + TIMER_3_CH_1_CNT;
+    if (TIM3->CCR1 > TIM3->ARR) {
+      TIM3->CCR1 = TIM3->CCR1 - TIM3->ARR; // Handle counter overflows
+    }
     TIM3->SR &= ~(1 << 1);
 
   } else if ((TIM3->SR & (1 << 2)) != 0) {
     if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
       TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
-    } else if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_SENT) {
-      g_robot.ultrasound->status = ULTRASOUND_STOPPED;
     }
 
     TIM3->CCR2 = TIM3->CNT + TIMER_3_CH_2_CNT;
@@ -98,8 +110,9 @@ void TIM3_IRQHandler(void) {
     }
     TIM3->SR &= ~(1 << 2);
   } else if ((TIM3->SR & (1 << 3)) != 0) {
+    updateMaxSpeed();
 
-
+    calculateAndSendSpeed();
 
     TIM3->SR &= ~(1 << 3);
 
@@ -146,6 +159,23 @@ void TIM2_IRQHandler(void) {
     TIM2->SR = ~(1 << 2); // Clear flags
   }
 }
+
+void EXTI15_10_IRQHandler(void){ // EXTI13 ISR. Octocoupler Right Wheel (PC13)
+  if ((EXTI->PR & 0x2000) != 0){ // Is EXTI13 flag on?
+    g_robot.speed_sensor_right.counter += 1;
+
+    EXTI->PR |= (1<<13); // Clear EXTI13 flag
+  }
+}
+
+void EXTI0_IRQHandler(void){ // EXTI0 ISR. Octocoupler Left Wheel (PA0)
+  if ((EXTI->PR & (1<<0))!=0){ // Is it the interrupt flag set?
+    g_robot.speed_sensor_left.counter += 1;
+
+    EXTI->PR = 0x01; // Clear EXTI flag
+  }
+}
+
 
 /* USER CODE END 0 */
 
@@ -242,6 +272,8 @@ int main(void)
       }
 
       updateRobot();
+    } else {
+      updateStatusRobot();
     }
 
     /* USER CODE END WHILE */
@@ -647,13 +679,22 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     }
 
     if (status_mode != MODE_DEFAULT) {
-      updateStatusMode(status_mode);
-      updateStatusRobot(status_robot);
+      g_robot.status_mode = status_mode;
+      g_robot.status_robot_next = status_robot;
     }
 
     receiveData();
   }
 }
+
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+  g_robot.bluetooth.status = BLUETOOTH_STOPPED;
+}
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+  g_robot.bluetooth.status = BLUETOOTH_STOPPED;
+}
+
 
 /* USER CODE END 4 */
 
@@ -665,9 +706,9 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1) {
-  }
+  //__disable_irq();
+  //hile (1) {
+  //}
   /* USER CODE END Error_Handler_Debug */
 }
 

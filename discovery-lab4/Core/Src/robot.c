@@ -20,6 +20,8 @@ static struct SpeedSelector s_speed_selector;
 static char s_data_send[DATA_SEND_LENGTH], s_data_received[DATA_RECEIVED_LENGHT];
 static struct Bluetooth s_bluetooth;
 
+static struct GPIOPin s_pin_speed_sensor_right, s_pin_speed_sensor_left;
+static struct SpeedSensor s_speed_sensor_right, s_speed_sensor_left;
 
 /*
  * Initializes the basic structure of a gpio pin with the default speed
@@ -40,6 +42,14 @@ static void initOutputGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char
   // 01 the register
   gpio->MODER &= ~(1 << (pin * 2 + 1));
   gpio->MODER |= (1 << (pin * 2));
+}
+
+static void initInputGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin) {
+  initGPIOPin(gpio_pin, gpio, pin);
+
+  // 00 the register
+  gpio->MODER &= ~(1 << (pin * 2 + 1));
+  gpio->MODER &= ~(1 << (pin * 2));
 }
 
 static void initAFGPIOPin(struct GPIOPin *gpio_pin, GPIO_TypeDef *gpio, char pin, char af) {
@@ -98,6 +108,7 @@ static void initDriveModule(void) {
 
   g_robot.speed = MAX_SPEED;
   g_robot.status_robot = ROBOT_DEFAULT;
+  g_robot.status_robot_next = ROBOT_DEFAULT;
   g_robot.status_obstacle = OBSTACLE_NONE;
   g_robot.status_mode = MODE_MANUAL;
   g_robot.delay = DELAY_OFF;
@@ -146,9 +157,9 @@ static void initTimer3(void) {
   TIM3->CR2 = 0x0000;
   TIM3->SMCR = 0x0000;
 
-  TIM3->PSC = TIMER_3_PSC - 1;
+  TIM3->PSC = TIMER_3_PSC - 1; // 0.1ms per count
   TIM3->CNT = 0;
-  TIM3->ARR = TIMER_3_CH_1_CNT;
+  TIM3->ARR = TIMER_3_CH_3_CNT;
   TIM3->CCR1 = TIMER_3_CH_1_CNT;
   TIM3->CCR2 = TIMER_3_CH_2_CNT;
   TIM3->CCR3 = TIMER_3_CH_3_CNT;
@@ -172,7 +183,8 @@ static void initTimer3(void) {
 static void initUltrasonicAndBuzzerModule(void) {
   initOutputGPIOPin(&s_pin_buzzer, GPIOA, 1);
   s_buzzer.gpio_pin = &s_pin_buzzer;
-  s_buzzer.status = BUZZER_ON;
+  s_buzzer.status = BUZZER_OFF;
+  updateStatusGPIOPin(s_buzzer.gpio_pin, GPIO_PIN_DOWN);
   g_robot.buzzer = &s_buzzer;
 
   initOutputGPIOPin(&s_pin_ultrasound_trigger, GPIOD, 2);
@@ -185,8 +197,6 @@ static void initUltrasonicAndBuzzerModule(void) {
   s_ultrasound.status_distance = DISTANCE_NONE;
   s_ultrasound.distance = 100;
   g_robot.ultrasound = &s_ultrasound;
-
-  updateStatusBuzzer(BUZZER_OFF);
 
   initTimer2();
   initTimer3();
@@ -220,29 +230,38 @@ static void initBluetoothModule(UART_HandleTypeDef *huart) {
   s_bluetooth.data_received = s_data_received;
   s_bluetooth.data_send = s_data_send;
   s_bluetooth.huart = huart;
+  s_bluetooth.status = BLUETOOTH_STOPPED;
 
   g_robot.bluetooth = s_bluetooth;
 
   receiveData();
 }
 
-void updateStatusBuzzer(enum StatusBuzzer status) {
-  if (g_robot.buzzer->status == status) {
-    return;
-  }
+static void initSpeedSensorModule() {
+  initInputGPIOPin(&s_pin_speed_sensor_right, GPIOC, 13);
+  s_speed_sensor_right.pin = s_pin_speed_sensor_right;
+  s_speed_sensor_right.counter = 0;
+  g_robot.speed_sensor_right = s_speed_sensor_right;
 
-  g_robot.buzzer->status = status;
-  switch (g_robot.buzzer->status) {
-  case BUZZER_ON:
-    updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_UP);
-    break;
-  case BUZZER_OFF:
-    updateStatusGPIOPin(g_robot.buzzer->gpio_pin, GPIO_PIN_DOWN);
-    break;
-  case BUZZER_BEEPING:
-    break;
-  }
+  EXTI->FTSR &= ~(0x02000); // ‘0’ in bit 13 disables falling edge for EXTI13
+  EXTI->RTSR |= 0x02000; // ‘1’ in bit 13 enables rising edge for EXTI13
+  SYSCFG->EXTICR[3] |= 0x0020; // EXTI13 associated to GPIOC (The octo-coupler)
+  EXTI->IMR |= 0x2000; // ‘1’ enables EXTI13, unmasks it
+  NVIC->ISER[1] |= (1 << (40 - 32)); // Enables EXTI13 in NVIC (position 40).
+
+  initInputGPIOPin(&s_pin_speed_sensor_left, GPIOA, 0);
+  s_speed_sensor_left.pin = s_pin_speed_sensor_left;
+  s_speed_sensor_left.counter = 0;
+  g_robot.speed_sensor_left = s_speed_sensor_left;
+
+  EXTI->FTSR &= ~(0x01); // ‘1’ enable falling Edge for EXTI0
+  EXTI->RTSR |= (0x01); // ‘0’ disable rising Edge for EXTI0
+  SYSCFG->EXTICR[0] = 0; // EXTI0 is associated to GPIOA (user button=PA0)
+  EXTI->IMR |= 0x01; // ‘1’ enable EXTI0, unmask it
+  NVIC->ISER[0] |= (1 << 6); // Enable EXTI0 in NVIC (position 6)
+
 }
+
 
 /*
  * Updates the motor pin depending of its status
@@ -303,34 +322,21 @@ static void updateStatusMotor(struct Motor *motor, enum StatusMotor status) {
   updateStatusGPIOPin(&(motor->pin_direction), status_motor_pin_direction);
 }
 
-void updateStatusMode(enum StatusMode status) {
-  if (g_robot.status_mode == status) {
-     return;
-  }
-
-  g_robot.status_mode = status;
-
-  if (g_robot.status_mode == MODE_AUTOMATIC) {
-    g_robot.bluetooth.data_send = "Automatic mode started\n";
-    sendData();
-  }
-}
-
 /*
  * Updates the status of the motor and calls to implement the status.
  *    All the movements are with respect to the whole robot.
  *
  */
-void updateStatusRobot(enum StatusRobot status) {
-  if (g_robot.status_robot == status) {
+void updateStatusRobot() {
+  if (g_robot.status_robot == g_robot.status_robot_next) {
     return;
   }
 
-  g_robot.status_robot = status;
+  g_robot.status_robot = g_robot.status_robot_next;
   enum StatusMotor status_motor_right, status_motor_left;
   char *message = NULL;
 
-  switch (status) {
+  switch (g_robot.status_robot_next) {
   case ROBOT_DEFAULT:
     status_motor_right = MOTOR_STOPPED;
     status_motor_left = MOTOR_STOPPED;
@@ -416,6 +422,7 @@ void createRobot(UART_HandleTypeDef *huart) {
   initUltrasonicAndBuzzerModule();
   initSpeedSelectorModule();
   initBluetoothModule(huart);
+  initSpeedSensorModule();
 
   TIM2->CR1 |= 0x0001; // CEN = 1 -> Start counter
   TIM2->SR = 0; // Clear flags
@@ -446,7 +453,7 @@ void updateBuzzer() {
     status_buzzer = BUZZER_OFF;
   }
 
-  updateStatusBuzzer(status_buzzer);
+  g_robot.buzzer->status = status_buzzer;
 }
 
 void updateMaxSpeed() {
@@ -523,7 +530,8 @@ void updateRobot() {
   }
 
   updateSpeedRobot(speed);
-  updateStatusRobot(status_robot);
+  g_robot.status_robot_next = status_robot;
+  updateStatusRobot();
 
   while (do_wait != 0) {
     g_robot.delay = DELAY_START;
@@ -564,14 +572,34 @@ void sendDistanceData() {
   sendData();
 }
 
+void calculateAndSendSpeed() {
+  unsigned char speed_right_rev_min = ((g_robot.speed_sensor_right.counter * 60 / HOLES_PER_WHEEL) / COUNTER_PERIOD_SEC);
+  unsigned char speed_left_rev_min = ((g_robot.speed_sensor_left.counter * 60 / HOLES_PER_WHEEL) / COUNTER_PERIOD_SEC);
+
+  g_robot.speed_sensor_right.counter = 0;
+  g_robot.speed_sensor_left.counter = 0;
+
+  char *message = malloc(DATA_SEND_LENGTH * sizeof(char));
+  sprintf(message, "(rev/min) Right: %u | Left: %u \n", speed_right_rev_min, speed_left_rev_min);
+  strcpy(g_robot.bluetooth.data_send, message);
+  free(message);
+
+  g_robot.bluetooth.data_send = message;
+
+  sendData();
+}
+
 void sendData() {
-  unsigned length = 0;
-  while (length < DATA_SEND_LENGTH) {
-    if (g_robot.bluetooth.data_send[length] == '\0'){
-      break;
-    }
-    length++;
+  if ((g_robot.bluetooth.status == BLUETOOTH_TRANSMITTING) || g_robot.bluetooth.data_send == NULL) {
+    return;
   }
 
+  unsigned length = strlen(g_robot.bluetooth.data_send);
+
+  if (length == 0) {
+    return;
+  }
+
+  g_robot.bluetooth.status = BLUETOOTH_TRANSMITTING;
   HAL_UART_Transmit_IT(g_robot.bluetooth.huart, (unsigned char *) (g_robot.bluetooth.data_send), length);
 }
