@@ -681,6 +681,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (status_mode != MODE_DEFAULT) {
       g_robot.status_mode = status_mode;
       g_robot.status_robot_next = status_robot;
+      g_robot.status_obstacle = OBSTACLE_NONE;
     }
 
     receiveData();
