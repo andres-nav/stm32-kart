@@ -93,7 +93,7 @@ static void initDriveModule(void) {
   s_motor_right.pin_speed = s_pin_speed_motor_right;
   s_motor_right.pin_direction = s_pin_direction_motor_right;
   s_motor_right.channel = 4;
-  s_motor_right.status = MOTOR_FORWARD;
+  s_motor_right.status = MOTOR_STOPPED;
   g_robot.motor_right = &s_motor_right;
 
   // Motor left is set to the output of the right driver (due to the placement
@@ -103,18 +103,18 @@ static void initDriveModule(void) {
   s_motor_left.pin_speed = s_pin_speed_motor_left;
   s_motor_left.pin_direction = s_pin_direction_motor_left;
   s_motor_left.channel = 3;
-  s_motor_right.status = MOTOR_FORWARD;
+  s_motor_right.status = MOTOR_STOPPED;
   g_robot.motor_left = &s_motor_left;
 
   g_robot.speed = MAX_SPEED;
   g_robot.status_robot = ROBOT_DEFAULT;
-  g_robot.status_robot_next = ROBOT_DEFAULT;
+  g_robot.status_robot_next = ROBOT_STOPPED;
   g_robot.status_obstacle = OBSTACLE_NONE;
   g_robot.status_mode = MODE_MANUAL;
   g_robot.delay = DELAY_OFF;
 
   updateSpeedRobot(0);
-  updateStatusRobot(ROBOT_STOPPED);
+  updateStatusRobot();
 
   initTimer4();
 }
