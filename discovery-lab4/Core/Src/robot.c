@@ -238,24 +238,24 @@ static void initBluetoothModule(UART_HandleTypeDef *huart) {
 }
 
 static void initSpeedSensorModule() {
-  initInputGPIOPin(&s_pin_speed_sensor_right, GPIOC, 13);
+  initInputGPIOPin(&s_pin_speed_sensor_right, GPIOA, 2);
   s_speed_sensor_right.pin = s_pin_speed_sensor_right;
   s_speed_sensor_right.counter = 0;
   g_robot.speed_sensor_right = s_speed_sensor_right;
 
-  EXTI->FTSR &= ~(0x02000); // ‘0’ in bit 13 disables falling edge for EXTI13
-  EXTI->RTSR |= 0x02000; // ‘1’ in bit 13 enables rising edge for EXTI13
-  SYSCFG->EXTICR[3] |= 0x0020; // EXTI13 associated to GPIOC (The octo-coupler)
-  EXTI->IMR |= 0x2000; // ‘1’ enables EXTI13, unmasks it
-  NVIC->ISER[1] |= (1 << (40 - 32)); // Enables EXTI13 in NVIC (position 40).
+  EXTI->FTSR &= ~(1 << 2); // ‘0’ in bit 2 disables falling edge for EXTI2
+  EXTI->RTSR |= (1 << 2); // ‘1’ in bit 13 enables rising edge for EXTI2
+  SYSCFG->EXTICR[0] = 0; // EXTI2 associated to GPIOA (The octo-coupler)
+  EXTI->IMR |= 0x04; // ‘1’ enables EXTI2, unmasks it
+  NVIC->ISER[0] |= (1 << (8)); // Enables EXTI13 in NVIC (position 40).
 
   initInputGPIOPin(&s_pin_speed_sensor_left, GPIOA, 0);
   s_speed_sensor_left.pin = s_pin_speed_sensor_left;
   s_speed_sensor_left.counter = 0;
   g_robot.speed_sensor_left = s_speed_sensor_left;
 
-  EXTI->FTSR &= ~(0x01); // ‘1’ enable falling Edge for EXTI0
-  EXTI->RTSR |= (0x01); // ‘0’ disable rising Edge for EXTI0
+  EXTI->FTSR &= ~(1 << 0); // ‘1’ enable falling Edge for EXTI0
+  EXTI->RTSR |= (1 << 0); // ‘0’ disable rising Edge for EXTI0
   SYSCFG->EXTICR[0] = 0; // EXTI0 is associated to GPIOA (user button=PA0)
   EXTI->IMR |= 0x01; // ‘1’ enable EXTI0, unmask it
   NVIC->ISER[0] |= (1 << 6); // Enable EXTI0 in NVIC (position 6)

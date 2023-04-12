@@ -160,11 +160,11 @@ void TIM2_IRQHandler(void) {
   }
 }
 
-void EXTI15_10_IRQHandler(void){ // EXTI13 ISR. Octocoupler Right Wheel (PC13)
-  if ((EXTI->PR & 0x2000) != 0){ // Is EXTI13 flag on?
+void EXTI2_IRQHandler(void){ // EXTI2 ISR. Octocoupler Right Wheel (PA2)
+  if ((EXTI->PR & (1 << 2)) != 0){ // Is EXTI13 flag on?
     g_robot.speed_sensor_right.counter += 1;
 
-    EXTI->PR |= (1<<13); // Clear EXTI13 flag
+    EXTI->PR |= (1<<2); // Clear EXTI13 flag
   }
 }
 
