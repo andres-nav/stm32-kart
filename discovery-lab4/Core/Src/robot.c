@@ -538,21 +538,25 @@ void receiveData() {
 
 void sendDistanceData() {
   char *message = NULL;
-  if ((g_robot.ultrasound->distance >= 4) && (g_robot.ultrasound->distance <= 14)) {
+  if ((g_robot.ultrasound->distance >= 9) && (g_robot.ultrasound->distance <= 11)) {
     if (g_robot.ultrasound->status_distance == DISTANCE_10) {
       return;
     }
     message = "Object at 10 cm approx \n";
     g_robot.ultrasound->status_distance = DISTANCE_10;
 
-  } else if ((g_robot.ultrasound->distance >= 16) && (g_robot.ultrasound->distance <= 24)) {
+  } else if ((g_robot.ultrasound->distance >= 19) && (g_robot.ultrasound->distance <= 21)) {
     if (g_robot.ultrasound->status_distance == DISTANCE_20) {
       return;
     }
     message = "Object at 20 cm approx \n";
     g_robot.ultrasound->status_distance = DISTANCE_20;
 
-  } else {
+  } else if ((g_robot.ultrasound->distance >= 25) || (g_robot.ultrasound->distance <= 5)){
+    g_robot.ultrasound->status_distance = DISTANCE_NONE;
+  }
+
+  if (message == NULL) {
     return;
   }
 

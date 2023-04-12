@@ -78,12 +78,18 @@ void TIM3_IRQHandler(void) {
 
     updateMaxSpeed();
 
+    if (g_robot.buzzer->status == BUZZER_BEEPING) {
+       toggleGPIOPin(g_robot.buzzer->gpio_pin);
+     }
+
     TIM3->SR &= ~(1 << 1);
 
   } else if ((TIM3->SR & (1 << 2)) != 0) {
     if (g_robot.ultrasound->status == ULTRASOUND_STOPPED) {
       g_robot.ultrasound->status = ULTRASOUND_TRIGGER_START;
       TIM2->EGR |= (1 << 2); // UG = 1 -> Send channel 2 update event to enable trigger
+    } else if (g_robot.ultrasound->status == ULTRASOUND_TRIGGER_SENT) {
+      g_robot.ultrasound->status = ULTRASOUND_STOPPED;
     }
 
     TIM3->CCR2 = TIM3->CNT + TIMER_3_CH_2_CNT;
@@ -93,9 +99,7 @@ void TIM3_IRQHandler(void) {
     TIM3->SR &= ~(1 << 2);
   } else if ((TIM3->SR & (1 << 3)) != 0) {
 
-    if (g_robot.buzzer->status == BUZZER_BEEPING) {
-      toggleGPIOPin(g_robot.buzzer->gpio_pin);
-    }
+
 
     TIM3->SR &= ~(1 << 3);
 
